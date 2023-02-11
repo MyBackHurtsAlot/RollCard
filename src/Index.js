@@ -17,11 +17,9 @@ const theme = {
 };
 
 createRoot(document.querySelector("#root")).render(
-    <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <ResetStyle />
-            <GlobalStyle />
-            <App />
-        </ThemeProvider>
-    </React.StrictMode>
+    <ThemeProvider theme={theme}>
+        <ResetStyle />
+        <GlobalStyle />
+        <App />
+    </ThemeProvider>
 );

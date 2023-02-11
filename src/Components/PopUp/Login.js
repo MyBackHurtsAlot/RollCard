@@ -36,6 +36,7 @@ const SignUp = ({
                 checkEmail,
                 checkPassword
             );
+
             setCurrentPage("");
             setDisplay("none");
             navigate("/");
@@ -48,7 +49,9 @@ const SignUp = ({
         } catch (error) {
             if (!checkEmail || !checkPassword) {
                 setPopMessage("請輸入信箱及密碼");
-            } else if (error.code === "auth/user-not-found") {
+            } else if (
+                error.message === "Firebase: Error (auth/invalid-email)."
+            ) {
                 setPopMessage("信箱或密碼有誤");
             }
         }

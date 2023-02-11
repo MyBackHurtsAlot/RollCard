@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../Firebase-config";
@@ -18,29 +18,22 @@ const Header = () => {
     const [popMessage, setPopMessage] = useState("");
     const [popColor, setPopColor] = useState("#aa0000");
     const [loggedIn, setLoggedIn] = useState(false);
-    const { user, setUser } = useContext(UserContext);
     const [uid, setUid] = useState(null);
     const [showMenu, setShowMenu] = useState(false);
+    const { user, setUser } = useContext(UserContext);
+
     useEffect(() => {
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                navigate("/");
-            } else {
-                setLoggedIn(true);
-                setUid(user.uid);
-                setUser(user.uid);
-                // console.log(uid);
-                //console.log("111", user);
+                return;
             }
+            setLoggedIn(true);
+            setUid(user.uid);
+            setUser(user.uid);
+            setShowMenu(true);
         });
     }, []);
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (currentUser) => {
-    //         if (currentUser) {
-    //         }
-    //     });
-    // }, []);
 
     const navigate = useNavigate();
     const homePageHandler = () => {
@@ -52,9 +45,11 @@ const Header = () => {
         await signOut(auth);
         setLoggedIn(false);
         setUid(null);
+        // setDisplay("none");
         // setUser({});
         onAuthStateChanged(auth, () => {
             navigate("/");
+            window.location.reload(false);
         });
     };
 
@@ -68,13 +63,13 @@ const Header = () => {
     return (
         <Header_Wrapper>
             <Header_Container>
-                <Header_Container_Logo onClick={homePageHandler}>
-                    Roll Card
+                <Header_Container_Logo>
+                    <NavLink to="/"> Roll Card</NavLink>
                 </Header_Container_Logo>
                 {loggedIn === true ? (
                     <Header_container_Member
                         onClick={() => {
-                            setDisplay("block");
+                            setDisplay("flex");
                             setShowMenu(true);
                         }}
                     >
@@ -84,7 +79,8 @@ const Header = () => {
                     <Header_container_Login
                         onClick={() => {
                             setCurrentPage("Login");
-                            setDisplay("block");
+                            setDisplay("flex");
+                            setShowMenu(false);
                         }}
                     >
                         登入
@@ -123,21 +119,29 @@ const Header = () => {
                 )}
             </Header_Container>
             {showMenu === true && (
-                <Header_menu_container>
+                <Header_menu_container style={{ display: display }}>
                     <Header_menu_YourPage
                         onClick={() => {
                             navigate(`/member/profile/${uid}`);
+                            setDisplay("none");
                         }}
                     >
+                        {/* <NavLink to="`/member/profile/${uid}">你的頁面</NavLink> */}
                         你的頁面
                     </Header_menu_YourPage>
-                    <Header_menu_UpLoad>上傳影片</Header_menu_UpLoad>
+                    <Header_menu_UpLoad
+                        onClick={() => {
+                            // navigate(`/upload`);
+                            setDisplay("none");
+                        }}
+                    >
+                        <NavLink to="/upload">上傳影片</NavLink>
+                    </Header_menu_UpLoad>
                     <Header_menu_LogOut onClick={logoutHandler}>
                         登出
                     </Header_menu_LogOut>
                 </Header_menu_container>
             )}
-
             <PopUp_Mask
                 style={{ display: display }}
                 onClick={() => {
@@ -165,6 +169,7 @@ const Header_Wrapper = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 `;
 const Header_Container = styled.div`
     width: 80%;
@@ -173,11 +178,13 @@ const Header_Container = styled.div`
     align-items: center;
 `;
 const Header_Container_Logo = styled.div`
+    cursor: pointer;
     font-family: "Ubuntu Condensed";
-    color: ${(props) => props.theme.colors.highLight};
     letter-spacing: 1px;
     font-size: 1.4em;
-    cursor: pointer;
+    a {
+        color: ${(props) => props.theme.colors.highLight};
+    }
     transition: letter-spacing 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     &:hover {
         letter-spacing: 1.5px;
@@ -188,9 +195,7 @@ const Header_container_Login = styled(Header_Container_Logo)`
     font-size: 1em;
     font-weight: 200;
 `;
-const Header_container_Member = styled(Header_container_Login)`
-    display: block;
-`;
+const Header_container_Member = styled(Header_container_Login)``;
 
 const Header_menu_container = styled.div`
     width: 152px;
@@ -198,20 +203,17 @@ const Header_menu_container = styled.div`
     border-radius: 5px;
     position: absolute;
     right: 5%;
-    top: 66px;
+    top: 70px;
     background-color: ${(props) => props.theme.colors.primary_Grey};
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     z-index: 4;
+    a {
+        color: ${(props) => props.theme.colors.primary_white};
+    }
 `;
-const Header_menu_YourPage = styled(Header_container_Login)`
-    display: block;
-`;
-const Header_menu_UpLoad = styled(Header_container_Login)`
-    display: block;
-`;
-const Header_menu_LogOut = styled(Header_container_Login)`
-    display: block;
-`;
+const Header_menu_YourPage = styled(Header_container_Login)``;
+const Header_menu_UpLoad = styled(Header_container_Login)``;
+const Header_menu_LogOut = styled(Header_container_Login)``;

@@ -12,9 +12,6 @@ const Nav = () => {
                 </Nav_Left_Title>
                 <Nav_Left_Role>乙方</Nav_Left_Role>
                 {/* 有時間的話做跑馬 */}
-                {/* <Nav_Left_Content>
-                    導演攝影燈光場務製片演員剪接調色混音動畫，把你的團隊成員
-                </Nav_Left_Content> */}
             </Nav_Left_Wrapper>
             <Nav_Right_Wrapper>
                 <Nav_Right_Role>甲方</Nav_Right_Role>
@@ -33,10 +30,14 @@ export default Nav;
 //Styled Component
 const Nav_Wrapper = styled.nav`
     width: 100%;
-    height: 300px;
+    height: 400px;
     /* padding: 0 10%; */
     background-color: ${(props) => props.theme.colors.primary_white};
     display: flex;
+    &:hover {
+        /* background-color: #91919140; */
+        /* filter: blur(2px); */
+    }
 `;
 const Nav_Left_Wrapper = styled.div`
     display: flex;
@@ -55,12 +56,38 @@ const Nav_Left_Role = styled.div`
     text-align: left;
     -webkit-text-stroke: 1px;
     -webkit-text-fill-color: transparent;
+    animation: slideInFromBottom 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    opacity: 100;
+
+    @keyframes slideInFromBottom {
+        from {
+            transform: translateY(10%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 100;
+        }
+    }
 `;
 const Nav_Left_Title = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
     font-size: 64px;
     font-weight: 900;
     text-align: end;
+    animation: slideInFromRight 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    opacity: 100;
+
+    @keyframes slideInFromRight {
+        from {
+            transform: translateX(10%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 100;
+        }
+    }
 `;
 const Nav_Left_Content = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
@@ -69,10 +96,36 @@ const Nav_Left_Content = styled.div`
 const Nav_Right_Role = styled(Nav_Left_Role)`
     color: ${(props) => props.theme.colors.primary_white};
     text-align: end;
+    animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    opacity: 100;
+
+    @keyframes slideInFromTop {
+        from {
+            transform: translateY(-15%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 100;
+        }
+    }
 `;
 const Nav_Right_Title = styled(Nav_Left_Title)`
     color: ${(props) => props.theme.colors.primary_white};
     text-align: start;
+    animation: slideInFromLeft 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    opacity: 100;
+
+    @keyframes slideInFromLeft {
+        from {
+            transform: translateX(-10%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 100;
+        }
+    }
 `;
 const Nav_Right_Wrapper_Background = styled.div`
     background-color: ${(props) => props.theme.colors.primary_Dark};

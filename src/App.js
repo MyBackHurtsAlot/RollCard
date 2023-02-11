@@ -1,26 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, BrowserRouter, useNavigate } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { query, collection, getDocs, where } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 import { db } from "./Firebase-config";
+
 import {
     LoginContext,
     UserContext,
     UserInfoContext,
+    VideoContext,
 } from "./Context/userContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Firebase-config";
-
+import { storage } from "./Firebase-config";
+import Header from "./Components/Header/Index";
 import HomePage from "./Pages/Home/Index";
 import MemberEditPage from "./Pages/Member/MemberEdit/Index";
 import MemberPage from "./Pages/Member/MemberPage";
+import VideoUpload from "./Pages/Upload/Video/index";
+import Watch from "./Pages/Watch/Index";
+import VideoPlayer from "./Components/VideoPlayer/Index";
+import SendEmail from "./Pages/Member/SendEmail";
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState("");
+    const [displayNone, setDisplayNone] = useState("none");
+    const [displayBlock, setDisplayBlock] = useState("block");
+    const [visibility, setVisability] = useState("visable");
 
+    // ====== UserInfoContext ======
     const [userName, setUserName] = useState("Name Here");
+    const [userEmail, setUserEmail] = useState("");
     const [userJob, setUserJob] = useState("What you do");
     const [userAbout, setUserAbout] = useState("About you");
+    const [avator, setAvator] = useState(null);
+    const [avatorPreview, setAvatorPreview] = useState(null);
+    // const [video, setVideo] = useState(null);
+    const [originalVideoName, setOriginalVideoName] = useState("");
+    const [memberVideo, setMemberVideo] = useState([]);
+    const [videoUrl, setVideoUrl] = useState("");
+    const [videoName, setVideoName] = useState("FileName");
+    const [videoDescription, setVideoDescription] = useState("Description");
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
         if (user) {
@@ -37,6 +59,14 @@ const App = () => {
                         setUserJob(userInfo.userJob || "What you do");
                         setUserAbout(userInfo.userAbout || "About you");
                     });
+                    const avatorPath = `avators/${userUid}/${
+                        "avator" + userUid
+                    }`;
+                    const avator = await getDownloadURL(
+                        ref(storage, avatorPath)
+                    );
+                    // !!!!!!!!!!!!!!! 把 Preview 改回 avator !!!!!!!!!!!
+                    setAvatorPreview(() => avator || null);
                 } catch (error) {
                     console.log(error);
                 }
@@ -56,28 +86,88 @@ const App = () => {
                         setUserJob,
                         userAbout,
                         setUserAbout,
+                        avator,
+                        setAvator,
+                        avatorPreview,
+                        setAvatorPreview,
+                        userEmail,
+                        setUserEmail,
                     }}
                 >
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route
-                                path="/member/profile/:uid"
-                                element={
-                                    <MemberEditPage
-                                        loggedIn={loggedIn}
-                                        setLoggedIn={setLoggedIn}
-                                        user={user}
-                                        setUser={setUser}
-                                    />
-                                }
-                            />
-                            <Route
-                                path="/memberPage/:uid"
-                                element={<MemberPage />}
-                            ></Route>
-                        </Routes>
-                    </BrowserRouter>
+                    <VideoContext.Provider
+                        value={{
+                            videoName,
+                            setVideoName,
+                            videoDescription,
+                            setVideoDescription,
+                            videoUrl,
+                            setVideoUrl,
+                            displayNone,
+                            setDisplayNone,
+                            displayBlock,
+                            setDisplayBlock,
+                            visibility,
+                            setVisability,
+                            memberVideo,
+                            setMemberVideo,
+                            originalVideoName,
+                            setOriginalVideoName,
+                            // video,
+                            // setVideo,
+                        }}
+                    >
+                        <BrowserRouter>
+                            <Header />
+
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={
+                                        <HomePage
+                                            selectedCategory={selectedCategory}
+                                            setSelectedCategory={
+                                                setSelectedCategory
+                                            }
+                                        />
+                                    }
+                                />
+                                <Route
+                                    path="/member/profile/:uid"
+                                    element={
+                                        <MemberEditPage
+                                            loggedIn={loggedIn}
+                                            setLoggedIn={setLoggedIn}
+                                            user={user}
+                                            setUser={setUser}
+                                        />
+                                    }
+                                />
+                                <Route
+                                    path="/member/:memberId"
+                                    element={<MemberPage />}
+                                ></Route>
+                                <Route
+                                    path="/upload"
+                                    element={
+                                        <VideoUpload
+                                            selectedCategory={selectedCategory}
+                                            setSelectedCategory={
+                                                setSelectedCategory
+                                            }
+                                        />
+                                    }
+                                ></Route>
+                                <Route
+                                    path="/watch/:splitUrl"
+                                    element={<Watch />}
+                                ></Route>
+                                <Route
+                                    path="/contact"
+                                    element={<SendEmail />}
+                                ></Route>
+                            </Routes>
+                        </BrowserRouter>
+                    </VideoContext.Provider>
                 </UserInfoContext.Provider>
             </UserContext.Provider>
         </LoginContext.Provider>

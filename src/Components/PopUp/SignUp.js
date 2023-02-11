@@ -39,13 +39,19 @@ const SignUp = ({
             setRegisterPassword("");
             setCurrentPage("");
             setDisplay("none");
-            navigate("/member");
+            navigate(`/member/profile/${uid}`);
+            if (popMessage) {
+                setPopMessage("");
+            }
         } catch (error) {
             if (!registerEmail || !registerPassword) {
                 setPopMessage("請輸入信箱及密碼");
-            } else if (error.message === "auth/email-already-in-use") {
-                setPopMessage("請輸入信箱及密碼");
+            } else if (
+                error.message === "Firebase: Error (auth/email-already-in-use)."
+            ) {
+                setPopMessage("信箱被用過啦");
             }
+            console.log(error.message);
         }
     };
     return (
