@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../Firebase-config";
@@ -65,16 +65,33 @@ const Header = () => {
             <Header_Container>
                 <Header_Container_Logo>
                     <NavLink to="/"> Roll Card</NavLink>
+                    <Outlet />
                 </Header_Container_Logo>
                 {loggedIn === true ? (
-                    <Header_container_Member
-                        onClick={() => {
-                            setDisplay("flex");
-                            setShowMenu(true);
-                        }}
-                    >
-                        會員中心
-                    </Header_container_Member>
+                    <Header_menu_container>
+                        <Header_menu_YourPage
+                            onClick={() => {
+                                // navigate(`/member/profile/${uid}`);
+                                setDisplay("none");
+                            }}
+                        >
+                            <NavLink to={`/member/profile/${uid}`}>
+                                你的頁面
+                            </NavLink>
+                            {/* 你的頁面 */}
+                        </Header_menu_YourPage>
+                        <Header_menu_UpLoad
+                            onClick={() => {
+                                // navigate(`/upload`);
+                                setDisplay("none");
+                            }}
+                        >
+                            <NavLink to="/upload">上傳影片</NavLink>
+                        </Header_menu_UpLoad>
+                        <Header_menu_LogOut onClick={logoutHandler}>
+                            登出
+                        </Header_menu_LogOut>
+                    </Header_menu_container>
                 ) : (
                     <Header_container_Login
                         onClick={() => {
@@ -118,20 +135,22 @@ const Header = () => {
                     />
                 )}
             </Header_Container>
-            {showMenu === true && (
+            {/* {showMenu === true && (
                 <Header_menu_container style={{ display: display }}>
                     <Header_menu_YourPage
                         onClick={() => {
-                            navigate(`/member/profile/${uid}`);
+                           
                             setDisplay("none");
                         }}
                     >
-                        {/* <NavLink to="`/member/profile/${uid}">你的頁面</NavLink> */}
-                        你的頁面
+                        <NavLink to={`/member/profile/${uid}`}>
+                            你的頁面
+                        </NavLink>
+                      
                     </Header_menu_YourPage>
                     <Header_menu_UpLoad
                         onClick={() => {
-                            // navigate(`/upload`);
+                     
                             setDisplay("none");
                         }}
                     >
@@ -141,7 +160,7 @@ const Header = () => {
                         登出
                     </Header_menu_LogOut>
                 </Header_menu_container>
-            )}
+            )} */}
             <PopUp_Mask
                 style={{ display: display }}
                 onClick={() => {
@@ -198,17 +217,18 @@ const Header_container_Login = styled(Header_Container_Logo)`
 const Header_container_Member = styled(Header_container_Login)``;
 
 const Header_menu_container = styled.div`
-    width: 152px;
-    height: 136px;
-    border-radius: 5px;
-    position: absolute;
-    right: 5%;
-    top: 70px;
-    background-color: ${(props) => props.theme.colors.primary_Grey};
+    /* width: 152px;
+        height: 136px;
+        border-radius: 5px;
+        position: absolute;
+        right: 5%;
+        top: 70px; */
+    /* background-color: ${(props) => props.theme.colors.primary_Grey}; */
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    gap: 20px;
     z-index: 4;
     a {
         color: ${(props) => props.theme.colors.primary_white};

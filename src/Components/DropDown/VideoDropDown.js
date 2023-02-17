@@ -2,7 +2,11 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
 
-const VideoDropDown = ({ videoTempCategory, setTempVideoCategory }) => {
+const VideoDropDown = ({
+    videoTempCategory,
+    setTempVideoCategory,
+    videoCategoryAll,
+}) => {
     const handleVideoDropDown = (options) => {
         setTempVideoCategory(options.value);
     };
@@ -14,14 +18,19 @@ const VideoDropDown = ({ videoTempCategory, setTempVideoCategory }) => {
         { value: "紀錄片", label: "紀錄片" },
         { value: "其他", label: "其他" },
     ];
+    const placeholder = videoCategoryAll ? videoCategoryAll : "請選擇分類";
+    console.log("from drop", videoTempCategory);
     return (
         <div>
             <Select
                 options={options}
                 classNamePrefix="react-select"
                 styles={customStyles}
-                placeholder={"請選擇分類"}
+                placeholder={placeholder}
                 onChange={handleVideoDropDown}
+                menuPortalTarget={document.body}
+                captureMenuScroll={false}
+                menuShouldScrollIntoView={true}
             />
         </div>
     );
@@ -63,6 +72,8 @@ const customStyles = {
     }),
     menu: () => ({
         width: "100%",
+        maxHeight: 90,
+        overflowY: "auto",
     }),
     menuList: () => ({
         color: "#f2f2f2",

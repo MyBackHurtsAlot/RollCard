@@ -16,6 +16,7 @@ const JobDropDown = ({ userJobTemp, setUserJobTemp, userJob }) => {
         { value: "演員", label: "演員" },
         { value: "其他", label: "其他" },
     ];
+
     const placeholder = userJob ? userJob : "你的職業";
     return (
         <div>
@@ -26,6 +27,10 @@ const JobDropDown = ({ userJobTemp, setUserJobTemp, userJob }) => {
                     styles={customStyles}
                     placeholder={placeholder}
                     onChange={handleVideoDropDown}
+                    menuPortalTarget={document.body}
+                    captureMenuScroll={false}
+                    menuShouldScrollIntoView={true}
+                    // menuPortal={true}
                 />
             </SelectWrapper>
         </div>
@@ -51,7 +56,7 @@ const customStyles = {
 
     control: (baseStyles, state) => ({
         ...baseStyles,
-        maxHeight: "100px",
+        // maxHeight: "100px",
         backgroundColor: "none",
         color: "#f2f2f2",
         // borderColor: state.isOpen ? "none" : "none",
@@ -65,6 +70,7 @@ const customStyles = {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = "opacity 300ms";
         const color = "#a6a6a6";
+
         return { ...provided, opacity, transition, color };
     },
     container: () => ({
@@ -72,6 +78,9 @@ const customStyles = {
     }),
     menu: () => ({
         width: "100%",
+        maxHeight: 130,
+        overflowY: "auto",
+        // backgroundColor: "blue",
     }),
     menuList: () => ({
         color: "#f2f2f2",

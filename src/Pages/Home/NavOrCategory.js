@@ -67,23 +67,42 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
                 });
             }
             getEnterprise();
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
+    // console.log("List", showEnterpriseList[0]);
 
     useEffect(() => {
         async function getEnterpriseVideo(enterprise) {
-            // console.log(enterprise);
+            // console.log("inside", enterprise);
             const response = await listAll(videoListRef, false);
+            // console.log(response);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === enterprise) {
-                    setShowEnterprise(url);
-                }
+                if (enterprise === fileName) setShowEnterprise(url);
+                // tempArray.push(fileName);
+                /*
+                // console.log(tempArray);
+                // tempArray.map((item) => {
+                tempArray.forEach((item) => {
+                    // console.log("item", item);
+                    if (item === enterprise) {
+                        console.log(item, enterprise);
+                        // console.log("after map", url);
+                        console.log(url);
+                        setShowEnterprise(url);
+                        return;
+                    }
+                });
+                */
             });
         }
         getEnterpriseVideo(showEnterpriseList[0]);
     }, [showEnterpriseList]);
+    // console.log("enter", showEnterprise);
     // ================= Animation ==================
     useEffect(() => {
         try {
@@ -96,6 +115,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
                 const animationList = [];
                 docSnap.forEach((doc) => {
                     const animation = doc.data();
+                    // console.log(animation);
                     animationList.push(animation.originalVideoName);
                     setShowAnimationList(animationList);
                 });
@@ -103,22 +123,26 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             getAnimation();
         } catch (error) {}
     }, []);
-
+    // console.log("showAnimation", showAnimation);
     useEffect(() => {
         async function getAnimationVideo(animation) {
-            // console.log(animation);
             const response = await listAll(videoListRef, false);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === animation) {
-                    setShowAnimation(url);
-                }
+                if (animation === fileName) setShowAnimation(url);
+                //         tempArray.push(fileName);
+                //         tempArray.map((item) => {
+                //             if (item === animation) {
+                //                 setShowAnimation(url);
+                //             }
+                //         });
             });
         }
         getAnimationVideo(showAnimationList[0]);
     }, [showAnimationList]);
-
+    // console.log("ani", showAnimation);
     // ================= Event ==================
     useEffect(() => {
         try {
@@ -143,12 +167,17 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         async function getEventVideo(event) {
             // console.log(event);
             const response = await listAll(videoListRef, false);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === event) {
-                    setShowEvent(url);
-                }
+                if (event === fileName) setShowEvent(url);
+                // tempArray.push(fileName);
+                // tempArray.map((item) => {
+                //     if (item === event) {
+                //         setShowEvent(url);
+                //     }
+                // });
             });
         }
         getEventVideo(showEventList[0]);
@@ -178,17 +207,22 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         async function getTrailerVideo(trailer) {
             // console.log(trailer);
             const response = await listAll(videoListRef, false);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === trailer) {
-                    setShowTrailer(url);
-                }
+                if (trailer === fileName) setShowTrailer(url);
+                // tempArray.push(fileName);
+                // tempArray.map((item) => {
+                //     if (item === trailer) {
+                //         setShowTrailer(url);
+                //     }
+                // });
             });
         }
         getTrailerVideo(showTrailerList[0]);
     }, [showTrailerList]);
-    // console.log(showTrailer);
+    // console.log("showTrailer", showTrailer);
 
     // ================= Documentory ==================
     useEffect(() => {
@@ -212,14 +246,19 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     useEffect(() => {
         async function getDocumentoryVideo(documentory) {
-            console.log(documentory);
+            // console.log(documentory);
             const response = await listAll(videoListRef, false);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === documentory) {
-                    setShowDocumentory(url);
-                }
+                if (documentory === fileName) setShowDocumentory(url);
+                // tempArray.push(fileName);
+                // tempArray.map((item) => {
+                //     if (item === documentory) {
+                //         setShowDocumentory(url);
+                //     }
+                // });
             });
         }
         getDocumentoryVideo(showDocumentoryList[0]);
@@ -249,12 +288,16 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         async function getOthersVideo(others) {
             // console.log(others);
             const response = await listAll(videoListRef, false);
+            const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
-                if (fileName === others) {
-                    setShowOthers(url);
-                }
+                tempArray.push(fileName);
+                tempArray.map((item) => {
+                    if (item === others) {
+                        setShowOthers(url);
+                    }
+                });
             });
         }
         getOthersVideo(showOthersList[0]);

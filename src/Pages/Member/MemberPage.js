@@ -9,9 +9,10 @@ import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import img from "../../Assets/SH.png";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 import SendEmail from "./SendEmail";
 import MemberPageInfo from "./MemberPageInfo";
-import { useNavigate } from "react-router-dom";
+import MemberShowVideo from "./MemberShowVideo";
 // import Rotation from "../../Assets/Rotation.mp4";
 
 const MemberPage = () => {
@@ -71,6 +72,8 @@ const MemberPage = () => {
     //     }
     // }, [currentMember]);
     // console.log(currentMemberAbout);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS PAGE FROM HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const [videoNameAll, setVideoNameAll] = useState([]);
     useEffect(() => {
         try {
             async function getVideos(memberId) {
@@ -90,9 +93,15 @@ const MemberPage = () => {
                     const docSnap = await getDocs(data);
                     docSnap.forEach((doc) => {
                         const originalVideoName = doc.data().originalVideoName;
+                        const videoName = doc.data().videoName;
                         if (originalVideoName === fileName) {
                             setMemberVideoAll((prev) =>
                                 !prev.includes(url) ? [...prev, url] : prev
+                            );
+                            setVideoNameAll((prev) =>
+                                !prev.includes(videoName)
+                                    ? [...prev, videoName]
+                                    : prev
                             );
                         }
                     });
@@ -103,8 +112,25 @@ const MemberPage = () => {
             console.log(error);
         }
     }, [memberId]);
+    console.log(videoNameAll);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TOHERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     // console.log(memberVideoAll);
     // console.log(videoArray);
+    // const videoRefs = videoNameAll.map(() => {
+    //     useRef(null);
+    // });
+    // const [currentVideo, setCurrentVideo] = useState([]);
+    // const handleInfo = () => {
+    //     const videoNames = videoRefs.map((ref) => {
+    //         ref.current.textContent;
+    //     });
+    //     setCurrentVideo(videoNames);
+    // };
+    // const [showVideo, setShowVideo] = useState("none");
+    // const handleShowVideo = () => {
+    //     setShowVideo("block");
+    // };
     return (
         <div>
             <MemberPageWrapper>
@@ -134,21 +160,35 @@ const MemberPage = () => {
                 </CurrentMemberWrapper> */}
                 <VideoWapper>
                     <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>
-                    <VideoSectionWrapper>
-                        {memberVideoAll.map((url) => {
+                    <VideoSectionWrapper
+                    // ref={testRef}
+                    // onMouseEnter={handleInfo}
+                    >
+                        <MemberShowVideo
+                            memberVideoAll={memberVideoAll}
+                            videoNameAll={videoNameAll}
+                        />
+                        {/* {currentVideo.map((member, index) => {
+                            <VideoContainer ref={member[index]} />;
+                            member;
+                        })} */}
+                        {/* {memberVideoAll.map((url, index) => {
                             const splitUrl = url.split("&token=")[1];
                             // console.log(splitUrl);
                             return (
                                 <VideoContainer key={uuidv4()}>
-                                    <video
-                                        src={url}
-                                        onClick={() => {
-                                            navigate(`/watch/${splitUrl}`);
-                                        }}
-                                    />
+                                    <NavLink to={`/watch/${splitUrl}`}>
+                                        <video
+                                            src={url}
+                                            style={{ display: showVideo }}
+                                        />
+                                    </NavLink>
+                                    <p onMouseEnter={handleShowVideo}>
+                                        {videoNameAll[index]}
+                                    </p>
                                 </VideoContainer>
                             );
-                        })}
+                        })} */}
                     </VideoSectionWrapper>
                 </VideoWapper>
             </MemberPageWrapper>
@@ -183,11 +223,14 @@ const VideoTitle = styled.div`
 
 const VideoSectionWrapper = styled.section`
     margin-top: 20px;
+    width: 100%;
+    /* border: 1px solid red; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 50px;
 `;
+
 const VideoContainer = styled.div`
     width: 45%;
     height: 324px;

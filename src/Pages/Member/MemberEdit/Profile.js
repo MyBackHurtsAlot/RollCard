@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+    useRef,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -29,8 +35,8 @@ const Profile = () => {
         setUserName,
         userJob,
         setUserJob,
-        // userAbout,
-        // setUserAbout,
+        userAbout,
+        setUserAbout,
         avator,
         setAvator,
         avatorPreview,
@@ -40,8 +46,9 @@ const Profile = () => {
     const [userEmail, setUserEmail] = useState("");
     const [userNameTemp, setUserNameTemp] = useState("Name Here");
     const [userJobTemp, setUserJobTemp] = useState("");
-    const [userAboutTemp, setUserAboutTemp] = useState("About You");
-    const [userAbout, setUserAbout] = useState("About you");
+    const [userAboutTemp, setUserAboutTemp] = useState("關於你");
+    // const [userAbout, setUserAbout] = useState("");
+    const userAboutRef = useRef();
 
     const submitUserInfo = async () => {
         try {
@@ -75,7 +82,7 @@ const Profile = () => {
             console.log(error);
         }
     };
-
+    // console.log(userAboutTemp);
     const AvatorChangePreview = async (e) => {
         // const imageRef = ref(storage, `avators/${user}/${"avator" + user}`);
         // if (imageRef) {
@@ -114,10 +121,15 @@ const Profile = () => {
     useEffect(() => {
         if (userNameTemp === "Name Here") {
             setUserNameTemp(userName);
-            setUserAboutTemp(userAbout);
         }
     }, [userName]);
 
+    useEffect(() => {
+        if (userAboutTemp === "關於你") {
+            setUserAboutTemp(userAbout);
+        }
+    }, [userAbout]);
+    // console.log(userAboutTemp);
     return (
         <Profile_Section>
             <Profile_Section_Left_Wrapper>
@@ -166,9 +178,9 @@ export default Profile;
 
 export const Profile_Section = styled.section`
     /* position: relative; */
-    margin: 5% auto auto 3%;
+    margin: 100px auto auto 3%;
     padding: 20px;
-    width: 40%;
+    width: 30%;
     min-height: 600px;
     border-radius: 20px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
@@ -201,11 +213,11 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     background-position: center;
     cursor: pointer;
     &:hover::after {
-        content: "要不要換照片";
+        content: "人為什麼要拍照人活得好好的他為什麼要拍照 到底是為了要回味兒 回什麼味 回自己的味 回自己和大家生活的味 回經歷和體驗的味 回經歷和體驗的味 回感受深刻的味 回悲歡離合喜怒哀樂的味 ";
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 200;
         position: absolute;
         border-radius: 15px;
@@ -213,7 +225,7 @@ export const Profile_Section_Left_Avator_Container = styled.label`
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #a6a6a640;
+        background-color: #67676740;
     }
 `;
 const Profile_Section_Left_Avator_Uploader = styled.input`

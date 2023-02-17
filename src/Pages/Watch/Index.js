@@ -9,6 +9,8 @@ import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import img from "../../Assets/SH.png";
 import VideoPlayer from "../../Components/VideoPlayer/Index";
+import CurrentMemberOthers from "./CurrentMemberOthers";
+import ThisCategory from "./ThisCategory";
 
 const Watch = () => {
     const { splitUrl } = useParams();
@@ -19,13 +21,16 @@ const Watch = () => {
     const [videoEditorJob, setVideoEditorJob] = useState("");
     const [videoName, setVideoName] = useState("");
     const [videoDescription, setVideoDescription] = useState("");
+    const [videoCategory, setVideoCategory] = useState("");
     const [currentVideo, setCurrentVideo] = useState("");
     const [expanded, setExpanded] = useState(false);
     const videoListRef = ref(storage, `videosForHomePage/`);
     const navigate = useNavigate();
     const measureRef = useRef(null);
 
+    // console.log(StorageReference.bucket)
     useEffect(() => {
+        // console.log(StorageReference.toString());
         async function getVideos() {
             const response = await listAll(videoListRef, false);
             response.items.forEach(async (videos) => {
@@ -62,7 +67,8 @@ const Watch = () => {
                     setCurrentVideo(videoInfo.user);
                     setVideoName(videoInfo.videoName);
                     setVideoDescription(videoInfo.videoDescription);
-                    console.log(videoInfo.videoDescription);
+                    setVideoCategory(videoInfo.videoCategory);
+                    // console.log(videoInfo.videoDescription);
                 });
             }
             getMemberInfo(fileName);
@@ -91,7 +97,7 @@ const Watch = () => {
                 ref(storage, `/avators/${currentVideo}/`),
                 false
             );
-            console.log(storageRef);
+            // console.log(storageRef);
             storageRef.items.forEach(async (avator) => {
                 const url = await getDownloadURL(avator);
                 setvideoAvator(url);
@@ -118,30 +124,40 @@ const Watch = () => {
                 <VideoPlayer videoList={videoList[0]} />
                 {/* <video src={videoList[0]} controls /> */}
             </Watch_Player_wrapper>
-            <Member_Section_Wrapper>
-                <Member_Section_VideoInfo_Wrapper>
-                    <h1>{`${videoName}`}</h1>
-                </Member_Section_VideoInfo_Wrapper>
-                <Member_Section_Editor_Wrapper
-                    onClick={() => navigate(`/member/${currentVideo}`)}
-                >
-                    <Member_Section_Avator_container
-                        videoAvator={videoAvator}
-                    />
-                    <Member_Section_Editor_Text_Wrapper>
-                        <h1>{`${videoEditor}`}</h1>
-                        <p>|</p>
-                        <p> {`${videoEditorJob}`}</p>
-                    </Member_Section_Editor_Text_Wrapper>
-                </Member_Section_Editor_Wrapper>
-                <Member_Section_Description
-                    ref={measureRef}
-                    expanded={expanded}
-                    onClick={() => setExpanded(true)}
-                >
-                    {parse(`${videoDescription}`)}
-                </Member_Section_Description>
-            </Member_Section_Wrapper>
+            <Member_Section_Below_Wrapper>
+                <Member_Section_Below_Left_Wrapper>
+                    <Member_Section_Wrapper>
+                        <Member_Section_VideoInfo_Wrapper>
+                            <h1>{`${videoName}`}</h1>
+                        </Member_Section_VideoInfo_Wrapper>
+
+                        <Member_Section_Editor_Wrapper
+                            onClick={() => navigate(`/member/${currentVideo}`)}
+                        >
+                            <Member_Section_Avator_container
+                                videoAvator={videoAvator}
+                            />
+                            <Member_Section_Editor_Text_Wrapper>
+                                <h1>{`${videoEditor}`}</h1>
+                                <p>|</p>
+                                <p> {`${videoEditorJob}`}</p>
+                            </Member_Section_Editor_Text_Wrapper>
+                        </Member_Section_Editor_Wrapper>
+                        <Member_Section_Description
+                            ref={measureRef}
+                            expanded={expanded}
+                            onClick={() => setExpanded(true)}
+                        >
+                            {parse(`${videoDescription}`)}
+                        </Member_Section_Description>
+                    </Member_Section_Wrapper>
+                    <ThisCategory videoCategory={videoCategory} />
+                </Member_Section_Below_Left_Wrapper>
+
+                <CurrentMemberOthersWrapper>
+                    <CurrentMemberOthers videoEditor={videoEditor} />
+                </CurrentMemberOthersWrapper>
+            </Member_Section_Below_Wrapper>
         </div>
     );
 };
@@ -158,15 +174,30 @@ const Watch_Player_wrapper = styled.div`
         aspect-ratio: 16/9;
     }
 `;
-const Member_Section_Wrapper = styled.div`
+
+const Member_Section_Below_Wrapper = styled.div`
     width: 69%;
-    margin: 30px auto;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const CurrentMemberOthersWrapper = styled.div`
+    width: 45%;
+`;
+
+const Member_Section_Below_Left_Wrapper = styled.div`
+    width: 40%;
+`;
+const Member_Section_Wrapper = styled.div`
+    width: 100%;
+    /* margin: 30px auto; */
     display: flex;
     flex-direction: column;
     gap: 20px;
 `;
 const Member_Section_VideoInfo_Wrapper = styled.div`
-    width: 100%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -175,7 +206,7 @@ const Member_Section_VideoInfo_Wrapper = styled.div`
     }
 `;
 const Member_Section_Editor_Wrapper = styled.div`
-    width: 40%;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -210,7 +241,7 @@ const Member_Section_Avator_container = styled.div`
 `;
 
 const Member_Section_Description = styled.div`
-    width: 40%;
+    width: 100%;
     height: ${(props) => (props.expanded ? "auto" : "100px")};
     overflow: hidden;
     /* outline: 1px solid red; */

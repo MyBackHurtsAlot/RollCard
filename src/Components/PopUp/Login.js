@@ -62,19 +62,21 @@ const SignUp = ({
                 <PopUp_Title>會員登入</PopUp_Title>
                 <PopUp_Input_Wrapper>
                     <PopUp_Input
-                        placeholder="E-mail"
+                        placeholder="請輸入信箱"
                         type="input"
                         onChange={(e) => {
                             setCheckEmail(e.target.value);
                         }}
+                        // onClick={setPopMessage("")}
                         value={checkEmail}
                     ></PopUp_Input>
                     <PopUp_Password
                         type="password"
-                        placeholder="Password"
+                        placeholder="請輸入密碼"
                         onChange={(e) => {
                             setCheckPassword(e.target.value);
                         }}
+                        // onClick={setPopMessage("")}
                         value={checkPassword}
                     ></PopUp_Password>
                 </PopUp_Input_Wrapper>

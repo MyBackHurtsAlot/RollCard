@@ -50,7 +50,7 @@ const SendEmail = ({
     };
     return (
         <div>
-            <FormWrapper ref={form} onSubmit={sendEmail}>
+            {/* <FormWrapper ref={form} onSubmit={sendEmail}>
                 <Notice>
                     以下資訊會寄到 {currentMemberName} 的信箱，感謝您的聯絡
                 </Notice>
@@ -77,7 +77,7 @@ const SendEmail = ({
                     value={currentMemberEmail}
                 />
                 <Message>{message}</Message>
-            </FormWrapper>
+            </FormWrapper> */}
         </div>
     );
 };
@@ -145,6 +145,7 @@ const Notice = styled.div`
     font-size: 16px;
     font-weight: 600;
     margin: 50px auto 10px auto;
+    line-height: 30px;
 `;
 const Message = styled.div`
     /* width: 800px;

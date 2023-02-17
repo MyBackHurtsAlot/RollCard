@@ -8,11 +8,19 @@ import {
     VideoContext,
 } from "../../../Context/userContext";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    uploadBytesResumable,
+    StorageReference,
+} from "firebase/storage";
 import { storage } from "../../../Firebase-config";
 import { db } from "../../../Firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../Firebase-config";
+import UploadVideoInfo from "./UploadVideoInfo";
+import Loading from "../../Loading/Index";
 
 import Header from "../../../Components/Header/Index";
 import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
@@ -25,21 +33,22 @@ const VideoUpload = (selectedCategory) => {
     const [memberUrl, setMemberUrl] = useState();
     const [homePageUrl, setHomePageUrl] = useState();
     const [videoCategory, setVideoCategory] = useState("");
-    const [videoTempCategory, setTempVideoCategory] = useState("");
+    // const [videoTempCategory, setTempVideoCategory] = useState("");
+    const [uploading, setUploading] = useState(false);
+    const [progress, setProgress] = useState("");
 
+    const [displayNone, setDisplayNone] = useState("none");
+    const [displayBlock, setDisplayBlock] = useState("block");
+    const [visibility, setVisability] = useState("visable");
+    const [notLoading, setNotLoading] = useState("none");
+    // console.log("first", uploading);
     const {
-        videoName,
-        setVideoName,
+        // videoName,
+        // setVideoName,
         videoDescription,
         setVideoDescription,
         videoUrl,
         setVideoUrl,
-        displayNone,
-        setDisplayNone,
-        displayBlock,
-        setDisplayBlock,
-        visibility,
-        setVisability,
         originalVideoName,
         setOriginalVideoName,
     } = useContext(VideoContext);
@@ -49,6 +58,7 @@ const VideoUpload = (selectedCategory) => {
     const metadata = {
         contentType: "video/*",
     };
+    const [videoName, setVideoName] = useState("");
 
     useEffect(() => {
         const email = auth.currentUser;
@@ -63,39 +73,39 @@ const VideoUpload = (selectedCategory) => {
         }
     });
 
-    const submitVideoContent = async () => {
-        try {
-            // const url = await videoRef.getDownloadURL();
-            // await addDoc(collection(db, "Videos", user), {
-            //     user: user,
-            //     userEmail: userEmail,
-            //     userName: userName,
-            //     userJob: userJob,
-            //     videoName: videoName,
-            //     videoCategory: videoTempCategory,
-            //     originalVideoName: originalVideoName,
-            //     videoDescription: videoDescription,
-            //     videoUrlForHome: homePageUrl,
-            //     videoUrlForMember: memberUrl,
-            //     videoId: id,
-            // });
-            await addDoc(collection(db, "videoForAll"), {
-                user: user,
-                userEmail: userEmail,
-                userName: userName,
-                userJob: userJob,
-                videoName: videoName,
-                videoCategory: videoTempCategory,
-                originalVideoName: originalVideoName,
-                videoDescription: videoDescription,
-                videoUrlForHome: homePageUrl,
-                videoUrlForMember: memberUrl,
-                videoId: id,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // const submitVideoContent = async () => {
+    //     try {
+    // const url = await videoRef.getDownloadURL();
+    // await addDoc(collection(db, "Videos", user), {
+    //     user: user,
+    //     userEmail: userEmail,
+    //     userName: userName,
+    //     userJob: userJob,
+    //     videoName: videoName,
+    //     videoCategory: videoTempCategory,
+    //     originalVideoName: originalVideoName,
+    //     videoDescription: videoDescription,
+    //     videoUrlForHome: homePageUrl,
+    //     videoUrlForMember: memberUrl,
+    //     videoId: id,
+    // });
+    //         await addDoc(collection(db, "videoForAll"), {
+    //             user: user,
+    //             userEmail: userEmail,
+    //             userName: userName,
+    //             userJob: userJob,
+    //             videoName: videoName,
+    //             videoCategory: videoTempCategory,
+    //             originalVideoName: originalVideoName,
+    //             videoDescription: videoDescription,
+    //             videoUrlForHome: homePageUrl,
+    //             videoUrlForMember: memberUrl,
+    //             videoId: id,
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
     // const timeStamp = new Date(new Date().getTime()).toLocaleString();
     // !!!!!!!!!!!!!!!!!!!!!!!! 會上傳空值 ！！！！！！！！！！！！！！！！！！
     const handleDrop = async (e) => {
@@ -113,9 +123,17 @@ const VideoUpload = (selectedCategory) => {
                 );
                 // const videoForCateGory = ref(storage, ``);
                 if (videoRefForMember) {
-                    await uploadBytes(videoRefForMember, file, metadata);
-                    await uploadBytes(videoRefForHomePage, file, metadata);
-                    await uploadBytes();
+                    await uploadBytesResumable(
+                        videoRefForMember,
+                        file,
+                        metadata
+                    );
+                    await uploadBytesResumable(
+                        videoRefForHomePage,
+                        file,
+                        metadata
+                    );
+                    await uploadBytesResumable();
                     const url = await getDownloadURL(
                         ref(storage, videoRefForMember)
                     );
@@ -143,10 +161,31 @@ const VideoUpload = (selectedCategory) => {
                     storage,
                     `videosForHomePage/${file.name + user}`
                 );
+
                 // const videoRefForCategory = ref(storage, `videosForCategory`);
-                if (videoRefForMember) {
-                    await uploadBytes(videoRefForMember, file, metadata);
-                    await uploadBytes(videoRefForHomePage, file, metadata);
+                if (videoRefForHomePage) {
+                    const task = uploadBytesResumable(
+                        videoRefForHomePage,
+                        file,
+                        metadata
+                    );
+                    // console.log("task", task);
+                    setNotLoading("block");
+                    setDisplayBlock("none");
+                    // console.log("start", uploading);
+                    task.on("state_changed", (snapshot) => {
+                        let progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100;
+                        // progress = 100 ? null : setUploading(true);
+                        setProgress(progress);
+                        console.log("Upload is " + progress + "% done");
+                    });
+                    await uploadBytesResumable(
+                        videoRefForMember,
+                        file,
+                        metadata
+                    );
 
                     const urlForMember = await getDownloadURL(
                         ref(storage, videoRefForMember)
@@ -157,11 +196,9 @@ const VideoUpload = (selectedCategory) => {
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-                    console.log("111", originalVideoName);
-                    console.log(video);
-                    setDisplayNone("block");
-                    setDisplayBlock("none");
-                    setVisability("hidden");
+                    // console.log("111", originalVideoName);
+                    // console.log(video);
+
                     // useEffect(() => {
                     //     videoRefForMember.current = storage.ref(
                     //         `videos/${user}/${videoName + user}`
@@ -172,37 +209,64 @@ const VideoUpload = (selectedCategory) => {
                 console.log(error);
             }
         }
+        // setUploading(false);
+        // console.log("end", uploading);
+
         console.log("uploaded");
     };
+    useEffect(() => {
+        if (progress === 100) {
+            setDisplayNone("block");
+            setDisplayBlock("none");
+            setVisability("hidden");
+            setNotLoading("none");
+            setVideoName(videoName);
+            console.log("Change");
+        } else {
+            // setUploading(true);
+        }
+    }, [progress]);
+
+    const fileName = `${videoName + user}`;
+
+    // console.log("rerender");
+    console.log(notLoading);
     return (
         <>
             {/* <Header /> */}
-
             <Upload_Area_Wrapper
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
             >
                 <Upload_Video
-                    src={video}
+                    src={memberUrl}
                     controls
                     style={{ display: displayNone }}
                     key={id}
                 />
                 <Upload_File_Input style={{ display: displayBlock }}>
-                    Upload <br />
-                    ??POPUP AFTER UPLOADED??
-                    <br /> ！！！！！！ 上傳進度條 ！！！！！！
+                    {progress}
+                    Upload
                     <input type="file" onChange={uploadVideo} />
                 </Upload_File_Input>
+
+                <Loading
+                    style={{ display: notLoading }}
+                    progress={Math.ceil(progress)}
+                />
+                {/* <Loading progress={Math.ceil(progress)} /> */}
+
                 {/* <Upload_File_Video_Confirm onClick={submitVideo}>
                     Upload
                 </Upload_File_Video_Confirm> */}
             </Upload_Area_Wrapper>
-            <Upload_File_Section_Wrapper>
+            <UploadVideoInfo fileName={fileName} videoName={videoName} />
+            {/* <Upload_File_Section_Wrapper>
                 <Upload_File_Name
                     html={`${videoName}`}
                     onChange={(e) => {
                         setVideoName(e.target.value);
+                        textContent;
                     }}
                 />
                 <Upload_File_description
@@ -210,15 +274,21 @@ const VideoUpload = (selectedCategory) => {
                     onChange={(e) => {
                         setVideoDescription(e.target.value);
                     }}
+                    ref={aaa}
                 />
-                <Upload_File_Confirm onClick={submitVideoContent}>
+                <Upload_File_Confirm
+                    // onClick={submitVideoContent}
+                    onClick={() => {
+                        console.log(aaa.current.textContent);
+                    }}
+                >
                     OK
                 </Upload_File_Confirm>
                 <VideoDropDown
                     videoTempCategory={videoTempCategory}
                     setTempVideoCategory={setTempVideoCategory}
                 />
-            </Upload_File_Section_Wrapper>
+            </Upload_File_Section_Wrapper> */}
         </>
     );
 };
@@ -226,6 +296,7 @@ const VideoUpload = (selectedCategory) => {
 export default VideoUpload;
 
 // =========== Styled ============
+// const UploadVideoInfo = styled.div``;
 const Upload_Area_Wrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -234,50 +305,16 @@ const Upload_Area_Wrapper = styled.div`
     max-height: 1080px;
     margin: 66px auto 0 auto;
     aspect-ratio: 16/9;
-    // !!!!!!!!!!!!!!!!!!! 有需要再回來改回relative !!!!!!!!!!!!!!!!!!!!
-    /* position: relative; */
+    position: relative;
     z-index: 1;
-    /* outline: 1px solid #666666; */
+    outline: 1px solid #a6a6a6;
+    border-radius: 15px;
 `;
 const Upload_File_Input = styled.label`
     cursor: pointer;
     input {
         display: none;
     }
-`;
-const Upload_File_Section_Wrapper = styled.div`
-    position: relative;
-    width: 70%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-const Upload_File_Video_Confirm = styled.div`
-    color: ${(props) => props.theme.colors.primary_white};
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-`;
-const Upload_File_Name = styled(ContentEditable)`
-    font-size: 36px;
-    font-weight: 700;
-    outline: none;
-    color: ${(props) => props.theme.colors.primary_white};
-`;
-const Upload_File_description = styled(ContentEditable)`
-    font-size: 16px;
-    font-weight: 400;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    outline: none;
-    color: ${(props) => props.theme.colors.primary_white};
-`;
-const Upload_File_Confirm = styled.div`
-    color: ${(props) => props.theme.colors.primary_white};
-    cursor: pointer;
-    direction: rtl;
 `;
 const Upload_Video = styled.video`
     margin: 0 auto;

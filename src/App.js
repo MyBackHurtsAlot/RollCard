@@ -33,7 +33,7 @@ const App = () => {
     const [userName, setUserName] = useState("Name Here");
     const [userEmail, setUserEmail] = useState("");
     const [userJob, setUserJob] = useState("What you do");
-    const [userAbout, setUserAbout] = useState("About you");
+    const [userAbout, setUserAbout] = useState("關於你");
     const [avator, setAvator] = useState(null);
     const [avatorPreview, setAvatorPreview] = useState(null);
     // const [video, setVideo] = useState(null);
@@ -118,8 +118,12 @@ const App = () => {
                     >
                         <BrowserRouter>
                             <Header />
-
                             <Routes>
+                                {/* <Route
+                                    path="/"
+                                    element={<Header key={location.pathname} />}
+                                /> */}
+
                                 <Route
                                     path="/"
                                     element={

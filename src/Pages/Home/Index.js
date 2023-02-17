@@ -287,7 +287,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     useEffect(() => {
         async function getVideos() {
             const response = await listAll(videoListRef, false);
-            console.log(response);
+            console.log("ReRENDERED");
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
@@ -375,7 +375,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                 </NavOrCategory>
                 {/* <Nav /> */}
                 <Section>
-                    {console.log("bot")}
+                    {/* {console.log("bot")} */}
                     {/* <Category
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
