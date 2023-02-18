@@ -72,10 +72,11 @@ const customStyles = {
     }),
     menu: () => ({
         width: "100%",
-        maxHeight: 90,
+        maxHeight: 120,
         overflowY: "auto",
     }),
     menuList: () => ({
         color: "#f2f2f2",
+        backgroundColor: "${(props) => props.theme.colors.primary_white}",
     }),
 };

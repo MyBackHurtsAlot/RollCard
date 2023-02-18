@@ -8,16 +8,8 @@ import {
     UserContext,
     VideoContext,
 } from "../../Context/userContext";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
-import {
-    query,
-    collection,
-    setDoc,
-    getDocs,
-    where,
-    addDoc,
-    updateDoc,
-} from "firebase/firestore";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
+import { query, collection, getDocs, where, limit } from "firebase/firestore";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
@@ -63,7 +55,8 @@ const ThisCategory = ({ videoCategory }) => {
                 const data = query(
                     collection(db, "videoForAll"),
                     where("originalVideoName", "==", videoFileName),
-                    where("videoCategory", "==", videoCategory)
+                    where("videoCategory", "==", videoCategory),
+                    limit(3)
                 );
                 const docSnap = await getDocs(data);
                 const videoInfoArray = [];
@@ -114,7 +107,7 @@ const ThisCategory = ({ videoCategory }) => {
     // console.log(thisCategory);
     useEffect(() => {
         async function filteredVideo(filteredName) {
-            console.log(filteredName);
+            // console.log(filteredName);
             const response = await listAll(videoListRef, false);
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
@@ -138,18 +131,21 @@ const ThisCategory = ({ videoCategory }) => {
                 <ThisCat_Title>更多 {videoCategory} 分類的作品</ThisCat_Title>
                 {thisCategory.map((url, index) => {
                     const splitUrl = url.split("&token=")[1];
-                    console.log(splitUrl);
+                    // console.log(splitUrl);
                     return (
                         <Home_Video_Container key={uuidv4()}>
-                            <video
-                                src={url}
-                                onClick={() => {
-                                    navigate(`/watch/${splitUrl}`);
-                                    window.location.reload();
-                                }}
-                            />
-                            <p>{videoNameList[index]}</p>
-                            <p>{editorName[index]}</p>
+                            <VideoContent>
+                                <p>{videoNameList[index]}</p>
+                                <video
+                                    src={url}
+                                    onClick={() => {
+                                        navigate(`/watch/${splitUrl}`);
+                                        window.location.reload();
+                                    }}
+                                />
+
+                                <p>{editorName[index]}</p>
+                            </VideoContent>
                         </Home_Video_Container>
                     );
                 })}
@@ -172,19 +168,30 @@ const ThisCat_Section_Wrapper = styled.section`
 const ThisCat_Title = styled.div`
     margin: 0 auto;
 `;
+
+const VideoContent = styled.div`
+    width: 30%;
+    padding: 10px;
+`;
 const Home_Video_Container = styled.div`
     width: 100%;
-    height: 250px;
+    min-height: 250px;
+
     /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
     cursor: pointer;
     video {
+        margin-top: 5px;
         width: 100%;
         border-radius: 15px;
         /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
     }
-    img {
-        width: 50px;
+
+    p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-top: 5px;
     }
 `;

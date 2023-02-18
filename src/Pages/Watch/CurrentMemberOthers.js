@@ -3,9 +3,8 @@ import { UserContext } from "../../Context/userContext";
 import parse from "html-react-parser";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useParams } from "react-router-dom";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +12,9 @@ import { v4 as uuidv4 } from "uuid";
 const CurrentMemberOthers = ({ videoEditor }) => {
     const { user } = useContext(UserContext);
     const [memberVideo, setMemberVideo] = useState([]);
-    const navigate = useNavigate;
+    const [videoNameList, setVideoNameList] = useState([]);
+    const [videoCategoryList, setVideoCategoryList] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -35,9 +36,21 @@ const CurrentMemberOthers = ({ videoEditor }) => {
                     const docSnap = await getDocs(data);
                     docSnap.forEach((doc) => {
                         const originalVideoName = doc.data().originalVideoName;
+                        const videoName = doc.data().videoName;
+                        const category = doc.data().videoCategory;
                         if (originalVideoName === fileName) {
                             setMemberVideo((prev) =>
                                 !prev.includes(url) ? [...prev, url] : prev
+                            );
+                            setVideoNameList((prev) =>
+                                !prev.includes(videoName)
+                                    ? [...prev, videoName]
+                                    : prev
+                            );
+                            setVideoCategoryList((prev) =>
+                                !prev.includes(category)
+                                    ? [...prev, category]
+                                    : prev
                             );
                         }
                     });
@@ -48,29 +61,36 @@ const CurrentMemberOthers = ({ videoEditor }) => {
             console.log(error);
         }
     }, [videoEditor]);
-    // console.log("asdf", user);
+    // console.log("asdf", memberVideo);
+    // console.log(videoCategoryList);
     return (
-        <div>
+        <>
             <VideoWapper>
                 <VideoTitle> {videoEditor} 的其他作品</VideoTitle>
                 <VideoSectionWrapper>
-                    {memberVideo.map((url) => {
+                    {memberVideo.map((url, index) => {
                         const splitUrl = url.split("&token=")[1];
-                        // console.log(splitUrl);
+                        // console.log("member", splitUrl);
                         return (
                             <VideoContainer key={uuidv4()}>
+                                <p>{videoNameList[index]}</p>
                                 <video
                                     src={url}
                                     onClick={() => {
                                         navigate(`/watch/${splitUrl}`);
+                                        window.location.reload();
+                                        // console.log(splitUrl);
+                                        // console.log("navigate");
                                     }}
                                 />
+
+                                <p>{videoCategoryList[index]}</p>
                             </VideoContainer>
                         );
                     })}
                 </VideoSectionWrapper>
             </VideoWapper>
-        </div>
+        </>
     );
 };
 
@@ -108,6 +128,7 @@ const VideoContainer = styled.div`
     /* outline: 1px solid red; */
     cursor: pointer;
     video {
+        margin-top: 5px;
         width: 100%;
         border-radius: 15px;
         /* max-width: 45%; */
@@ -122,5 +143,9 @@ const VideoContainer = styled.div`
     }
     img {
         width: 50px;
+    }
+
+    p {
+        margin-top: 5px;
     }
 `;

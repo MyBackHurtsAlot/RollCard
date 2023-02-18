@@ -188,7 +188,7 @@ const Header_Wrapper = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 10;
 `;
 const Header_Container = styled.div`
     width: 80%;

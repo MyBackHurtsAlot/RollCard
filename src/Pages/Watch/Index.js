@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useParams } from "react-router-dom";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import img from "../../Assets/SH.png";
 import VideoPlayer from "../../Components/VideoPlayer/Index";
 import CurrentMemberOthers from "./CurrentMemberOthers";
 import ThisCategory from "./ThisCategory";
+import { async } from "@firebase/util";
 
 const Watch = () => {
     const { splitUrl } = useParams();
     const [videoList, setVideoList] = useState([]);
-    const [componentDidMount, setComponentDidMount] = useState(false);
     const [videoEditor, setVideoEditor] = useState("");
     const [videoAvator, setvideoAvator] = useState(null);
     const [videoEditorJob, setVideoEditorJob] = useState("");
@@ -24,6 +24,7 @@ const Watch = () => {
     const [videoCategory, setVideoCategory] = useState("");
     const [currentVideo, setCurrentVideo] = useState("");
     const [expanded, setExpanded] = useState(false);
+    const [videoListAll, setVideoListAll] = useState([]);
     const videoListRef = ref(storage, `videosForHomePage/`);
     const navigate = useNavigate();
     const measureRef = useRef(null);
@@ -42,11 +43,18 @@ const Watch = () => {
                         !prev.includes(url) ? [...prev, url, fileName] : prev
                     );
                 }
+                setVideoListAll((prev) =>
+                    !prev.find((item) => item.url === url)
+                        ? [...prev, { url: url, fileName: fileName }]
+                        : prev
+                );
             });
         }
         getVideos();
-        setComponentDidMount(true);
     }, []);
+    // console.log("videoListAll", videoListAll);
+
+    // console.log(videoListAll[0]);
 
     useEffect(() => {
         if (videoList.length === 0) {
@@ -72,6 +80,13 @@ const Watch = () => {
                 });
             }
             getMemberInfo(fileName);
+
+            // async function getAllNeededData(videoListAll) {
+            //     console.log(videoListAll);
+            //     // const fileNameAll = videoListAll[0].fileName;
+            //     // console.log(fileNameAll);
+            // }
+            // getAllNeededData(videoListAll);
         } catch (error) {
             console.log(error);
         }
@@ -183,11 +198,11 @@ const Member_Section_Below_Wrapper = styled.div`
 `;
 
 const CurrentMemberOthersWrapper = styled.div`
-    width: 45%;
+    width: 30%;
 `;
 
 const Member_Section_Below_Left_Wrapper = styled.div`
-    width: 40%;
+    width: 65%;
 `;
 const Member_Section_Wrapper = styled.div`
     width: 100%;
@@ -197,7 +212,7 @@ const Member_Section_Wrapper = styled.div`
     gap: 20px;
 `;
 const Member_Section_VideoInfo_Wrapper = styled.div`
-    width: 40%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;

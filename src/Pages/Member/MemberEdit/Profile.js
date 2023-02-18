@@ -153,7 +153,7 @@ const Profile = () => {
                     html={`${userNameTemp}`}
                     onChange={(e) => setUserNameTemp(e.target.value)}
                 />
-                <JobDropDownWidth
+                <JobDropDown
                     userJobTemp={userJobTemp}
                     setUserJobTemp={setUserJobTemp}
                     userJob={userJob}
@@ -213,7 +213,7 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     background-position: center;
     cursor: pointer;
     &:hover::after {
-        content: "人為什麼要拍照人活得好好的他為什麼要拍照 到底是為了要回味兒 回什麼味 回自己的味 回自己和大家生活的味 回經歷和體驗的味 回經歷和體驗的味 回感受深刻的味 回悲歡離合喜怒哀樂的味 ";
+        content: "人為什麼要拍照人活得好好的他為什麼要拍照 到底是為了要回味兒 回什麼味 回自己的味 回自己和大家生活的味 回經歷和體驗的味 回經歷和體驗的味 回感受深刻的味 回悲歡離合喜怒哀樂的味 什麼味的照片才叫好呢？拍得漂亮 拍得瀟灑 拍得清楚 拍得得意 拍得精彩 拍得出色 拍得深情 拍得智慧 拍得天真浪漫反璞歸真 拍得喜事連連無怨無悔 拍得恍然大悟破鏡重圓 拍得平常心是道 拍得日日好日年年好年 如夢似真止於至善";
         display: flex;
         align-items: center;
         justify-content: center;
@@ -235,7 +235,8 @@ const Profile_Section_Left_Avator_Uploader = styled.input`
     left: 0;
 `;
 const Profile_Section_Left_Avator_Uploader_Confirm = styled.div`
-    background-color: ${(props) => props.theme.colors.primary_Lightgrey};
+    background-color: ${(props) => props.theme.colors.highLight};
+    color: ${(props) => props.theme.colors.primary_Dark};
     position: absolute;
     left: 93%;
     top: 45%;
@@ -298,9 +299,9 @@ export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
     color: ${(props) => props.theme.colors.primary_Dark};
 `;
 
-const JobDropDownWidth = styled(JobDropDown)`
-    width: 100%;
-`;
+// const JobDropDownWidth = styled(JobDropDown)`
+//     width: 100%;
+// `;
 
 export const Profile_Section_Right_Editor_Confirm = styled.div`
     font-size: 14px;
@@ -311,8 +312,8 @@ export const Profile_Section_Right_Editor_Confirm = styled.div`
     letter-spacing: 3px;
     border-radius: 5px;
 
-    color: ${(props) => props.theme.colors.primary_white};
-    background-color: ${(props) => props.theme.colors.primary_Dark};
+    color: ${(props) => props.theme.colors.primary_Dark};
+    background-color: ${(props) => props.theme.colors.highLight};
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
 import styled, { css } from "styled-components";
 import { UserContext, VideoContext } from "../../../Context/userContext";
@@ -8,7 +8,7 @@ import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../../Firebase-config";
 import { db } from "../../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router-dom";
+
 import HandleEdit from "./HandleEdit";
 
 const MemberEditVideo = ({
@@ -17,6 +17,7 @@ const MemberEditVideo = ({
     videoNameAll,
     videoDiscriptionAll,
 }) => {
+    const navigate = useNavigate();
     const videoWrapperRef = useRef([]);
     const videoBlockRef = useRef([]);
     const videoTextRef = useRef([]);
@@ -25,6 +26,7 @@ const MemberEditVideo = ({
         <>
             <Member_EditPage_Video_Wrapper>
                 {memberVideoAll.map((url, index) => {
+                    const splitUrl = url.split("&token=")[1];
                     return (
                         <EditVideoWrapper
                             key={uuidv4()}
@@ -37,6 +39,9 @@ const MemberEditVideo = ({
                                 ref={(el) =>
                                     (videoBlockRef.current[index] = el)
                                 }
+                                onClick={() => {
+                                    navigate(`/watch/${splitUrl}`);
+                                }}
                             />
                             <VideoTextWrapper
                                 videoindex={index}
@@ -44,7 +49,9 @@ const MemberEditVideo = ({
                             >
                                 <p>{videoNameAll[index]}</p>
                                 <p>{videoCategoryAll[index]}</p>
-                                {/* <p>{parse(`{videoDiscriptionAll[index]}`)}</p> */}
+                                <div>
+                                    {parse(`${videoDiscriptionAll[index]}`)}
+                                </div>
                             </VideoTextWrapper>
                             <HandleEdit
                                 videoWrapperRef={videoWrapperRef}
@@ -76,10 +83,10 @@ const Member_EditPage_Video_Wrapper = styled.div`
     z-index: 1;
     border-radius: 15px;
     gap: 15px;
-    cursor: pointer;
 
     video {
-        width: 40%;
+        cursor: pointer;
+        width: 30%;
         border-radius: 15px;
         /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
         aspect-ratio: 16/9;
@@ -98,6 +105,10 @@ const EditVideoWrapper = styled.div`
     display: flex;
     padding: 15px 0 15px 0;
     border-radius: 15px;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     outline: 1px solid ${(props) => props.theme.colors.primary_white};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
@@ -111,11 +122,18 @@ const VideoTextWrapper = styled.div`
     flex-direction: column;
     margin-left: 15px;
     gap: 15px;
+
     & > p:first-child {
         font-size: 24px;
         font-weight: 700;
+        border-bottom: 1px solid #f2f2f270;
+        padding-bottom: 10px;
     }
     & > p:nth-child(2) {
+        font-size: 18;
+        font-weight: 500;
+        border-bottom: 1px solid #f2f2f270;
+        padding-bottom: 10px;
     }
 `;
 const EditButton = styled.div`

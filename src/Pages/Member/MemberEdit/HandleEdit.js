@@ -29,28 +29,18 @@ const HandleEdit = ({
     const { user } = useContext(UserContext);
     const [showEdit, setShowEdit] = useState(true);
     const [videoBlock, setVideoBlock] = useState("");
-    const [newVideoDescription, setNewVideoDescription] = useState("");
     const [newVideoNameTemp, setNewVideoNameTemp] = useState("");
     const [newVideoDescriptionAllTemp, setNewVideoDescriptionAllTemp] =
         useState("");
     const [videoTempCategory, setTempVideoCategory] = useState("");
-    const [selected, setSelected] = useState([]);
-    // useEffect(() => {
-    //     videoWrapperRef.current.map((i) => {
-    //         // console.log("item", i);
-    //         setSelected((prev) => (!prev.includes(i) ? [...prev, i] : prev));
-    //     });
-    // }, []);
-    // console.log(videoNameAll);
-    // console.log(videoindex);
-    // console.log(videoWrapperRef.current);
-    const handleEditClick = (i) => {
-        setShowEdit(!showEdit);
 
+    console.log("showEdit", showEdit);
+    const handleEditClick = (i) => {
         // console.log("videoindex", i);
         // console.log(videoWrapperRef.current[i]);
         if (videoWrapperRef.current[i]) {
-            console.log(videoNameAll);
+            // console.log(videoNameAll);
+            // console.log(videoCategoryAll);
             const newHeight = showEdit ? "auto" : "auto";
             videoWrapperRef.current[i].style.height = newHeight;
             const newDisplay = showEdit ? "column" : "row";
@@ -62,13 +52,22 @@ const HandleEdit = ({
             const newTextContent = showEdit ? "none" : "flex";
             videoTextRef.current[i].style.display = newTextContent;
         } else {
-            item.current.removeAttribute("style");
-            videoBlockRef[i].current.removeAttribute("style");
-            videoTextRef[i].current.removeAttribute("style");
+            videoWrapperRef.current[i].removeAttribute("style");
+            videoBlockRef.current[i].removeAttribute("style");
+            videoTextRef.current[i].removeAttribute("style");
         }
     };
 
-    const submitNewVideoInfo = async () => {
+    const handleCancel = (i) => {
+        if (videoWrapperRef.current[i]) {
+            videoWrapperRef.current[i].removeAttribute("style");
+            videoBlockRef.current[i].removeAttribute("style");
+            videoTextRef.current[i].removeAttribute("style");
+        }
+    };
+
+    const submitNewVideoInfo = () => {
+        console.log("triggered");
         try {
             async function updateData(videoNameAll) {
                 const d = query(
@@ -77,6 +76,7 @@ const HandleEdit = ({
                 );
                 const docSnap = await getDocs(d);
                 docSnap.forEach((doc) => {
+                    // console.log("videoTempCategory", videoTempCategory);
                     try {
                         updateDoc(doc.ref, {
                             videoName: newVideoNameTemp,
@@ -100,11 +100,11 @@ const HandleEdit = ({
         }
     }, [videoNameAll]);
 
-    // useEffect(() => {
-    //     if (videoCategoryAll === videoCategoryAll) {
-    //         setTempVideoCategory(videoCategoryAll);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (videoCategoryAll === videoCategoryAll) {
+            setTempVideoCategory(videoCategoryAll);
+        }
+    }, []);
     useEffect(() => {
         if (videoDiscriptionAll === videoDiscriptionAll) {
             setNewVideoDescriptionAllTemp(videoDiscriptionAll);
@@ -140,17 +140,29 @@ const HandleEdit = ({
                     />
                 </EditVideoContent>
             ) : null}
-
-            <EditButton
-                onClick={() => {
-                    if (showEdit === false) {
-                        submitNewVideoInfo();
-                    }
-                    setShowEdit(handleEditClick(videoindex));
-                }}
-            >
-                {showEdit ? "編輯" : "儲存"}
-            </EditButton>
+            <ButtonWrapper>
+                <CancelButton
+                    showEdit={showEdit}
+                    onClick={() => {
+                        handleCancel(videoindex);
+                        setShowEdit(!showEdit);
+                    }}
+                >
+                    算了
+                </CancelButton>
+                <EditButton
+                    showEdit={showEdit}
+                    onClick={() => {
+                        if (showEdit === false) {
+                            submitNewVideoInfo();
+                        }
+                        setShowEdit(handleEditClick(videoindex));
+                        setShowEdit(!showEdit);
+                    }}
+                >
+                    {showEdit ? "編輯" : "儲存"}
+                </EditButton>
+            </ButtonWrapper>
         </>
     );
 };
@@ -188,12 +200,31 @@ const NewVideoDescription = styled(ContentEditable)`
     /* display: flex;
     align-items: center; */
 `;
-const EditButton = styled.div`
+const ButtonWrapper = styled.div`
     margin: auto 15px 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+`;
+const EditButton = styled.span`
+    cursor: pointer;
+
     font-size: 0.8em;
     width: 60px;
     height: 40px;
-    outline: 1px solid ${(props) => props.theme.colors.primary_white};
+    color: ${(props) =>
+        props.showEdit
+            ? props.theme.colors.primary_white
+            : props.theme.colors.primary_Dark};
+    outline: 1px solid
+        ${(props) =>
+            props.showEdit
+                ? props.theme.colors.primary_white
+                : props.theme.colors.none};
+    background-color: ${(props) =>
+        props.showEdit
+            ? props.theme.colors.primary_Dark
+            : props.theme.colors.highLight};
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -204,4 +235,10 @@ const EditButton = styled.div`
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
+`;
+
+const CancelButton = styled(EditButton)`
+    display: ${(props) => (props.showEdit ? "none" : "flex")};
+    background-color: ${(props) => props.theme.colors.primary_Dark};
+    color: ${(props) => props.theme.colors.primary_white};
 `;
