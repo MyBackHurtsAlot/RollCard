@@ -11,6 +11,7 @@ import img from "../../Assets/SH.png";
 import VideoPlayer from "../../Components/VideoPlayer/Index";
 import CurrentMemberOthers from "./CurrentMemberOthers";
 import ThisCategory from "./ThisCategory";
+import { HandleDescription } from "./HandleDescription";
 import { async } from "@firebase/util";
 
 const Watch = () => {
@@ -23,7 +24,8 @@ const Watch = () => {
     const [videoDescription, setVideoDescription] = useState("");
     const [videoCategory, setVideoCategory] = useState("");
     const [currentVideo, setCurrentVideo] = useState("");
-    const [expanded, setExpanded] = useState(false);
+    // const [expanded, setExpanded] = useState(false);
+    // const [showExpand, setShowExpand] = useState(false);
     const [videoListAll, setVideoListAll] = useState([]);
     const videoListRef = ref(storage, `videosForHomePage/`);
     const navigate = useNavigate();
@@ -124,14 +126,20 @@ const Watch = () => {
 
     // useEffect(() => {
     //     if (videoDescription) {
-    //         // const descriptionHeight = measureRef.current.scrollHeight;
-    //         // const containerHeight = 200;
-    //         console.log(videoDescription.scrollHeight);
-    //         // if (descriptionHeight >= containerHeight) {
-    //         //     setExpanded(false);
-    //         // }
+    //         const descriptionHeight = measureRef.current.scrollHeight;
+
+    //         console.log(descriptionHeight);
+    //         if (descriptionHeight > 100) {
+    //             setShowExpand(true);
+    //         }
     //     }
     // }, [videoDescription]);
+    // console.log("show", showExpand);
+
+    // const handleDescripiton = () => {
+    //     setShowExpand(false);
+    //     setExpanded(true);
+    // };
 
     return (
         <div>
@@ -158,13 +166,16 @@ const Watch = () => {
                                 <p> {`${videoEditorJob}`}</p>
                             </Member_Section_Editor_Text_Wrapper>
                         </Member_Section_Editor_Wrapper>
-                        <Member_Section_Description
-                            ref={measureRef}
-                            expanded={expanded}
-                            onClick={() => setExpanded(true)}
+                        <HandleDescription
+                            // ref={measureRef}
+                            // expanded={expanded}
+                            // showExpand={showExpand}
+                            // onClick={handleDescripiton}
+                            videoDescription={videoDescription}
                         >
-                            {parse(`${videoDescription}`)}
-                        </Member_Section_Description>
+                            {/* <div>{parse(`${videoDescription}`)}</div>
+                            {console.log("ori", videoDescription)} */}
+                        </HandleDescription>
                     </Member_Section_Wrapper>
                     <ThisCategory videoCategory={videoCategory} />
                 </Member_Section_Below_Left_Wrapper>
@@ -234,6 +245,14 @@ const Member_Section_Editor_Wrapper = styled.div`
         transform: translateX(5px);
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
+        /* ::after {
+            content: "前往";
+            color: #f2f2f2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        } */
     }
 `;
 const Member_Section_Editor_Text_Wrapper = styled.div`
@@ -254,38 +273,37 @@ const Member_Section_Avator_container = styled.div`
     background-size: cover;
     background-position: center;
 `;
+// const Member_Section_Description = styled.div`
+//     width: 100%;
+//     height: ${(props) => (props.expanded ? "auto" : "100px")};
+//     overflow: hidden;
+//     line-height: 1.5em;
+//     background-color: #404040;
+//     border-radius: 15px;
+//     padding: 10px;
+//     position: relative;
+//     cursor: ${(props) => (!props.showExpand ? "auto" : "pointer")};
+//     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+//     ${(props) =>
+//         props.showExpand &&
+//         css`
+//             &:hover {
+//                 background-color: rgba(0, 0, 0, 0.5);
+//                 color: #4d4d4d;
 
-const Member_Section_Description = styled.div`
-    width: 100%;
-    height: ${(props) => (props.expanded ? "auto" : "100px")};
-    overflow: hidden;
-    /* outline: 1px solid red; */
-    background-color: #404040;
-    border-radius: 15px;
-    padding: 10px;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    ${(props) =>
-        !props.expanded &&
-        css`
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.5);
-                color: #4d4d4d;
+//                 transform: translateX(5px);
+//                 transform: translateY(-5px);
+//                 box-shadow: 5px 5px 0px 0px #a6a6a6;
 
-                transform: translateX(5px);
-                transform: translateY(-5px);
-                box-shadow: 5px 5px 0px 0px #a6a6a6;
-
-                ::after {
-                    content: "展開全文";
-                    color: #f2f2f2;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    /* padding: 10px; */
-                }
-            }
-        `};
-`;
+//                 ::after {
+//                     content: "展開全文";
+//                     color: #f2f2f2;
+//                     position: absolute;
+//                     top: 50%;
+//                     left: 50%;
+//                     transform: translate(-50%, -50%);
+//                     /* padding: 10px; */
+//                 }
+//             }
+//         `};
+// `;

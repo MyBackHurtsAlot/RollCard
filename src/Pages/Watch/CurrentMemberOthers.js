@@ -73,7 +73,6 @@ const CurrentMemberOthers = ({ videoEditor }) => {
                         // console.log("member", splitUrl);
                         return (
                             <VideoContainer key={uuidv4()}>
-                                <p>{videoNameList[index]}</p>
                                 <video
                                     src={url}
                                     onClick={() => {
@@ -83,7 +82,7 @@ const CurrentMemberOthers = ({ videoEditor }) => {
                                         // console.log("navigate");
                                     }}
                                 />
-
+                                <p>{videoNameList[index]}</p>
                                 <p>{videoCategoryList[index]}</p>
                             </VideoContainer>
                         );
@@ -141,11 +140,11 @@ const VideoContainer = styled.div`
             box-shadow: 5px 5px 0px 0px #a6a6a6;
         }
     }
-    img {
-        width: 50px;
-    }
 
     p {
         margin-top: 5px;
+    }
+    & > p:first-child {
+        font-weight: 700;
     }
 `;

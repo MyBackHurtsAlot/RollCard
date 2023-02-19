@@ -135,7 +135,6 @@ const ThisCategory = ({ videoCategory }) => {
                     return (
                         <Home_Video_Container key={uuidv4()}>
                             <VideoContent>
-                                <p>{videoNameList[index]}</p>
                                 <video
                                     src={url}
                                     onClick={() => {
@@ -143,7 +142,7 @@ const ThisCategory = ({ videoCategory }) => {
                                         window.location.reload();
                                     }}
                                 />
-
+                                <p>{videoNameList[index]}</p>
                                 <p>{editorName[index]}</p>
                             </VideoContent>
                         </Home_Video_Container>
@@ -167,6 +166,8 @@ const ThisCat_Section_Wrapper = styled.section`
 `;
 const ThisCat_Title = styled.div`
     margin: 0 auto;
+    font-size: 1.5rem;
+    font-weight: 200;
 `;
 
 const VideoContent = styled.div`
