@@ -264,18 +264,18 @@ export const Profile_Section_Right_Wrapper = styled.div`
     gap: 30px;
 `;
 export const Profile_Section_Right_Name_Editor = styled(ContentEditable)`
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 700;
-    width: 100%;
-    height: 50px;
+    max-width: 100%;
+    min-height: 50px;
     outline: none;
     white-space: pre-wrap;
     word-wrap: break-word;
-    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 0;
+    flex-wrap: wrap;
+    /* line-height: 0; */
     color: ${(props) => props.theme.colors.primary_Dark};
 `;
 

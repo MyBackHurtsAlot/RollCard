@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
+import styled from "styled-components";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
@@ -14,10 +15,9 @@ import {
     UserContext,
     VideoContext,
 } from "../../../Context/userContext";
-import styled from "styled-components";
-// import Header from "../../../Components/Header/Index";
 import Profile from "./Profile";
 import MemberEditVideo from "./MemberEditVideo";
+import Loading from "../../Loading/Index";
 
 const MemberEditPage = () => {
     const { user } = useContext(UserContext);
@@ -32,10 +32,11 @@ const MemberEditPage = () => {
     });
 
     const [videoNameAll, setVideoNameAll] = useState([]);
-
     const [memberVideoAll, setMemberVideoAll] = useState([]);
     const [videoCategoryAll, setVideoCategoryAll] = useState([]);
     const [videoDiscriptionAll, setVideoDiscriptionAll] = useState([]);
+    const [displayNone, setDisplayNone] = useState("none");
+    const [editor, setEditor] = useState("");
 
     useEffect(() => {
         try {
@@ -59,6 +60,9 @@ const MemberEditPage = () => {
                         const videoName = doc.data().videoName;
                         const videoCategory = doc.data().videoCategory;
                         const videoDescription = doc.data().videoDescription;
+                        const userName = doc.data().userName;
+                        console.log(doc.data().userName);
+                        setEditor(userName);
                         if (originalVideoName === fileName) {
                             setMemberVideoAll((prev) =>
                                 !prev.includes(url) ? [...prev, url] : prev
@@ -87,6 +91,28 @@ const MemberEditPage = () => {
             console.log(error);
         }
     }, [user]);
+    useEffect(() => {
+        if (videoNameAll.length === 0) {
+            const fetchData = async (userUid) => {
+                try {
+                    const data = query(
+                        collection(db, "User"),
+                        where("userUid", "==", userUid)
+                    );
+                    const docSnap = await getDocs(data);
+                    docSnap.forEach((doc) => {
+                        const userInfo = doc.data();
+                        setEditor(userInfo.userName);
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            fetchData(user);
+            setDisplayNone("block");
+        }
+    }, [user]);
 
     return (
         <>
@@ -102,11 +128,14 @@ const MemberEditPage = () => {
                         videoCategoryAll={videoCategoryAll}
                         videoDiscriptionAll={videoDiscriptionAll}
                     />
-                    {/* <Member_EditPage_Video_Wrapper>
-                        {memberVideo.map((url) => {
+                    <Member_EditPage_Video_Wrapper
+                        style={{ display: displayNone }}
+                    >
+                        <Loading progress={`${editor},傳支影片吧`} />
+                        {/* {memberVideo.map((url) => {
                             return <video src={url} key={uuidv4()} controls />;
-                        })}
-                    </Member_EditPage_Video_Wrapper> */}
+                        })} */}
+                    </Member_EditPage_Video_Wrapper>
                 </Member_EditPage_Video_Section>
             </MemberPageWrapper>
         </>
@@ -142,11 +171,13 @@ const Member_EditPage_Video_Section = styled.div`
 
 const Member_EditPage_Video_Wrapper = styled.div`
     width: 100%;
+    min-height: 580px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+    position: relative;
     video {
         width: 40%;
         border-radius: 15px;

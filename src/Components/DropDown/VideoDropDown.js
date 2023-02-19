@@ -19,7 +19,7 @@ const VideoDropDown = ({
         { value: "其他", label: "其他" },
     ];
     const placeholder = videoCategoryAll ? videoCategoryAll : "請選擇分類";
-    console.log("from drop", videoTempCategory);
+    // console.log("from drop", videoTempCategory);
     return (
         <div>
             <Select

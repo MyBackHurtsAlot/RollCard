@@ -252,7 +252,7 @@ const VideoUpload = (selectedCategory) => {
 
                 <Loading
                     style={{ display: notLoading }}
-                    progress={Math.ceil(progress)}
+                    progress={`${Math.ceil(progress)}%`}
                 />
                 {/* <Loading progress={Math.ceil(progress)} /> */}
 

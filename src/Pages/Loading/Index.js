@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 
 const Loading = ({ style, progress }) => {
-    return <Preload style={style}>{`${progress}%`}</Preload>;
+    return <Preload style={style}>{`${progress}`}</Preload>;
 };
 
 export default Loading;
@@ -11,10 +11,11 @@ const Preload = styled.div`
     position: absolute;
     font-size: 2em;
     font-weight: 500;
+    white-space: nowrap;
     top: 0;
     left: 0;
     color: ${(props) => props.theme.colors.highLight};
-    animation: preload-animation 6s linear infinite;
+    animation: preload-animation 10s linear infinite;
 
     @keyframes preload-animation {
         0% {
