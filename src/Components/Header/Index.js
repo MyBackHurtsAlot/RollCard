@@ -7,7 +7,7 @@ import Login from "../PopUp/Login";
 import SignUp from "../PopUp/SignUp";
 import { PopUp_Mask } from "../PopUp/Style/PopUpStyle";
 import { UserContext } from "../../Context/userContext";
-
+import { device } from "../Rwd";
 const Header = () => {
     const [display, setDisplay] = useState("none");
     const [currentPage, setCurrentPage] = useState("");
@@ -183,18 +183,31 @@ const Header_Wrapper = styled.header`
     position: fixed;
     top: 0;
     left: 0;
-
     height: 66px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
 `;
+
 const Header_Container = styled.div`
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media ${device.smallest} {
+        flex-direction: column;
+        gap: 10px;
+    }
+    @media ${device.mobile} {
+        flex-direction: row;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
+    @media ${device.desktop} {
+        flex-direction: row;
+    }
 `;
 const Header_Container_Logo = styled.div`
     cursor: pointer;

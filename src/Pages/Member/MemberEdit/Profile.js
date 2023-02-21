@@ -44,7 +44,7 @@ const Profile = () => {
     } = useContext(UserInfoContext);
     // console.log(userJob);
     const [userEmail, setUserEmail] = useState("");
-    const [userNameTemp, setUserNameTemp] = useState("Name Here");
+    const [userNameTemp, setUserNameTemp] = useState("你的名字");
     const [userJobTemp, setUserJobTemp] = useState("");
     const [userAboutTemp, setUserAboutTemp] = useState("關於你");
     // const [userAbout, setUserAbout] = useState("");
@@ -119,7 +119,7 @@ const Profile = () => {
         }
     };
     useEffect(() => {
-        if (userNameTemp === "Name Here") {
+        if (userNameTemp === "你的名字") {
             setUserNameTemp(userName);
         }
     }, [userName]);
@@ -129,12 +129,10 @@ const Profile = () => {
             setUserAboutTemp(userAbout);
         }
     }, [userAbout]);
-    // console.log(userAboutTemp);
     return (
         <Profile_Section>
             <Profile_Section_Left_Wrapper>
                 <Profile_Section_Left_Avator_Container
-                    // !!!!!!!!!!!!!!! 把 Preview 改回 avator !!!!!!!!!!!
                     avatorPreview={avatorPreview}
                 >
                     <Profile_Section_Left_Avator_Uploader
@@ -145,7 +143,7 @@ const Profile = () => {
                 <Profile_Section_Left_Avator_Uploader_Confirm
                     onClick={uploadImage}
                 >
-                    儲存
+                    上傳
                 </Profile_Section_Left_Avator_Uploader_Confirm>
             </Profile_Section_Left_Wrapper>
             <Profile_Section_Right_Wrapper>
@@ -180,7 +178,7 @@ export const Profile_Section = styled.section`
     /* position: relative; */
     margin: 100px auto auto 3%;
     padding: 20px;
-    width: 30%;
+    width: 25%;
     min-height: 600px;
     border-radius: 20px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
@@ -205,7 +203,6 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     height: 200px;
     border-radius: 15px;
     background-color: ${(props) => props.theme.colors.primary_white};
-    // !!!!!!!!!!!!!!! 把 Preview 改回 avator !!!!!!!!!!!
     background-image: ${(props) =>
         props.avatorPreview ? `url(${props.avatorPreview})` : `url(${img})`};
     color: ${(props) => props.theme.colors.primary_white};
@@ -215,7 +212,7 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     &:hover::after {
         content: "人為什麼要拍照人活得好好的他為什麼要拍照 到底是為了要回味兒 回什麼味 回自己的味 回自己和大家生活的味 回經歷和體驗的味 回經歷和體驗的味 回感受深刻的味 回悲歡離合喜怒哀樂的味 什麼味的照片才叫好呢？拍得漂亮 拍得瀟灑 拍得清楚 拍得得意 拍得精彩 拍得出色 拍得深情 拍得智慧 拍得天真浪漫反璞歸真 拍得喜事連連無怨無悔 拍得恍然大悟破鏡重圓 拍得平常心是道 拍得日日好日年年好年 如夢似真止於至善";
         display: flex;
-        align-items: center;
+        /* align-items: center; */
         justify-content: center;
         font-size: 18px;
         font-weight: 200;
@@ -224,8 +221,9 @@ export const Profile_Section_Left_Avator_Container = styled.label`
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
-        background-color: #67676740;
+        max-height: 200px;
+        overflow: hidden;
+        background-color: #16161664;
     }
 `;
 const Profile_Section_Left_Avator_Uploader = styled.input`
@@ -248,10 +246,11 @@ const Profile_Section_Left_Avator_Uploader_Confirm = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
-        width: 42px;
-        height: 42px;
+        transform: translateX(5px);
+        transform: translateY(-5px);
+        box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
 export const Profile_Section_Right_Wrapper = styled.div`

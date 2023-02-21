@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { ref, getDownloadURL, listAll, list } from "firebase/storage";
 import {
     query,
     collection,
@@ -284,24 +284,58 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     const [editorAvator, setEditorAvator] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function getVideos() {
-            const response = await listAll(videoListRef, false);
-            console.log("ReRENDERED");
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                setVideoFileNameList((prev) =>
-                    !prev.includes(fileName) ? [...prev, fileName] : prev
-                );
-                // setVideoFileName(fileName);
-                setVideoList((prev) =>
-                    !prev.includes(url) ? [...prev, url] : prev
-                );
-            });
+    const [isEnd, setIsEnd] = useState(false);
+    const [nextPage, setNextPage] = useState(false);
+    const [pageToken, setPageToken] = useState(null);
+    const observer = useRef(null);
+    const lastVideoRef = useRef(null);
+
+    async function getVideos(pageToken) {
+        const options = { maxResults: 8 };
+        if (pageToken) {
+            options.pageToken = pageToken;
         }
-        getVideos();
+        const response = await list(videoListRef, options);
+        response.items.forEach(async (videos) => {
+            const url = await getDownloadURL(videos);
+            const fileName = videos.name;
+            setVideoFileNameList((prev) =>
+                !prev.includes(fileName) ? [...prev, fileName] : prev
+            );
+            setVideoList((prev) =>
+                !prev.includes(url) ? [...prev, url] : prev
+            );
+        });
+        if (response.nextPageToken) {
+            setPageToken(response.nextPageToken);
+        } else {
+            setIsEnd(true);
+        }
+    }
+
+    useEffect(() => {
+        async function init() {
+            await getVideos();
+        }
+        init();
     }, []);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(async (entries) => {
+            if (entries[0].isIntersecting && !isEnd) {
+                setPageToken((prevToken) => {
+                    getVideos(prevToken);
+                });
+            }
+        });
+        const lastVideo = lastVideoRef.current;
+        if (lastVideo) {
+            observer.observe(lastVideo);
+        }
+        return () => {
+            observer.disconnect();
+        };
+    }, [lastVideoRef, isEnd, setPageToken]);
 
     useEffect(() => {
         if (videoList.length === 0) {
@@ -393,6 +427,8 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                             editorName={editorName}
                         />
                     )}
+                    {videoList.length >= 0 && <div ref={lastVideoRef}></div>}
+                    {console.log(videoList.length)}
                 </Section>
             </Main>
         </>

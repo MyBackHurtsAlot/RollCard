@@ -106,8 +106,8 @@ const Watch = () => {
             const docSnapEdit = await getDocs(EditorData);
             docSnapEdit.forEach((doc) => {
                 const editorInfo = doc.data();
-                setVideoEditor(editorInfo.userName);
-                setVideoEditorJob(editorInfo.userJob);
+                setVideoEditor(editorInfo.userName || "工作人員A");
+                setVideoEditorJob(editorInfo.userJob || "影視工作人員");
             });
 
             const storageRef = await listAll(
@@ -156,6 +156,7 @@ const Watch = () => {
 
                         <Member_Section_Editor_Wrapper
                             onClick={() => navigate(`/member/${currentVideo}`)}
+                            editor={`${videoEditor}`}
                         >
                             <Member_Section_Avator_container
                                 videoAvator={videoAvator}
@@ -177,7 +178,10 @@ const Watch = () => {
                             {console.log("ori", videoDescription)} */}
                         </HandleDescription>
                     </Member_Section_Wrapper>
-                    <ThisCategory videoCategory={videoCategory} />
+                    <ThisCategory
+                        videoCategory={videoCategory}
+                        currentVideo={currentVideo}
+                    />
                 </Member_Section_Below_Left_Wrapper>
 
                 <CurrentMemberOthersWrapper>
@@ -245,14 +249,16 @@ const Member_Section_Editor_Wrapper = styled.div`
         transform: translateX(5px);
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
-        /* ::after {
-            content: "前往";
-            color: #f2f2f2;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        } */
+    }
+    &:hover::after {
+        content: ${({ editor }) => `"去 ${editor} 那邊看看"`};
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        border-radius: 5px;
+        background-color: #a6a6a6;
+        color: #f2f2f2;
+        padding: 5px;
     }
 `;
 const Member_Section_Editor_Text_Wrapper = styled.div`

@@ -30,9 +30,9 @@ const App = () => {
     const [visibility, setVisability] = useState("visable");
 
     // ====== UserInfoContext ======
-    const [userName, setUserName] = useState("Name Here");
+    const [userName, setUserName] = useState("你的名字");
     const [userEmail, setUserEmail] = useState("");
-    const [userJob, setUserJob] = useState("What you do");
+    const [userJob, setUserJob] = useState("你的職業");
     const [userAbout, setUserAbout] = useState("關於你");
     const [avator, setAvator] = useState(null);
     const [avatorPreview, setAvatorPreview] = useState(null);
@@ -55,8 +55,8 @@ const App = () => {
                     const docSnap = await getDocs(data);
                     docSnap.forEach((doc) => {
                         const userInfo = doc.data();
-                        setUserName(userInfo.userName || "Name Here");
-                        setUserJob(userInfo.userJob || "What you do");
+                        setUserName(userInfo.userName || "你的名字");
+                        setUserJob(userInfo.userJob || "你的職業");
                         setUserAbout(userInfo.userAbout || "About you");
                     });
                     const avatorPath = `avators/${userUid}/${

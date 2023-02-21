@@ -5,8 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 
 const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
     const [showVideo, setShowVideo] = useState(-1);
-    const handleShowVideo = (index) => {
+    const [mousex, setMousex] = useState(0);
+
+    const handleShowVideo = (index, e) => {
         setShowVideo(index);
+    };
+    const handleMouseMove = (e) => {
+        setMousex(e.clientX);
     };
     const handleHideVideo = (index = -1) => {
         setTimeout(() => {
@@ -32,7 +37,11 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                                 {showVideo === index ? (
                                     <video
                                         src={url}
-                                        style={{ display: "block" }}
+                                        style={{
+                                            display: "block",
+                                            transform: `translateX(-${mousex}px)`,
+                                        }}
+                                        mousex={mousex}
                                     />
                                 ) : (
                                     <video
@@ -41,8 +50,13 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                                     />
                                 )}
                             </NavLink>
-                            <p onMouseEnter={() => handleShowVideo(index)}>
+                            <p
+                                onMouseEnter={() => handleShowVideo(index)}
+                                onMouseMove={(e) => handleMouseMove(e)}
+                            >
                                 {videoNameAll[index]}
+                                {console.log(showVideo)}
+                                {console.log(mousex)}
                             </p>
                         </VideoContainer>
                     );
@@ -60,7 +74,7 @@ const MemberShowVideoWrapper = styled.div`
 `;
 
 const VideoContainer = styled.div`
-    width: 100%;
+    width: 90%;
     position: relative;
     /* height: 324px; */
     /* outline: 1px solid blue; */
@@ -76,12 +90,13 @@ const VideoContainer = styled.div`
         width: 60%;
         border-radius: 15px;
         z-index: 3;
-        /* max-width: 45%; */
+        width: 45%;
         aspect-ratio: 16/9;
         /* transform: rotate(5deg); */
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         opacity: 100;
+        /* transform: translateX(-${(props) => props.mousex}px); */
         @keyframes slideInFromTop {
             from {
                 transform: translateX(-80%);
@@ -103,14 +118,14 @@ const VideoContainer = styled.div`
     }
     p {
         width: 90%;
-        line-height: 100px;
-        font-size: 1.5em;
+        line-height: 50px;
+        font-size: 1.3em;
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        border-bottom: 1px solid #a6a6a6;
+        border-bottom: 1px solid #a6a6a660;
         &:hover {
             color: #f2b705;
         }
-
-        /* outline: 1px solid red; */
     }
+
+    /* outline: 1px solid red; */
 `;

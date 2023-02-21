@@ -14,7 +14,7 @@ import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
 
-const ThisCategory = ({ videoCategory }) => {
+const ThisCategory = ({ videoCategory, currentVideo }) => {
     const [thisCategory, setThisCategory] = useState([]);
     const [videoList, setVideoList] = useState([]);
     const videoListRef = ref(storage, `videosForHomePage/`);
@@ -78,6 +78,7 @@ const ThisCategory = ({ videoCategory }) => {
                     const EditorNameArray = [];
                     const userIdArray = [];
                     const originalVideoNameArray = [];
+
                     // console.log(results);
                     results.forEach((allNames) => {
                         if (allNames.length === 0) {
@@ -129,25 +130,35 @@ const ThisCategory = ({ videoCategory }) => {
         <div>
             <ThisCat_Section_Wrapper>
                 <ThisCat_Title>更多 {videoCategory} 分類的作品</ThisCat_Title>
-                {thisCategory.map((url, index) => {
-                    const splitUrl = url.split("&token=")[1];
-                    // console.log(splitUrl);
-                    return (
-                        <Home_Video_Container key={uuidv4()}>
-                            <VideoContent>
-                                <video
-                                    src={url}
-                                    onClick={() => {
-                                        navigate(`/watch/${splitUrl}`);
-                                        window.location.reload();
-                                    }}
-                                />
-                                <p>{videoNameList[index]}</p>
-                                <p>{editorName[index]}</p>
-                            </VideoContent>
-                        </Home_Video_Container>
-                    );
-                })}
+                <VideoWrapper>
+                    {thisCategory.map((url, index) => {
+                        const splitUrl = url.split("&token=")[1];
+                        // console.log(splitUrl);
+                        return (
+                            <Home_Video_Container key={uuidv4()}>
+                                <VideoContent editor={editorName[index]}>
+                                    <video
+                                        src={url}
+                                        onClick={() => {
+                                            navigate(`/watch/${splitUrl}`);
+                                            window.location.reload();
+                                        }}
+                                    />
+                                    <h1>{videoNameList[index]}</h1>
+                                    <p
+                                        onClick={() =>
+                                            navigate(
+                                                `/member/${userIdList[index]}`
+                                            )
+                                        }
+                                    >
+                                        {editorName[index]}
+                                    </p>
+                                </VideoContent>
+                            </Home_Video_Container>
+                        );
+                    })}
+                </VideoWrapper>
             </ThisCat_Section_Wrapper>
         </div>
     );
@@ -157,8 +168,10 @@ export default ThisCategory;
 const ThisCat_Section_Wrapper = styled.section`
     margin-top: 50px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
+
     gap: 20px;
     outline: 1px solid #404040;
     border-radius: 15px;
@@ -169,15 +182,15 @@ const ThisCat_Title = styled.div`
     font-size: 1.5rem;
     font-weight: 200;
 `;
-
-const VideoContent = styled.div`
-    width: 30%;
-    padding: 10px;
+const VideoWrapper = styled.div`
+    display: flex;
 `;
 const Home_Video_Container = styled.div`
-    width: 100%;
-    min-height: 250px;
-
+    width: 30%;
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        color: ${(props) => props.theme.colors.highLight};
+    }
     /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
     cursor: pointer;
     video {
@@ -187,6 +200,12 @@ const Home_Video_Container = styled.div`
         /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
+        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+        &:hover {
+            transform: translateX(5px);
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px 0px #a6a6a6;
+        }
     }
 
     p {
@@ -194,5 +213,29 @@ const Home_Video_Container = styled.div`
         white-space: nowrap;
         text-overflow: ellipsis;
         margin-top: 5px;
+    }
+`;
+const VideoContent = styled.div`
+    width: 100%;
+    padding: 10px;
+    position: relative;
+    h1 {
+        font-size: 1.3em;
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    p {
+        &:hover::after {
+            content: ${({ editor }) => `"去 ${editor} 那邊看看"`};
+            position: absolute;
+            top: 100%;
+            left: 0;
+            border-radius: 5px;
+            background-color: #a6a6a6;
+            color: #f2f2f2;
+            padding: 5px;
+        }
     }
 `;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { device } from "../../Components/Rwd";
 const Nav = () => {
     return (
         <Nav_Wrapper>
@@ -34,9 +34,18 @@ const Nav_Wrapper = styled.nav`
     /* padding: 0 10%; */
     background-color: ${(props) => props.theme.colors.primary_white};
     display: flex;
-    &:hover {
-        /* background-color: #91919140; */
-        /* filter: blur(2px); */
+    @media ${device.smallest} {
+        flex-direction: column;
+    }
+
+    @media ${device.mobile} {
+        flex-direction: column;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
+    @media ${device.desktop} {
+        flex-direction: row;
     }
 `;
 const Nav_Left_Wrapper = styled.div`
@@ -46,6 +55,18 @@ const Nav_Left_Wrapper = styled.div`
     width: 50%;
     height: 100%;
     /* background-color: #006dcc; */
+    @media ${device.smallest} {
+        width: 100%;
+    }
+    @media ${device.mobile} {
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        width: 50%;
+    }
+    @media ${device.desktop} {
+        width: 50%;
+    }
 `;
 const Nav_Left_Role = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
@@ -69,6 +90,18 @@ const Nav_Left_Role = styled.div`
             opacity: 100;
         }
     }
+    @media ${device.smallest} {
+        font-size: 90px;
+    }
+    @media ${device.mobile} {
+        font-size: 90px;
+    }
+    @media ${device.tablet} {
+        font-size: 150px;
+    }
+    @media ${device.desktop} {
+        font-size: 150px;
+    }
 `;
 const Nav_Left_Title = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
@@ -88,6 +121,18 @@ const Nav_Left_Title = styled.div`
             opacity: 100;
         }
     }
+    /* @media ${device.smallest} {
+        font-size: 50px;
+    }
+    @media ${device.mobile} {
+        font-size: 50px;
+    }
+    @media ${device.tablet} {
+        font-size: 64px;
+    }
+    @media ${device.desktop} {
+        font-size: 64px;
+    } */
 `;
 const Nav_Left_Content = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
@@ -139,4 +184,16 @@ const Nav_Right_Wrapper = styled.div`
     height: 100%;
     /* background-color: #6bafeb; */
     background-color: ${(props) => props.theme.colors.primary_Dark};
+    @media ${device.smallest} {
+        width: 100%;
+    }
+    @media ${device.mobile} {
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        width: 50%;
+    }
+    @media ${device.desktop} {
+        width: 50%;
+    }
 `;

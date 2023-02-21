@@ -50,7 +50,7 @@ const SendEmail = ({
     };
     return (
         <div>
-            {/* <FormWrapper ref={form} onSubmit={sendEmail}>
+            <FormWrapper ref={form} onSubmit={sendEmail}>
                 <Notice>
                     以下資訊會寄到 {currentMemberName} 的信箱，感謝您的聯絡
                 </Notice>
@@ -65,7 +65,17 @@ const SendEmail = ({
                     onChange={handleHeight}
                     ref={autoHeight}
                 />
-                <Send type="submit" value="送出" />
+                <ButtonWrapper>
+                    <Cancel
+                        onClick={() => {
+                            setSendEmail(false);
+                        }}
+                    >
+                        算了
+                    </Cancel>
+                    <Send type="submit" value="送出" />
+                </ButtonWrapper>
+
                 <input
                     type="hidden"
                     name="currentMemberName"
@@ -77,7 +87,7 @@ const SendEmail = ({
                     value={currentMemberEmail}
                 />
                 <Message>{message}</Message>
-            </FormWrapper> */}
+            </FormWrapper>
         </div>
     );
 };
@@ -124,16 +134,44 @@ const FormWrapper = styled.form`
         font-weight: 200;
         margin: 0 auto 20px auto;
         padding: 10px;
-        width: 70%;
+        width: 90%;
         min-height: 40px;
         border-radius: 10px;
         border: none;
     }
 `;
+
+const ButtonWrapper = styled.div`
+    margin: 0 auto;
+    display: flex;
+    width: 90%;
+`;
 const Send = styled.input`
     background-color: #404040;
     color: #f2f2f2;
     margin-top: 650px;
+    width: 40% !important;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        transform: translateX(5px);
+        transform: translateY(-5px);
+        box-shadow: 5px 5px 0px 0px #a6a6a6;
+    }
+`;
+const Cancel = styled.div`
+    background-color: #404040;
+    color: #f2f2f2;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 0;
+    width: 40%;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
         transform: translateX(5px);

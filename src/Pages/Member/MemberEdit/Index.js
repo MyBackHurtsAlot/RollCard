@@ -92,7 +92,9 @@ const MemberEditPage = () => {
         }
     }, [user]);
     useEffect(() => {
-        if (videoNameAll.length === 0) {
+        console.log("called");
+        if (memberVideoAll.length === 0) {
+            console.log(videoNameAll.length);
             const fetchData = async (userUid) => {
                 try {
                     const data = query(
@@ -108,12 +110,13 @@ const MemberEditPage = () => {
                     console.log(error);
                 }
             };
-
             fetchData(user);
             setDisplayNone("block");
+        } else {
+            setDisplayNone("none");
         }
-    }, [user]);
-
+    }, [memberVideoAll]);
+    console.log(videoNameAll.length);
     return (
         <>
             <MemberPageWrapper>
@@ -131,7 +134,7 @@ const MemberEditPage = () => {
                     <Member_EditPage_Video_Wrapper
                         style={{ display: displayNone }}
                     >
-                        <Loading progress={`${editor},傳支影片吧`} />
+                        <Loading progress={`${editor} 傳支影片吧`} />
                         {/* {memberVideo.map((url) => {
                             return <video src={url} key={uuidv4()} controls />;
                         })} */}

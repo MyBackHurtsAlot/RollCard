@@ -77,6 +77,7 @@ const MemberPageInfo = ({
                     currentMember={currentMember}
                     currentMemberName={currentMemberName}
                     currentMemberEmail={currentMemberEmail}
+                    setSendEmail={setSendEmail}
                 >
                     聯絡 {currentMemberName}
                 </Contact>
