@@ -9,6 +9,7 @@ import { CgMiniPlayer } from "react-icons/cg";
 
 const VideoPlayer = ({ videoList }) => {
     const videoRef = useRef(null);
+    const fullScreenRef = useRef(null);
     const url = videoList;
     const {
         togglePlay,
@@ -29,7 +30,9 @@ const VideoPlayer = ({ videoList }) => {
         toggleFullScreen,
         fullScreen,
         toggleMiniPlayer,
-    } = Controller(videoRef);
+    } = Controller(videoRef, fullScreenRef);
+    // const {toggleFullScreen,
+    //     fullScreen,} = Controller(fullScreenRef)
     const [showControls, setShowControls] = useState(false);
     const [showSpeedControl, setShowSpeedControl] = useState(false);
     const [speedDisplay, setSpeedDisplay] = useState(false);
@@ -79,6 +82,7 @@ const VideoPlayer = ({ videoList }) => {
     return (
         <div>
             <Video_Wrapper
+                ref={fullScreenRef}
                 onMouseEnter={() => {
                     setShowControls(true);
                 }}
@@ -348,7 +352,7 @@ const SpeedController = styled.ul`
     height: 150px;
     position: absolute;
     /* right: 11%; */
-    right: 15%;
+    right: 209px;
 
     bottom: ${(props) => (props.showSpeedControl ? "55px" : "50px")};
     opacity: ${(props) => (props.showSpeedControl ? 100 : 0)};
@@ -387,6 +391,7 @@ const VolumeWrapper = styled.div`
     width: 20px;
     height: 20px;
     cursor: pointer;
+    position: relative;
 `;
 const VolumeContainer = styled.div`
     display: flex;
@@ -416,7 +421,8 @@ const VolumeBar = styled.input`
     height: 5px;
     position: absolute;
     /* right: 4%; */
-    right: 9.5%;
+    /* right: 9.5%; */
+    right: -33px;
     bottom: ${(props) => (props.showVolumeControl ? "100px" : "90px")};
     opacity: ${(props) => (props.showVolumeControl ? 110 : 0)};
     pointer-events: ${(props) => (props.volumeDisplay ? "auto" : "none")};

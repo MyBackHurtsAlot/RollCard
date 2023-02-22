@@ -8,7 +8,7 @@ import { storage } from "../../../Firebase-config";
 import { db } from "../../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, navLink } from "react-router-dom";
 import { auth } from "../../../Firebase-config";
 import {
     UserInfoContext,

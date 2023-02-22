@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import SendEmail from "./SendEmail";
 import MemberPageInfo from "./MemberPageInfo";
 import MemberShowVideo from "./MemberShowVideo";
+
 // import Rotation from "../../Assets/Rotation.mp4";
 
 const MemberPage = () => {

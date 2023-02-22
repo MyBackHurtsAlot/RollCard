@@ -228,7 +228,7 @@ const VideoContent = styled.div`
     }
     p {
         &:hover::after {
-            content: ${({ editor }) => `"去 ${editor} 那邊看看"`};
+            content: ${({ editor }) => `"${editor} 的所有作品"`};
             position: absolute;
             top: 100%;
             left: 0;

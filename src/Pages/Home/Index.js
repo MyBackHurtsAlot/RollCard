@@ -424,6 +424,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                         <VideoSection
                             videoList={videoList}
                             videoNameList={videoNameList}
+                            userIdList={userIdList}
                             editorName={editorName}
                         />
                     )}

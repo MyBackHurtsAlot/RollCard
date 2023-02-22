@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import React, { useState, useEffect } from "react";
 
-const Controller = (videoRef) => {
+const Controller = (videoRef, fullScreenRef) => {
     const [playing, setPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [speed, setSpeed] = useState(1);
@@ -26,10 +26,10 @@ const Controller = (videoRef) => {
     };
     useEffect(() => {
         fullScreen
-            ? videoRef.current.webkitEnterFullscreen()
+            ? fullScreenRef.current.requestFullscreen()
             : document.exitFullscreen();
-    }, [fullScreen, videoRef]);
-
+    }, [fullScreen, fullScreenRef]);
+    console.log(fullScreen);
     const togglePlay = () => {
         setPlaying(!playing);
     };

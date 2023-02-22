@@ -23,7 +23,7 @@ import img from "../../Assets/SH.png";
 import Loading from "../Loading/Index";
 import { device } from "../../Components/Rwd";
 
-const VideoSection = ({ videoList, videoNameList, editorName }) => {
+const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
     const navigate = useNavigate();
     const [showLoding, setShowLoading] = useState(false);
     // console.log(editorName);
@@ -73,9 +73,20 @@ const VideoSection = ({ videoList, videoNameList, editorName }) => {
                                         navigate(`/watch/${splitUrl}`);
                                     }}
                                 />
-                                <Home_VideoInfo_Container>
+
+                                <Home_VideoInfo_Container
+                                    editor={editorName[index]}
+                                >
                                     <h1>{videoNameList[index]}</h1>
-                                    <p>{editorName[index]}</p>
+                                    <p
+                                        onClick={() =>
+                                            navigate(
+                                                `/member/${userIdList[index]}`
+                                            )
+                                        }
+                                    >
+                                        {editorName[index]}
+                                    </p>
                                 </Home_VideoInfo_Container>
 
                                 {/* <Home_Video_Avator
@@ -151,6 +162,7 @@ const Home_Video_Container = styled.div`
 
 const Home_VideoInfo_Container = styled.div`
     margin: 5px auto auto 5px;
+    position: relative;
     h1 {
         font-size: 18px;
         font-weight: 500;
@@ -161,6 +173,16 @@ const Home_VideoInfo_Container = styled.div`
     }
     p {
         font-weight: 200;
+        &:hover::after {
+            content: ${({ editor }) => `"${editor} 的所有作品"`};
+            position: absolute;
+            top: 110%;
+            left: 0;
+            border-radius: 5px;
+            background-color: #a6a6a6;
+            color: #f2f2f2;
+            padding: 5px;
+        }
     }
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {

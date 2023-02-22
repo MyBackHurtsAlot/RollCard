@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {
+    useContext,
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+} from "react";
 import { NavLink, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -6,12 +12,27 @@ import { v4 as uuidv4 } from "uuid";
 const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
     const [showVideo, setShowVideo] = useState(-1);
     const [mousex, setMousex] = useState(0);
+    const videoRef = useRef(null);
+    const videoContainerRef = useRef(null);
+    const mouse = useRef({ x: 0 });
 
-    const handleShowVideo = (index, e) => {
+    const handleShowVideo = (index) => {
         setShowVideo(index);
     };
     const handleMouseMove = (e) => {
-        setMousex(e.clientX);
+        const container = e.currentTarget.getBoundingClientRect();
+        const distanceFromLeft = e.clientX - container.left;
+        const distanceFromRight = container.right - e.clientX;
+        const containerWidth = container.right - container.left;
+        const videoWidth = 0.45 * containerWidth;
+        const maxDistance = containerWidth - videoWidth;
+
+        const videoX =
+            distanceFromLeft < maxDistance
+                ? -distanceFromLeft
+                : maxDistance - distanceFromRight;
+
+        setMousex(videoX);
     };
     const handleHideVideo = (index = -1) => {
         setTimeout(() => {
@@ -34,21 +55,25 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                             onMouseLeave={() => handleHideVideo(index)}
                         >
                             <NavLink to={`/watch/${splitUrl}`}>
-                                {showVideo === index ? (
-                                    <video
-                                        src={url}
-                                        style={{
-                                            display: "block",
-                                            transform: `translateX(-${mousex}px)`,
-                                        }}
-                                        mousex={mousex}
-                                    />
-                                ) : (
+                                {/* {showVideo === index ? ( */}
+                                <video
+                                    src={url}
+                                    ref={videoRef}
+                                    style={{
+                                        display:
+                                            showVideo === index
+                                                ? "block"
+                                                : "none",
+                                        transform: `translateX(${mousex}px)`,
+                                    }}
+                                />
+
+                                {/* ) : (
                                     <video
                                         src={url}
                                         style={{ display: "none" }}
                                     />
-                                )}
+                                )} */}
                             </NavLink>
                             <p
                                 onMouseEnter={() => handleShowVideo(index)}
@@ -83,6 +108,7 @@ const VideoContainer = styled.div`
     justify-content: center;
     align-content: space-between;
     cursor: pointer;
+    z-index: 2;
     video {
         position: absolute;
         right: 50px;
@@ -95,6 +121,7 @@ const VideoContainer = styled.div`
         /* transform: rotate(5deg); */
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+        animation: moveToMouse 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         opacity: 100;
         /* transform: translateX(-${(props) => props.mousex}px); */
         @keyframes slideInFromTop {
@@ -109,6 +136,14 @@ const VideoContainer = styled.div`
                 opacity: 100;
             }
         }
+        /* @keyframes moveToMouse {
+            from {
+                transform: translateX(1);
+            }
+            to {
+                transform: translateX(${(props) => props.mousex}px);
+            }
+        } */
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         &:hover {
             transform: translateX(5px);
