@@ -15,6 +15,7 @@ import { db } from "../../../Firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../Firebase-config";
 import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
+import { device } from "../../../Components/Rwd";
 
 const UploadVideoInfo = ({ videoName }) => {
     const { user } = useContext(UserContext);
@@ -63,7 +64,7 @@ const UploadVideoInfo = ({ videoName }) => {
         }
     };
     useEffect(() => {
-        setVideoNameTemp(videoName || "FileName");
+        setVideoNameTemp(videoName || "檔案名稱");
     }, [videoName]);
     useEffect(() => {
         setVideoDescriptionTemp(videoDescription);
@@ -111,13 +112,17 @@ const Upload_File_Section_Wrapper = styled.div`
 `;
 
 const Upload_File_Name = styled(ContentEditable)`
-    font-size: 36px;
+    font-size: 1.5em;
     font-weight: 700;
     outline: none;
     padding: 10px;
     border: 1px solid #f2f2f2;
     border-radius: 15px;
     color: ${(props) => props.theme.colors.primary_white};
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:focus {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+    }
 `;
 const Upload_File_description = styled(ContentEditable)`
     font-size: 16px;
@@ -130,6 +135,10 @@ const Upload_File_description = styled(ContentEditable)`
     border: 1px solid #f2f2f2;
     border-radius: 15px;
     color: ${(props) => props.theme.colors.primary_white};
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:focus {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+    }
 `;
 const Upload_File_Confirm = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
@@ -150,6 +159,9 @@ const Upload_File_Confirm = styled.div`
         transform: translateX(5px);
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
+    }
+    @media ${device.onDesktop} {
+        width: 100%;
     }
 `;
 const Upload_Video = styled.video`

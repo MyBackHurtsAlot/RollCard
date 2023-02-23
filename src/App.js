@@ -40,8 +40,8 @@ const App = () => {
     const [originalVideoName, setOriginalVideoName] = useState("");
     const [memberVideo, setMemberVideo] = useState([]);
     const [videoUrl, setVideoUrl] = useState("");
-    const [videoName, setVideoName] = useState("FileName");
-    const [videoDescription, setVideoDescription] = useState("Description");
+    const [videoName, setVideoName] = useState("檔案名稱");
+    const [videoDescription, setVideoDescription] = useState("介紹你的影片");
     const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
