@@ -26,6 +26,7 @@ import ContentEditable from "react-contenteditable";
 import styled from "styled-components";
 import img from "../../../Assets/SH.png";
 import JobDropDown from "../../../Components/DropDown/JobDropDown";
+import Card from "../../../Components/Card";
 
 const Profile = () => {
     const { user } = useContext(UserContext);
@@ -47,7 +48,7 @@ const Profile = () => {
     const [userNameTemp, setUserNameTemp] = useState("你的名字");
     const [userJobTemp, setUserJobTemp] = useState("");
     const [userAboutTemp, setUserAboutTemp] = useState("關於你");
-    // const [userAbout, setUserAbout] = useState("");
+    const [showCard, setShowCard] = useState(false);
     const userAboutRef = useRef();
 
     const submitUserInfo = async () => {
@@ -78,6 +79,7 @@ const Profile = () => {
                 });
             }
             updateData(user);
+            setShowCard(true);
         } catch (error) {
             console.log(error);
         }
@@ -166,6 +168,7 @@ const Profile = () => {
                     儲存
                 </Profile_Section_Right_Editor_Confirm>
             </Profile_Section_Right_Wrapper>
+            {showCard ? <Card /> : ""}
         </Profile_Section>
     );
 };
@@ -175,7 +178,7 @@ export default Profile;
 // ============ Style ===========
 
 export const Profile_Section = styled.section`
-    /* position: relative; */
+    position: relative;
     margin: 100px auto auto 3%;
     padding: 20px;
     width: 25%;

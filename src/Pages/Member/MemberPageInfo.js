@@ -10,17 +10,42 @@ import { db } from "../../Firebase-config";
 import img from "../../Assets/SH.png";
 import { v4 as uuidv4 } from "uuid";
 import SendEmail from "./SendEmail";
+import { device } from "../../Components/Rwd";
+import SmallScreen from "./SmallScreen";
+
 const MemberPageInfo = ({
     currentMember,
     currentMemberName,
     setCurrentMemberName,
     memberId,
+    currentAvator,
+    setCurrentAvator,
 }) => {
     const [currentMemberJob, setCurrentMemberJob] = useState("");
     const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
-    const [currentAvator, setCurrentAvator] = useState("");
+    // const [currentAvator, setCurrentAvator] = useState("");
+    const [isSmallScreen, setIsSmaillScreen] = useState(false);
     const [sendEmail, setSendEmail] = useState(false);
+
+    useEffect(() => {
+        if (window.innerWidth < 1199) {
+            setIsSmaillScreen(true);
+        } else {
+            setIsSmaillScreen(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < 1200) {
+                setIsSmaillScreen(true);
+            } else {
+                setIsSmaillScreen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     useEffect(() => {
         async function getAvator(memberId) {
             const response = await listAll(
@@ -59,29 +84,41 @@ const MemberPageInfo = ({
             console.log(error);
         }
     }, [currentMember]);
-    console.log("currentMemberAbout");
+    console.log(device.underDesktop);
 
     return (
         <div>
-            <CurrentMemberWrapper>
-                <Avator currentAvator={currentAvator}></Avator>
-                <UserContainer>
-                    <UserName>{currentMemberName}</UserName>
-                    <UserJob>{currentMemberJob}</UserJob>
-                    <UserAbout>{currentMemberAbout}</UserAbout>
-                </UserContainer>
-                <Contact
-                    onClick={() => {
-                        setSendEmail(true);
-                    }}
-                    currentMember={currentMember}
+            {isSmallScreen ? (
+                <SmallScreen
                     currentMemberName={currentMemberName}
+                    currentMember={currentMember}
+                    currentMemberJob={currentMemberJob}
                     currentMemberEmail={currentMemberEmail}
-                    setSendEmail={setSendEmail}
-                >
-                    聯絡 {currentMemberName}
-                </Contact>
-            </CurrentMemberWrapper>
+                    setCurrentMemberName={setCurrentMemberName}
+                    memberId={memberId}
+                    currentAvator={currentAvator}
+                ></SmallScreen>
+            ) : (
+                <CurrentMemberWrapper>
+                    <Avator currentAvator={currentAvator}></Avator>
+                    <UserContainer>
+                        <UserName>{currentMemberName}</UserName>
+                        <UserJob>{currentMemberJob}</UserJob>
+                        <UserAbout>{currentMemberAbout}</UserAbout>
+                    </UserContainer>
+                    <Contact
+                        onClick={() => {
+                            setSendEmail(true);
+                        }}
+                        currentMember={currentMember}
+                        currentMemberName={currentMemberName}
+                        currentMemberEmail={currentMemberEmail}
+                        setSendEmail={setSendEmail}
+                    >
+                        聯絡 {currentMemberName}
+                    </Contact>
+                </CurrentMemberWrapper>
+            )}
             {sendEmail ? (
                 <SendEmail
                     setSendEmail={setSendEmail}
@@ -107,7 +144,7 @@ const CurrentMemberWrapper = styled.div`
     /* margin: 5% auto auto 3%; */
     float: left;
     padding: 20px;
-    width: 30%;
+    width: 25%;
     min-height: 600px;
     border-radius: 20px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
@@ -119,6 +156,10 @@ const CurrentMemberWrapper = styled.div`
     gap: 5px;
     z-index: 3;
     position: relative;
+    /* @media ${device.underDesktop} {
+        width: 90%;
+        min-height: 300px;
+    } */
 `;
 
 const Avator = styled.div`
@@ -130,6 +171,9 @@ const Avator = styled.div`
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
+    /* @media ${device.underDesktop} {
+        width: 40%;
+    } */
 `;
 const UserContainer = styled.div`
     width: 80%;

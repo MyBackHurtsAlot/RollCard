@@ -13,18 +13,22 @@ import { useNavigate } from "react-router-dom";
 import SendEmail from "./SendEmail";
 import MemberPageInfo from "./MemberPageInfo";
 import MemberShowVideo from "./MemberShowVideo";
+import { device } from "../../Components/Rwd";
+import VideoCategory from "./VideoCategory";
 
 // import Rotation from "../../Assets/Rotation.mp4";
 
 const MemberPage = () => {
     const { user, setUser } = useContext(UserContext);
     const [currentMember, setCurrentMember] = useState("");
+    const [currentAvator, setCurrentAvator] = useState("");
     const [currentMemberName, setCurrentMemberName] = useState("");
     const [currentMemberJob, setCurrentMemberJob] = useState("");
     const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
     // const [currentAvator, setCurrentAvator] = useState("");
     const [memberVideoAll, setMemberVideoAll] = useState([]);
+    // const [isSmallScreen, setIsSmaillScreen] = useState(false);
 
     const { memberId } = useParams();
     const navigate = useNavigate;
@@ -33,6 +37,26 @@ const MemberPage = () => {
     useEffect(() => {
         setCurrentMember(memberId);
     }, [memberId]);
+
+    // useEffect(() => {
+    //     if (window.innerWidth < 1200) {
+    //         setIsSmaillScreen(true);
+    //     } else {
+    //         setIsSmaillScreen(false);
+    //     }
+    //     const handleResize = () => {
+    //         if (window.innerWidth < 1200) {
+    //             setIsSmaillScreen(true);
+    //         } else {
+    //             setIsSmaillScreen(false);
+    //         }
+    //     };
+    //     window.addEventListener("resize", handleResize);
+
+    //     return () => window.removeEventListener("resize", handleResize);
+    // }, []);
+    // console.log(window.innerWidth);
+    // console.log(isSmallScreen);
 
     // useEffect(() => {
     //     async function getAvator(memberId) {
@@ -75,6 +99,8 @@ const MemberPage = () => {
     // console.log(currentMemberAbout);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS PAGE FROM HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
     const [videoNameAll, setVideoNameAll] = useState([]);
+    const [videoCategoryAll, setMemberCategoryAll] = useState([]);
+    const [videoInfoAll, setVideoInfoAll] = useState({});
     useEffect(() => {
         try {
             async function getVideos(memberId) {
@@ -95,6 +121,8 @@ const MemberPage = () => {
                     docSnap.forEach((doc) => {
                         const originalVideoName = doc.data().originalVideoName;
                         const videoName = doc.data().videoName;
+                        const videoCategory = doc.data().videoCategory;
+                        // console.log(videoCategory);
                         if (originalVideoName === fileName) {
                             setMemberVideoAll((prev) =>
                                 !prev.includes(url) ? [...prev, url] : prev
@@ -104,6 +132,18 @@ const MemberPage = () => {
                                     ? [...prev, videoName]
                                     : prev
                             );
+                            setMemberCategoryAll((prev) =>
+                                !prev.includes(videoCategory)
+                                    ? [...prev, videoCategory]
+                                    : prev
+                            );
+                            setVideoInfoAll((prev) => ({
+                                ...prev,
+                                [videoCategory]: {
+                                    url,
+                                    videoName,
+                                },
+                            }));
                         }
                     });
                 });
@@ -113,7 +153,8 @@ const MemberPage = () => {
             console.log(error);
         }
     }, [memberId]);
-    console.log(videoNameAll);
+    console.log(videoInfoAll);
+    // console.log(videoNameAll);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TOHERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // console.log(memberVideoAll);
@@ -133,13 +174,15 @@ const MemberPage = () => {
     //     setShowVideo("block");
     // };
     return (
-        <div>
+        <>
             <MemberPageWrapper>
                 <MemberPageInfo
                     currentMemberName={currentMemberName}
                     currentMember={currentMember}
                     setCurrentMemberName={setCurrentMemberName}
                     memberId={memberId}
+                    currentAvator={currentAvator}
+                    setCurrentAvator={setCurrentAvator}
                 />
                 {/* <CurrentMemberWrapper>
                     <Avator currentAvator={currentAvator}></Avator>
@@ -159,6 +202,12 @@ const MemberPage = () => {
                         聯絡 {currentMemberName}
                     </Contact>
                 </CurrentMemberWrapper> */}
+                <VideoCategory
+                    memberVideoAll={memberVideoAll}
+                    videoNameAll={videoNameAll}
+                    videoCategoryAll={videoCategoryAll}
+                    currentMemberName={currentMemberName}
+                />
                 <VideoWapper>
                     <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>
                     <VideoSectionWrapper
@@ -193,12 +242,11 @@ const MemberPage = () => {
                     </VideoSectionWrapper>
                 </VideoWapper>
             </MemberPageWrapper>
-        </div>
+        </>
     );
 };
 
 export default MemberPage;
-
 const MemberPageWrapper = styled.section`
     margin-top: 150px;
     width: 90%;
@@ -206,10 +254,14 @@ const MemberPageWrapper = styled.section`
     position: relative;
     /* display: flex;
     justify-content: space-between; */
+    /* @media ${device.underDesktop} {
+        display: flex;
+        flex-direction: column;
+    } */
 `;
 
 const VideoWapper = styled.div`
-    width: 68%;
+    /* width: 68%; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -219,7 +271,10 @@ const VideoWapper = styled.div`
 const VideoTitle = styled.div`
     font-size: 1.5rem;
     font-weight: 200;
-    margin-left: 20px;
+    /* margin-left: 20px; */
+    /* @media ${device.underDesktop} {
+        width: 40%;
+    } */
 `;
 
 const VideoSectionWrapper = styled.section`

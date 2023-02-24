@@ -29,7 +29,7 @@ const Controller = (videoRef, fullScreenRef) => {
             ? fullScreenRef.current.requestFullscreen()
             : document.exitFullscreen();
     }, [fullScreen, fullScreenRef]);
-    console.log(fullScreen);
+    // console.log(fullScreen);
     const togglePlay = () => {
         setPlaying(!playing);
     };

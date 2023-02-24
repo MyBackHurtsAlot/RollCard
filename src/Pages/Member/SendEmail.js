@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import emailjs from "@emailjs/browser";
 
@@ -12,6 +12,25 @@ const SendEmail = ({
     const autoHeight = useRef();
     const [message, setMessage] = useState("");
     const [showMessage, setShowMessage] = useState(false);
+    const [isSmallScreen, setIsSmaillScreen] = useState(false);
+
+    useEffect(() => {
+        if (window.innerWidth < 1199) {
+            setIsSmaillScreen(true);
+        } else {
+            setIsSmaillScreen(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < 1200) {
+                setIsSmaillScreen(true);
+            } else {
+                setIsSmaillScreen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const sendEmail = (e) => {
         e.preventDefault();
@@ -50,7 +69,11 @@ const SendEmail = ({
     };
     return (
         <div>
-            <FormWrapper ref={form} onSubmit={sendEmail}>
+            <FormWrapper
+                ref={form}
+                onSubmit={sendEmail}
+                isSmallScreen={isSmallScreen}
+            >
                 <Notice>
                     以下資訊會寄到 {currentMemberName} 的信箱，感謝您的聯絡
                 </Notice>
@@ -98,7 +121,7 @@ export default SendEmail;
 
 const FormWrapper = styled.form`
     /* margin: 90px auto auto auto; */
-    width: 27%;
+    width: ${(props) => (props.isSmallScreen ? "80%" : "27%")};
     min-height: 600px;
     border-radius: 15px;
     padding: 15px;
@@ -107,11 +130,14 @@ const FormWrapper = styled.form`
     flex-direction: column;
     /* gap: 25px; */
     position: absolute;
-    left: 32%;
-    z-index: 2;
-    animation: slideInFromLeft 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    left: ${(props) => (props.isSmallScreen ? "10%" : "32%")};
+    z-index: 10;
+    /* animation: slideInFromLeft 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93); */
     opacity: 100;
-
+    animation: ${(props) =>
+        props.isSmallScreen
+            ? "slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);"
+            : "slideInFromLeft  0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);"};
     @keyframes slideInFromLeft {
         from {
             transform: translateX(-40%);
@@ -119,6 +145,16 @@ const FormWrapper = styled.form`
         }
         to {
             transform: translateX(0);
+            opacity: 100;
+        }
+    }
+    @keyframes slideInFromTop {
+        from {
+            transform: translateY(-40%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
             opacity: 100;
         }
     }

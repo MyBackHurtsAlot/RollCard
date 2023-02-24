@@ -16,34 +16,18 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../Firebase-config";
 import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
 import { device } from "../../../Components/Rwd";
+import Card from "../../../Components/Card";
 
-const UploadVideoInfo = ({ videoName }) => {
+const UploadVideoInfo = ({ videoName, originalVideoName }) => {
     const { user } = useContext(UserContext);
     const [videoTempCategory, setTempVideoCategory] = useState("");
     const [videoDescriptionTemp, setVideoDescriptionTemp] = useState("");
     const [videoNameTemp, setVideoNameTemp] = useState("");
-    // console.log(fileName, "fromchild");
-    const {
-        // videoName,
-        setVideoName,
-        videoDescription,
-        setVideoDescription,
-        videoUrl,
-        setVideoUrl,
-        displayNone,
-        setDisplayNone,
-        displayBlock,
-        setDisplayBlock,
-        visibility,
-        setVisability,
-        originalVideoName,
-        setOriginalVideoName,
-    } = useContext(VideoContext);
+    const { videoDescription } = useContext(VideoContext);
     const { userName, userJob, userEmail, setUserEmail } =
         useContext(UserInfoContext);
+    const [showCard, setShowCard] = useState(false);
     const id = uuidv4();
-    // console.log(user);
-
     const submitVideoContent = async () => {
         try {
             await addDoc(collection(db, "videoForAll"), {
@@ -59,6 +43,8 @@ const UploadVideoInfo = ({ videoName }) => {
                 // videoUrlForMember: memberUrl,
                 videoId: id,
             });
+            console.log(1234);
+            setShowCard(true);
         } catch (error) {
             console.log(error);
         }
@@ -69,8 +55,8 @@ const UploadVideoInfo = ({ videoName }) => {
     useEffect(() => {
         setVideoDescriptionTemp(videoDescription);
     }, []);
-
-    console.log(videoName);
+    console.log(showCard);
+    // console.log(videoName);
     return (
         <>
             <Upload_File_Section_Wrapper>
@@ -93,6 +79,8 @@ const UploadVideoInfo = ({ videoName }) => {
                 <Upload_File_Confirm onClick={submitVideoContent}>
                     上傳
                 </Upload_File_Confirm>
+                <Card />
+                {/* {showCard ? <Card /> : ""} */}
             </Upload_File_Section_Wrapper>
         </>
     );
@@ -160,7 +148,7 @@ const Upload_File_Confirm = styled.div`
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
-    @media ${device.onDesktop} {
+    @media ${device.underDesktop} {
         width: 100%;
     }
 `;

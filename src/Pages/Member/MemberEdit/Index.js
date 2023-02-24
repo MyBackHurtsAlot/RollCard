@@ -61,7 +61,7 @@ const MemberEditPage = () => {
                         const videoCategory = doc.data().videoCategory;
                         const videoDescription = doc.data().videoDescription;
                         const userName = doc.data().userName;
-                        console.log(doc.data().userName);
+                        // console.log(doc.data().userName);
                         setEditor(userName);
                         if (originalVideoName === fileName) {
                             setMemberVideoAll((prev) =>
@@ -92,7 +92,6 @@ const MemberEditPage = () => {
         }
     }, [user]);
     useEffect(() => {
-        console.log("called");
         if (memberVideoAll.length === 0) {
             console.log(videoNameAll.length);
             const fetchData = async (userUid) => {

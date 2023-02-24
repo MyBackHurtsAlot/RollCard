@@ -8,7 +8,7 @@ import React, {
 import { NavLink, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-
+import { device } from "../../Components/Rwd";
 const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
     const [showVideo, setShowVideo] = useState(-1);
     const [mousex, setMousex] = useState(0);
@@ -96,6 +96,9 @@ const MemberShowVideoWrapper = styled.div`
     width: 100%;
     /* display: flex;
     justify-content: space-between; */
+    /* @media ${device.underDesktop} {
+        width: 50%;
+    } */
 `;
 
 const VideoContainer = styled.div`

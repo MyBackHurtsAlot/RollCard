@@ -153,11 +153,12 @@ const VideoUpload = (selectedCategory) => {
                     const urlRefForHomePage = await getDownloadURL(
                         ref(storage, videoRefForMember)
                     );
+
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-                    console.log("fileName", file.name);
-                    console.log("1234", originalVideoName);
+                    // console.log("fileName", file.name);
+                    // console.log("1234", originalVideoName);
                 }
             } catch (error) {
                 console.log(error);
@@ -168,6 +169,7 @@ const VideoUpload = (selectedCategory) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
             setVideoName(file.name);
+            console.log(file.name);
             try {
                 const videoRefForMember = ref(
                     storage,
@@ -212,7 +214,7 @@ const VideoUpload = (selectedCategory) => {
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-                    console.log("111", originalVideoName);
+
                     // console.log(video);
 
                     // useEffect(() => {
@@ -230,6 +232,7 @@ const VideoUpload = (selectedCategory) => {
 
         console.log("uploaded");
     };
+    // console.log("111", originalVideoName);
     useEffect(() => {
         if (progress === 100) {
             setDisplayNone("block");
@@ -237,7 +240,7 @@ const VideoUpload = (selectedCategory) => {
             setVisability("hidden");
             setNotLoading("none");
             setVideoName(videoName);
-            console.log("Change");
+            // console.log("Change");
         } else {
             // setUploading(true);
         }
@@ -246,7 +249,7 @@ const VideoUpload = (selectedCategory) => {
     const fileName = `${videoName + user}`;
 
     // console.log("rerender");
-    console.log(notLoading);
+    // console.log(notLoading);
     return (
         <>
             <Upload_Area_Wrapper
@@ -272,7 +275,11 @@ const VideoUpload = (selectedCategory) => {
                     progress={`${Math.ceil(progress)}%`}
                 />
             </Upload_Area_Wrapper>
-            <UploadVideoInfo fileName={fileName} videoName={videoName} />
+            <UploadVideoInfo
+                fileName={fileName}
+                videoName={videoName}
+                originalVideoName={originalVideoName}
+            />
         </>
     );
 };

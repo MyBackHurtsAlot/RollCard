@@ -11,7 +11,6 @@ const Nav = () => {
                     線上作品集
                 </Nav_Left_Title>
                 <Nav_Left_Role>乙方</Nav_Left_Role>
-                {/* 有時間的話做跑馬 */}
             </Nav_Left_Wrapper>
             <Nav_Right_Wrapper>
                 <Nav_Right_Role>甲方</Nav_Right_Role>
