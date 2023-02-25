@@ -63,95 +63,128 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     const observer = useRef(null);
     const lastVideoRef = useRef(null);
 
-    async function getVideos(pageToken) {
-        const options = { maxResults: 8 };
-        if (pageToken) {
-            options.pageToken = pageToken;
-        }
-        const response = await list(videoListRef, options);
-        response.items.forEach(async (videos) => {
-            const url = await getDownloadURL(videos);
-            const fileName = videos.name;
-            setVideoFileNameList((prev) =>
-                !prev.includes(fileName) ? [...prev, fileName] : prev
-            );
-            setVideoList((prev) =>
-                !prev.includes(url) ? [...prev, url] : prev
-            );
-        });
-        if (response.nextPageToken) {
-            setPageToken(response.nextPageToken);
-        } else {
-            setIsEnd(true);
-        }
-    }
-
     useEffect(() => {
-        async function init() {
-            await getVideos();
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll")
+                // where("originalVideoName", "==", videoFileName)
+            );
+            const docSnap = await getDocs(data);
+            const newEditorNameList = [];
+            const newVideoNameList = [];
+            const newVideoList = [];
+            const newUserIdList = [];
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+                const editor = doc.data().userName;
+                const videoName = doc.data().videoName;
+                const category = doc.data().videoCategory;
+                const id = doc.data().videoCategory;
+                newVideoList.push(url);
+                newEditorNameList.push(editor);
+                newVideoNameList.push(videoName);
+                newUserIdList.push(id);
+            });
+            setVideoList(newVideoList);
+            setEditorName(newEditorNameList);
+            setVideoNameList(newVideoNameList);
+            setUserIdList(newUserIdList);
         }
-        init();
+        getVideo();
     }, []);
+    // async function getVideos(pageToken) {
+    //     const options = { maxResults: 8 };
+    //     if (pageToken) {
+    //         options.pageToken = pageToken;
+    //     }
+    //     const response = await list(videoListRef, options);
+    //     response.items.forEach(async (videos) => {
+    //         const url = await getDownloadURL(videos);
+    //         const fileName = videos.name;
+    //         setVideoFileNameList((prev) =>
+    //             !prev.includes(fileName) ? [...prev, fileName] : prev
+    //         );
+    //         setVideoList((prev) =>
+    //             !prev.includes(url) ? [...prev, url] : prev
+    //         );
+    //     });
+    //     if (response.nextPageToken) {
+    //         setPageToken(response.nextPageToken);
+    //     } else {
+    //         setIsEnd(true);
+    //     }
+    // }
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(async (entries) => {
-            if (entries[0].isIntersecting && !isEnd) {
-                setPageToken((prevToken) => {
-                    getVideos(prevToken);
-                });
-            }
-        });
-        const lastVideo = lastVideoRef.current;
-        if (lastVideo) {
-            observer.observe(lastVideo);
-        }
-        return () => {
-            observer.disconnect();
-        };
-    }, [lastVideoRef, isEnd, setPageToken]);
+    // useEffect(() => {
+    //     async function init() {
+    //         await getVideos();
+    //     }
+    //     init();
+    // }, []);
 
-    useEffect(() => {
-        if (videoList.length === 0) {
-            return;
-        }
-        try {
-            async function getMemberInfo(videoFileName) {
-                const data = query(
-                    collection(db, "videoForAll"),
-                    where("originalVideoName", "==", videoFileName)
-                );
-                const docSnap = await getDocs(data);
-                const videoInfoArray = [];
-                docSnap.forEach((doc) => {
-                    videoInfoArray.push(doc.data());
-                });
-                return videoInfoArray;
-            }
-            Promise.all(
-                videoFileNameList.map((fileName) => {
-                    return getMemberInfo(fileName);
-                })
-            )
-                .then((results) => {
-                    const videoNameArray = [];
-                    const EditorNameArray = [];
-                    const userIdArray = [];
-                    results.forEach((allNames) => {
-                        videoNameArray.push(allNames[0].videoName);
-                        EditorNameArray.push(allNames[0].userName);
-                        userIdArray.push(allNames[0].user);
-                        setVideoNameList(videoNameArray);
-                        setEditorName(EditorNameArray);
-                        setUserIdList(userIdArray);
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-    }, [videoList]);
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(async (entries) => {
+    //         if (entries[0].isIntersecting && !isEnd) {
+    //             setPageToken((prevToken) => {
+    //                 getVideos(prevToken);
+    //             });
+    //         }
+    //     });
+    //     const lastVideo = lastVideoRef.current;
+    //     if (lastVideo) {
+    //         observer.observe(lastVideo);
+    //     }
+    //     return () => {
+    //         observer.disconnect();
+    //     };
+    // }, [lastVideoRef, isEnd, setPageToken]);
+
+    // useEffect(() => {
+    //     if (videoList.length === 0) {
+    //         return;
+    //     }
+    //     try {
+    //         async function getMemberInfo(videoFileName) {
+    //             const data = query(
+    //                 collection(db, "videoForAll"),
+    //                 where("originalVideoName", "==", videoFileName)
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const videoInfoArray = [];
+    //             docSnap.forEach((doc) => {
+    //                 videoInfoArray.push(doc.data());
+    //             });
+    //             return videoInfoArray;
+    //         }
+    //         Promise.all(
+    //             videoFileNameList.map((fileName) => {
+    //                 // console.log("1234", fileName);
+    //                 return getMemberInfo(fileName);
+    //             })
+    //         )
+    //             .then((results) => {
+    //                 // console.log(results);
+    //                 const videoNameArray = [];
+    //                 const EditorNameArray = [];
+    //                 const userIdArray = [];
+    //                 results.forEach((allNames) => {
+    //                     // console.log(allNames);
+    //                     videoNameArray.push(allNames[0].videoName);
+    //                     EditorNameArray.push(allNames[0].userName);
+    //                     userIdArray.push(allNames[0].user);
+    //                     setVideoNameList(videoNameArray);
+    //                     setEditorName(EditorNameArray);
+    //                     setUserIdList(userIdArray);
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [videoList]);
 
     return (
         <>
@@ -202,7 +235,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                         />
                     )}
                     {videoList.length >= 0 && <div ref={lastVideoRef}></div>}
-                    {console.log(videoList.length)}
+                    {/* {console.log(videoList.length)} */}
                 </Section>
             </Main>
         </>

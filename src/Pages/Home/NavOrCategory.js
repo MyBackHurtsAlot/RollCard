@@ -51,257 +51,372 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     // ============== Enterprise ===============
     useEffect(() => {
-        try {
-            async function getEnterprise() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "企業形象")
-                );
-                const docSnap = await getDocs(data);
-                const enterpriseList = [];
-                docSnap.forEach((doc) => {
-                    const enterprise = doc.data();
-                    enterpriseList.push(enterprise.originalVideoName);
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "企業形象")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
 
-                    setShowEnterpriseList(enterpriseList);
-                });
-            }
-            getEnterprise();
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
-    // console.log("List", showEnterpriseList[0]);
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
 
-    useEffect(() => {
-        async function getEnterpriseVideo(enterprise) {
-            // console.log("inside", enterprise);
-            const response = await listAll(videoListRef, false);
-            // console.log(response);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                if (enterprise === fileName) setShowEnterprise(url);
-                // tempArray.push(fileName);
-                /*
-                // console.log(tempArray);
-                // tempArray.map((item) => {
-                tempArray.forEach((item) => {
-                    // console.log("item", item);
-                    if (item === enterprise) {
-                        console.log(item, enterprise);
-                        // console.log("after map", url);
-                        console.log(url);
-                        setShowEnterprise(url);
-                        return;
-                    }
-                });
-                */
+                newVideoList.push(url);
             });
+            setShowEnterprise(newVideoList[0]);
         }
-        getEnterpriseVideo(showEnterpriseList[0]);
-    }, [showEnterpriseList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+
+    //     try {
+    //         async function getEnterprise() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "企業形象")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const enterpriseList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const enterprise = doc.data();
+    //                 enterpriseList.push(enterprise.originalVideoName);
+
+    //                 setShowEnterpriseList(enterpriseList);
+    //             });
+    //         }
+    //         getEnterprise();
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, []);
+    // // console.log("List", showEnterpriseList[0]);
+
+    // useEffect(() => {
+    //     async function getEnterpriseVideo(enterprise) {
+    //         // console.log("inside", enterprise);
+    //         const response = await listAll(videoListRef, false);
+    //         // console.log(response);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             if (enterprise === fileName) setShowEnterprise(url);
+    //             // tempArray.push(fileName);
+    //             /*
+    //             // console.log(tempArray);
+    //             // tempArray.map((item) => {
+    //             tempArray.forEach((item) => {
+    //                 // console.log("item", item);
+    //                 if (item === enterprise) {
+    //                     console.log(item, enterprise);
+    //                     // console.log("after map", url);
+    //                     console.log(url);
+    //                     setShowEnterprise(url);
+    //                     return;
+    //                 }
+    //             });
+    //             */
+    //         });
+    //     }
+    //     getEnterpriseVideo(showEnterpriseList[0]);
+    // }, [showEnterpriseList]);
     // console.log("enter", showEnterprise);
     // ================= Animation ==================
     useEffect(() => {
-        try {
-            async function getAnimation() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "動畫")
-                );
-                const docSnap = await getDocs(data);
-                const animationList = [];
-                docSnap.forEach((doc) => {
-                    const animation = doc.data();
-                    // console.log(animation);
-                    animationList.push(animation.originalVideoName);
-                    setShowAnimationList(animationList);
-                });
-            }
-            getAnimation();
-        } catch (error) {}
-    }, []);
-    // console.log("showAnimation", showAnimation);
-    useEffect(() => {
-        async function getAnimationVideo(animation) {
-            const response = await listAll(videoListRef, false);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                if (animation === fileName) setShowAnimation(url);
-                //         tempArray.push(fileName);
-                //         tempArray.map((item) => {
-                //             if (item === animation) {
-                //                 setShowAnimation(url);
-                //             }
-                //         });
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "動畫")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
+
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+
+                newVideoList.push(url);
             });
+            setShowAnimation(newVideoList[0]);
         }
-        getAnimationVideo(showAnimationList[0]);
-    }, [showAnimationList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+    //     try {
+    //         async function getAnimation() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "動畫")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const animationList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const animation = doc.data();
+    //                 // console.log(animation);
+    //                 animationList.push(animation.originalVideoName);
+    //                 setShowAnimationList(animationList);
+    //             });
+    //         }
+    //         getAnimation();
+    //     } catch (error) {}
+    // }, []);
+    // // console.log("showAnimation", showAnimation);
+    // useEffect(() => {
+    //     async function getAnimationVideo(animation) {
+    //         const response = await listAll(videoListRef, false);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             if (animation === fileName) setShowAnimation(url);
+    //             //         tempArray.push(fileName);
+    //             //         tempArray.map((item) => {
+    //             //             if (item === animation) {
+    //             //                 setShowAnimation(url);
+    //             //             }
+    //             //         });
+    //         });
+    //     }
+    //     getAnimationVideo(showAnimationList[0]);
+    // }, [showAnimationList]);
     // console.log("ani", showAnimation);
     // ================= Event ==================
     useEffect(() => {
-        try {
-            async function getEvent() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "活動紀錄")
-                );
-                const docSnap = await getDocs(data);
-                const eventList = [];
-                docSnap.forEach((doc) => {
-                    const event = doc.data();
-                    eventList.push(event.originalVideoName);
-                    setShowEventList(eventList);
-                });
-            }
-            getEvent();
-        } catch (error) {}
-    }, []);
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "活動紀錄")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
 
-    useEffect(() => {
-        async function getEventVideo(event) {
-            // console.log(event);
-            const response = await listAll(videoListRef, false);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                if (event === fileName) setShowEvent(url);
-                // tempArray.push(fileName);
-                // tempArray.map((item) => {
-                //     if (item === event) {
-                //         setShowEvent(url);
-                //     }
-                // });
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+
+                newVideoList.push(url);
             });
+            setShowEvent(newVideoList[0]);
         }
-        getEventVideo(showEventList[0]);
-    }, [showEventList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+    //     try {
+    //         async function getEvent() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "活動紀錄")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const eventList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const event = doc.data();
+    //                 eventList.push(event.originalVideoName);
+    //                 setShowEventList(eventList);
+    //             });
+    //         }
+    //         getEvent();
+    //     } catch (error) {}
+    // }, []);
+
+    // useEffect(() => {
+    //     async function getEventVideo(event) {
+    //         // console.log(event);
+    //         const response = await listAll(videoListRef, false);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             if (event === fileName) setShowEvent(url);
+    //             // tempArray.push(fileName);
+    //             // tempArray.map((item) => {
+    //             //     if (item === event) {
+    //             //         setShowEvent(url);
+    //             //     }
+    //             // });
+    //         });
+    //     }
+    //     getEventVideo(showEventList[0]);
+    // }, [showEventList]);
     // console.log(showEvent);
     // ================= Trailer ==================
     useEffect(() => {
-        try {
-            async function getTrailer() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "預告片")
-                );
-                const docSnap = await getDocs(data);
-                const trailerList = [];
-                docSnap.forEach((doc) => {
-                    const trailer = doc.data();
-                    trailerList.push(trailer.originalVideoName);
-                    setShowTrailerList(trailerList);
-                });
-            }
-            getTrailer();
-        } catch (error) {}
-    }, []);
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "預告片")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
 
-    useEffect(() => {
-        async function getTrailerVideo(trailer) {
-            // console.log(trailer);
-            const response = await listAll(videoListRef, false);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                if (trailer === fileName) setShowTrailer(url);
-                // tempArray.push(fileName);
-                // tempArray.map((item) => {
-                //     if (item === trailer) {
-                //         setShowTrailer(url);
-                //     }
-                // });
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+
+                newVideoList.push(url);
             });
+            setShowTrailer(newVideoList[0]);
         }
-        getTrailerVideo(showTrailerList[0]);
-    }, [showTrailerList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+    //     try {
+    //         async function getTrailer() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "預告片")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const trailerList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const trailer = doc.data();
+    //                 trailerList.push(trailer.originalVideoName);
+    //                 setShowTrailerList(trailerList);
+    //             });
+    //         }
+    //         getTrailer();
+    //     } catch (error) {}
+    // }, []);
+
+    // useEffect(() => {
+    //     async function getTrailerVideo(trailer) {
+    //         // console.log(trailer);
+    //         const response = await listAll(videoListRef, false);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             if (trailer === fileName) setShowTrailer(url);
+    //             // tempArray.push(fileName);
+    //             // tempArray.map((item) => {
+    //             //     if (item === trailer) {
+    //             //         setShowTrailer(url);
+    //             //     }
+    //             // });
+    //         });
+    //     }
+    //     getTrailerVideo(showTrailerList[0]);
+    // }, [showTrailerList]);
     // console.log("showTrailer", showTrailer);
 
     // ================= Documentory ==================
     useEffect(() => {
-        try {
-            async function getDocumentory() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "紀錄片")
-                );
-                const docSnap = await getDocs(data);
-                const documentoryList = [];
-                docSnap.forEach((doc) => {
-                    const documentory = doc.data();
-                    documentoryList.push(documentory.originalVideoName);
-                    setShowDocumentoryList(documentoryList);
-                });
-            }
-            getDocumentory();
-        } catch (error) {}
-    }, []);
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "紀錄片")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
 
-    useEffect(() => {
-        async function getDocumentoryVideo(documentory) {
-            // console.log(documentory);
-            const response = await listAll(videoListRef, false);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                if (documentory === fileName) setShowDocumentory(url);
-                // tempArray.push(fileName);
-                // tempArray.map((item) => {
-                //     if (item === documentory) {
-                //         setShowDocumentory(url);
-                //     }
-                // });
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+
+                newVideoList.push(url);
             });
+            setShowDocumentory(newVideoList[0]);
         }
-        getDocumentoryVideo(showDocumentoryList[0]);
-    }, [showDocumentoryList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+    //     try {
+    //         async function getDocumentory() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "紀錄片")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const documentoryList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const documentory = doc.data();
+    //                 documentoryList.push(documentory.originalVideoName);
+    //                 setShowDocumentoryList(documentoryList);
+    //             });
+    //         }
+    //         getDocumentory();
+    //     } catch (error) {}
+    // }, []);
+
+    // useEffect(() => {
+    //     async function getDocumentoryVideo(documentory) {
+    //         // console.log(documentory);
+    //         const response = await listAll(videoListRef, false);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             if (documentory === fileName) setShowDocumentory(url);
+    //             // tempArray.push(fileName);
+    //             // tempArray.map((item) => {
+    //             //     if (item === documentory) {
+    //             //         setShowDocumentory(url);
+    //             //     }
+    //             // });
+    //         });
+    //     }
+    //     getDocumentoryVideo(showDocumentoryList[0]);
+    // }, [showDocumentoryList]);
     // console.log(showDocumentory);
     // ================= Others ==================
     useEffect(() => {
-        try {
-            async function getOthers() {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("videoCategory", "==", "其他")
-                );
-                const docSnap = await getDocs(data);
-                const othersList = [];
-                docSnap.forEach((doc) => {
-                    const others = doc.data();
-                    othersList.push(others.originalVideoName);
-                    setShowOthersList(othersList);
-                });
-            }
-            getOthers();
-        } catch (error) {}
-    }, []);
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", "其他")
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
 
-    useEffect(() => {
-        async function getOthersVideo(others) {
-            // console.log(others);
-            const response = await listAll(videoListRef, false);
-            const tempArray = [];
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                tempArray.push(fileName);
-                tempArray.map((item) => {
-                    if (item === others) {
-                        setShowOthers(url);
-                    }
-                });
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+
+                newVideoList.push(url);
             });
+            setShowOthers(newVideoList[0]);
         }
-        getOthersVideo(showOthersList[0]);
-    }, [showOthersList]);
+        getVideo();
+    }, []);
+    // useEffect(() => {
+    //     try {
+    //         async function getOthers() {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("videoCategory", "==", "其他")
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const othersList = [];
+    //             docSnap.forEach((doc) => {
+    //                 const others = doc.data();
+    //                 othersList.push(others.originalVideoName);
+    //                 setShowOthersList(othersList);
+    //             });
+    //         }
+    //         getOthers();
+    //     } catch (error) {}
+    // }, []);
+
+    // useEffect(() => {
+    //     async function getOthersVideo(others) {
+    //         // console.log(others);
+    //         const response = await listAll(videoListRef, false);
+    //         const tempArray = [];
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             tempArray.push(fileName);
+    //             tempArray.map((item) => {
+    //                 if (item === others) {
+    //                     setShowOthers(url);
+    //                 }
+    //             });
+    //         });
+    //     }
+    //     getOthersVideo(showOthersList[0]);
+    // }, [showOthersList]);
 
     return (
         <div>

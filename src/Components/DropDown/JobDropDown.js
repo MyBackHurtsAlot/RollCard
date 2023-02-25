@@ -74,6 +74,7 @@ const customStyles = {
         width: "100%",
         maxHeight: 130,
         overflowY: "auto",
+        backgroundColor: "#f2f2f2",
 
         // backgroundColor: "blue",
     }),

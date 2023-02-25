@@ -55,7 +55,7 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
     useEffect(() => {
         !videoList ? setShowLoading(false) : setShowLoading(true);
     }, [videoList]);
-    console.log(showLoding);
+    // console.log(showLoding);
     return (
         <div>
             {!showLoding ? (

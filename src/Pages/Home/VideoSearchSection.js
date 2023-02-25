@@ -42,105 +42,137 @@ const VideoSearchSection = ({
 
     useEffect(() => {
         setVideoCategoryList([]); // Clears previus search
-        async function getVideos() {
-            const response = await listAll(videoListRef, false);
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-
-                const fileName = videos.name;
-                // console.log(fileName);
-                setVideoFileNameList((prev) =>
-                    !prev.includes(fileName) ? [...prev, fileName] : prev
-                );
-                // setVideoFileName(fileName);
-                setVideoList((prev) =>
-                    !prev.includes(url) ? [...prev, url] : prev
-                );
+        async function getVideo(selectedCategory) {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("videoCategory", "==", selectedCategory)
+            );
+            const docSnap = await getDocs(data);
+            const newVideoList = [];
+            const newEditorNameList = [];
+            const newVideoNameList = [];
+            const newUserIdList = [];
+            docSnap.forEach((doc) => {
+                console.log("query");
+                const url = doc.data().videoUrlForHome;
+                const editor = doc.data().userName;
+                const videoName = doc.data().videoName;
+                const id = doc.data().videoCategory;
+                newVideoList.push(url);
+                newEditorNameList.push(editor);
+                newVideoNameList.push(videoName);
+                newUserIdList.push(id);
             });
+            setVideoList(newVideoList);
+            setEditorName(newEditorNameList);
+            setVideoNameList(newVideoNameList);
+            setUserIdList(newUserIdList);
+            setVideoCategoryList(newVideoList);
         }
-        getVideos();
-        setComponentDidMount(true);
+        getVideo(selectedCategory);
     }, [selectedCategory]);
 
-    useEffect(() => {
-        if (videoList.length === 0) {
-            return;
-        }
-        setVideoNameList([]);
-        try {
-            async function getMemberInfo(videoFileName, selectedCategory) {
-                const data = query(
-                    collection(db, "videoForAll"),
-                    where("originalVideoName", "==", videoFileName),
-                    where("videoCategory", "==", selectedCategory)
-                );
-                const docSnap = await getDocs(data);
-                const videoInfoArray = [];
-                docSnap.forEach((doc) => {
-                    videoInfoArray.push(doc.data());
-                });
-                if (videoInfoArray.length === 0) {
-                    return [];
-                }
-                return videoInfoArray;
-            }
-            Promise.all(
-                videoFileNameList.map((fileName) => {
-                    return getMemberInfo(fileName, selectedCategory);
-                })
-            )
-                .then((results) => {
-                    const videoNameArray = [];
-                    const EditorNameArray = [];
-                    const userIdArray = [];
-                    const originalVideoNameArray = [];
-                    // console.log(results);
-                    results.forEach((allNames) => {
-                        if (allNames.length === 0) {
-                            return;
-                        } else {
-                            videoNameArray.push(allNames[0].videoName);
-                            EditorNameArray.push(allNames[0].userName);
-                            userIdArray.push(allNames[0].user);
-                            originalVideoNameArray.push(
-                                allNames[0].originalVideoName
-                            );
-                            setVideoNameList(videoNameArray);
-                            setEditorName(EditorNameArray);
-                            setUserIdList(userIdArray);
-                            setOriginalVideoName(originalVideoNameArray);
-                        }
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-    }, [videoList, selectedCategory]);
-    // console.log(originalVideoName);
+    // useEffect(() => {
+    //     setVideoCategoryList([]); // Clears previus search
+    //     async function getVideos() {
+    //         const response = await listAll(videoListRef, false);
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
 
-    useEffect(() => {
-        async function filteredVideo(filteredName) {
-            console.log(filteredName);
-            const response = await listAll(videoListRef, false);
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
+    //             const fileName = videos.name;
+    //             // console.log(fileName);
+    //             setVideoFileNameList((prev) =>
+    //                 !prev.includes(fileName) ? [...prev, fileName] : prev
+    //             );
+    //             // setVideoFileName(fileName);
+    //             setVideoList((prev) =>
+    //                 !prev.includes(url) ? [...prev, url] : prev
+    //             );
+    //         });
+    //     }
+    //     getVideos();
+    //     setComponentDidMount(true);
+    // }, [selectedCategory]);
 
-                const fileName = videos.name;
-                // console.log(filteredName);
-                if (fileName === filteredName) {
-                    setVideoCategoryList((prev) =>
-                        !prev.includes(url) ? [...prev, url] : prev
-                    );
-                }
-            });
-        }
-        originalVideoName.map((filteredName) => {
-            return filteredVideo(filteredName);
-        });
-    }, [originalVideoName]);
+    // useEffect(() => {
+    //     if (videoList.length === 0) {
+    //         return;
+    //     }
+    //     setVideoNameList([]);
+    //     try {
+    //         async function getMemberInfo(videoFileName, selectedCategory) {
+    //             const data = query(
+    //                 collection(db, "videoForAll"),
+    //                 where("originalVideoName", "==", videoFileName),
+    //                 where("videoCategory", "==", selectedCategory)
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             const videoInfoArray = [];
+    //             docSnap.forEach((doc) => {
+    //                 videoInfoArray.push(doc.data());
+    //             });
+    //             if (videoInfoArray.length === 0) {
+    //                 return [];
+    //             }
+    //             return videoInfoArray;
+    //         }
+    //         Promise.all(
+    //             videoFileNameList.map((fileName) => {
+    //                 return getMemberInfo(fileName, selectedCategory);
+    //             })
+    //         )
+    //             .then((results) => {
+    //                 const videoNameArray = [];
+    //                 const EditorNameArray = [];
+    //                 const userIdArray = [];
+    //                 const originalVideoNameArray = [];
+    //                 // console.log(results);
+    //                 results.forEach((allNames) => {
+    //                     if (allNames.length === 0) {
+    //                         return;
+    //                     } else {
+    //                         videoNameArray.push(allNames[0].videoName);
+    //                         EditorNameArray.push(allNames[0].userName);
+    //                         userIdArray.push(allNames[0].user);
+    //                         originalVideoNameArray.push(
+    //                             allNames[0].originalVideoName
+    //                         );
+    //                         setVideoNameList(videoNameArray);
+    //                         setEditorName(EditorNameArray);
+    //                         setUserIdList(userIdArray);
+    //                         setOriginalVideoName(originalVideoNameArray);
+    //                     }
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [videoList, selectedCategory]);
+    // // console.log(originalVideoName);
+
+    // useEffect(() => {
+    //     async function filteredVideo(filteredName) {
+    //         console.log(filteredName);
+    //         const response = await listAll(videoListRef, false);
+    //         response.items.forEach(async (videos) => {
+    //             const url = await getDownloadURL(videos);
+
+    //             const fileName = videos.name;
+    //             // console.log(filteredName);
+    //             if (fileName === filteredName) {
+    //                 setVideoCategoryList((prev) =>
+    //                     !prev.includes(url) ? [...prev, url] : prev
+    //                 );
+    //             }
+    //         });
+    //     }
+    //     originalVideoName.map((filteredName) => {
+    //         return filteredVideo(filteredName);
+    //     });
+    // }, [originalVideoName]);
 
     return (
         <div>
@@ -183,7 +215,7 @@ const Home_Video_Section_Wrapper = styled.section`
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+
     gap: 50px;
 `;
 const Home_Video_Container = styled.div`

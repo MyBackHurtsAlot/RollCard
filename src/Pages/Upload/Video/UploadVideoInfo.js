@@ -39,8 +39,8 @@ const UploadVideoInfo = ({ videoName, originalVideoName }) => {
                 videoCategory: videoTempCategory,
                 originalVideoName: originalVideoName,
                 videoDescription: videoDescriptionTemp,
-                // videoUrlForHome: homePageUrl,
-                // videoUrlForMember: memberUrl,
+                videoUrlForHome: homePageUrl,
+                videoUrlForMember: memberUrl,
                 videoId: id,
             });
             console.log(1234);
@@ -79,8 +79,8 @@ const UploadVideoInfo = ({ videoName, originalVideoName }) => {
                 <Upload_File_Confirm onClick={submitVideoContent}>
                     上傳
                 </Upload_File_Confirm>
-                <Card />
-                {/* {showCard ? <Card /> : ""} */}
+                {/* <Card /> */}
+                {showCard ? <Card /> : ""}
             </Upload_File_Section_Wrapper>
         </>
     );

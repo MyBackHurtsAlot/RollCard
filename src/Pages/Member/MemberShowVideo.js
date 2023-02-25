@@ -19,21 +19,21 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
     const handleShowVideo = (index) => {
         setShowVideo(index);
     };
-    const handleMouseMove = (e) => {
-        const container = e.currentTarget.getBoundingClientRect();
-        const distanceFromLeft = e.clientX - container.left;
-        const distanceFromRight = container.right - e.clientX;
-        const containerWidth = container.right - container.left;
-        const videoWidth = 0.45 * containerWidth;
-        const maxDistance = containerWidth - videoWidth;
+    // const handleMouseMove = (e) => {
+    //     const container = e.currentTarget.getBoundingClientRect();
+    //     const distanceFromLeft = e.clientX - container.left;
+    //     const distanceFromRight = container.right - e.clientX;
+    //     const containerWidth = container.right - container.left;
+    //     const videoWidth = 0.45 * containerWidth;
+    //     const maxDistance = containerWidth - videoWidth;
 
-        const videoX =
-            distanceFromLeft < maxDistance
-                ? -distanceFromLeft
-                : maxDistance - distanceFromRight;
+    //     const videoX =
+    //         distanceFromLeft < maxDistance
+    //             ? -distanceFromLeft
+    //             : maxDistance - distanceFromRight;
 
-        setMousex(videoX);
-    };
+    //     setMousex(videoX);
+    // };
     const handleHideVideo = (index = -1) => {
         setTimeout(() => {
             if (index !== -1) {
@@ -55,29 +55,28 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                             onMouseLeave={() => handleHideVideo(index)}
                         >
                             <NavLink to={`/watch/${splitUrl}`}>
-                                {/* {showVideo === index ? ( */}
-                                <video
-                                    src={url}
-                                    ref={videoRef}
-                                    style={{
-                                        display:
-                                            showVideo === index
-                                                ? "block"
-                                                : "none",
-                                        transform: `translateX(${mousex}px)`,
-                                    }}
-                                />
-
-                                {/* ) : (
+                                {showVideo === index ? (
+                                    <video
+                                        src={url}
+                                        ref={videoRef}
+                                        // style={{
+                                        //     display:
+                                        //         showVideo === index
+                                        //             ? "block"
+                                        //             : "none",
+                                        //     transform: `translateX(${mousex}px)`,
+                                        // }}
+                                    />
+                                ) : (
                                     <video
                                         src={url}
                                         style={{ display: "none" }}
                                     />
-                                )} */}
+                                )}
                             </NavLink>
                             <p
                                 onMouseEnter={() => handleShowVideo(index)}
-                                onMouseMove={(e) => handleMouseMove(e)}
+                                // onMouseMove={(e) => handleMouseMove(e)}
                             >
                                 {videoNameAll[index]}
                                 {console.log(showVideo)}

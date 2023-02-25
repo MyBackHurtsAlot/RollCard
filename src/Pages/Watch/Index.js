@@ -31,85 +31,45 @@ const Watch = () => {
     const navigate = useNavigate();
     const measureRef = useRef(null);
 
-    // console.log(StorageReference.bucket)
     useEffect(() => {
-        // console.log(StorageReference.toString());
-        async function getVideos() {
-            const response = await listAll(videoListRef, false);
-            response.items.forEach(async (videos) => {
-                const url = await getDownloadURL(videos);
-                const fileName = videos.name;
-                // console.log("fileName", fileName);
-                if (url.includes(splitUrl)) {
-                    setVideoList((prev) =>
-                        !prev.includes(url) ? [...prev, url, fileName] : prev
-                    );
-                }
-                setVideoListAll((prev) =>
-                    !prev.find((item) => item.url === url)
-                        ? [...prev, { url: url, fileName: fileName }]
-                        : prev
-                );
-            });
-        }
-        getVideos();
-    }, []);
-    // console.log("videoListAll", videoListAll);
-
-    // console.log(videoListAll[0]);
-
-    useEffect(() => {
-        if (videoList.length === 0) {
-            return;
-        }
-        try {
-            // const videoUrl = videoList[0];
-            const fileName = videoList[1];
-
-            async function getMemberInfo(fileName) {
-                const data = query(
-                    collection(db, `videoForAll`),
-                    where("originalVideoName", "==", fileName)
-                );
-                const docSnap = await getDocs(data);
-                docSnap.forEach((doc) => {
-                    const videoInfo = doc.data();
-                    setCurrentVideo(videoInfo.user);
-                    setVideoName(videoInfo.videoName);
-                    setVideoDescription(videoInfo.videoDescription);
-                    setVideoCategory(videoInfo.videoCategory);
-                    // console.log(videoInfo.videoDescription);
-                });
-            }
-            getMemberInfo(fileName);
-
-            // async function getAllNeededData(videoListAll) {
-            //     console.log(videoListAll);
-            //     // const fileNameAll = videoListAll[0].fileName;
-            //     // console.log(fileNameAll);
-            // }
-            // getAllNeededData(videoListAll);
-        } catch (error) {
-            console.log(error);
-        }
-    }, [videoList]);
-
-    useEffect(() => {
-        if (!videoName) {
-            return;
-        }
-        async function getCurrentVideo(currentVideo) {
-            const EditorData = query(
-                collection(db, "User"),
-                where("userUid", "==", currentVideo)
+        async function getVideo() {
+            const data = query(
+                collection(db, "videoForAll")
+                // where("originalVideoName", "==", videoFileName)
             );
-            const docSnapEdit = await getDocs(EditorData);
-            docSnapEdit.forEach((doc) => {
-                const editorInfo = doc.data();
-                setVideoEditor(editorInfo.userName || "工作人員A");
-                setVideoEditorJob(editorInfo.userJob || "影視工作人員");
-            });
+            const docSnap = await getDocs(data);
+            const newEditorNameList = [];
+            const newVideoNameList = [];
+            const newVideoList = [];
+            const newUserJobList = [];
+            const newDescriptionList = [];
 
+            docSnap.forEach((doc) => {
+                const url = doc.data().videoUrlForHome;
+                const editor = doc.data().userName;
+                const videoName = doc.data().videoName;
+                const job = doc.data().userJob;
+                const description = doc.data().videoDescription;
+                const id = doc.data().user;
+                const category = doc.data().videoCategory;
+                if (url.includes(splitUrl)) {
+                    newVideoList.push(url);
+
+                    setVideoCategory(category);
+                    setCurrentVideo(id);
+                    setVideoName(videoName);
+                    setVideoEditor(editor || "工作人員A");
+                    setVideoEditorJob(job || "影視從業人員");
+                    setVideoDescription(description.toString());
+                }
+            });
+            setVideoList(newVideoList);
+        }
+        getVideo();
+    }, []);
+
+    useEffect(() => {
+        const getAvator = async (currentVideo) => {
             const storageRef = await listAll(
                 ref(storage, `/avators/${currentVideo}/`),
                 false
@@ -119,11 +79,123 @@ const Watch = () => {
                 const url = await getDownloadURL(avator);
                 setvideoAvator(url);
             });
-        }
-        getCurrentVideo(currentVideo);
-    }, [videoName]);
-    // console.log(videoList[0]);
+        };
+        getAvator(currentVideo);
+    }, [currentVideo]);
+    // useEffect(() => {
+    //     // console.log(StorageReference.toString());
+    //     // async function getVideos() {
+    //     //     const response = await listAll(videoListRef, false);
+    //     //     response.items.forEach(async (videos) => {
+    //     //         const url = await getDownloadURL(videos);
+    //     //         const fileName = videos.name;
+    //     //         // console.log("fileName", fileName);
+    //     //         if (url.includes(splitUrl)) {
+    //     //             setVideoList((prev) =>
+    //     //                 !prev.includes(url) ? [...prev, url, fileName] : prev
+    //     //             );
+    //     //         }
+    //     //         setVideoListAll((prev) =>
+    //     //             !prev.find((item) => item.url === url)
+    //     //                 ? [...prev, { url: url, fileName: fileName }]
+    //     //                 : prev
+    //     //         );
+    //     //     });
+    //     // }
+    //     async function getMemberInfo() {
+    //         const data = query(
+    //             collection(db, "videoForAll")
+    //             // where("originalVideoName", "==", videoFileName)
+    //         );
+    //         const docSnap = await getDocs(data);
+    //         docSnap.forEach((doc) => {
+    //             const url = doc.data().videoUrlForHome;
+    //             const fileName = doc.data().name;
+    //             if (url.includes(splitUrl)) {
+    //                 setVideoList((prev) =>
+    //                     !prev.includes(url) ? [...prev, url, fileName] : prev
+    //                 );
+    //             }
+    //             setVideoListAll((prev) =>
+    //                 !prev.find((item) => item.url === url)
+    //                     ? [...prev, { url: url, fileName: fileName }]
+    //                     : prev
+    //             );
+    //         });
+    //     }
+    //     getMemberInfo();
+    //     // getVideos();
+    // }, []);
+    // // console.log("videoListAll", videoListAll);
 
+    // // console.log(videoListAll[0]);
+
+    // useEffect(() => {
+    //     if (videoList.length === 0) {
+    //         return;
+    //     }
+    //     try {
+    //         // const videoUrl = videoList[0];
+    //         const fileName = videoList[1];
+
+    //         async function getMemberInfo(fileName) {
+    //             const data = query(
+    //                 collection(db, `videoForAll`),
+    //                 where("originalVideoName", "==", fileName)
+    //             );
+    //             const docSnap = await getDocs(data);
+    //             docSnap.forEach((doc) => {
+    //                 const videoInfo = doc.data();
+    //                 setCurrentVideo(videoInfo.user);
+    //                 setVideoName(videoInfo.videoName);
+    //                 setVideoDescription(videoInfo.videoDescription);
+    //                 setVideoCategory(videoInfo.videoCategory);
+    //                 // console.log(videoInfo.videoDescription);
+    //             });
+    //         }
+    //         getMemberInfo(fileName);
+
+    //         // async function getAllNeededData(videoListAll) {
+    //         //     console.log(videoListAll);
+    //         //     // const fileNameAll = videoListAll[0].fileName;
+    //         //     // console.log(fileNameAll);
+    //         // }
+    //         // getAllNeededData(videoListAll);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [videoList]);
+
+    // useEffect(() => {
+    //     if (!videoName) {
+    //         return;
+    //     }
+    //     async function getCurrentVideo(currentVideo) {
+    //         const EditorData = query(
+    //             collection(db, "User"),
+    //             where("userUid", "==", currentVideo)
+    //         );
+    //         const docSnapEdit = await getDocs(EditorData);
+    //         docSnapEdit.forEach((doc) => {
+    //             const editorInfo = doc.data();
+    //             setVideoEditor(editorInfo.userName || "工作人員A");
+    //             setVideoEditorJob(editorInfo.userJob || "影視從業人員");
+    //         });
+
+    //         const storageRef = await listAll(
+    //             ref(storage, `/avators/${currentVideo}/`),
+    //             false
+    //         );
+    //         // console.log(storageRef);
+    //         storageRef.items.forEach(async (avator) => {
+    //             const url = await getDownloadURL(avator);
+    //             setvideoAvator(url);
+    //         });
+    //     }
+    //     getCurrentVideo(currentVideo);
+    // }, [videoName]);
+    // console.log(videoList[0]);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // useEffect(() => {
     //     if (videoDescription) {
     //         const descriptionHeight = measureRef.current.scrollHeight;

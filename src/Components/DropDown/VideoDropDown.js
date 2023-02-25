@@ -57,6 +57,7 @@ const customStyles = {
         // borderColor: state.isOpen ? "none" : "none",
         boxShadow: "none",
         border: "1px solid #a6a6a6",
+
         "&:hover": {
             border: "1px solid #F2B70570",
         },
@@ -69,14 +70,20 @@ const customStyles = {
     },
     container: () => ({
         width: "100%",
+        backgroundColor: "${(props) => props.theme.colors.primary_white}",
     }),
     menu: () => ({
         width: "100%",
         maxHeight: 120,
         overflowY: "auto",
+        backgroundColor: "#0d0d0d",
     }),
     menuList: () => ({
         color: "#f2f2f2",
+        backgroundColor: "${(props) => props.theme.colors.primary_white}",
+    }),
+    dropdownIndicator: () => ({
+        // color: "#f2f2f2",
         backgroundColor: "${(props) => props.theme.colors.primary_white}",
     }),
 };

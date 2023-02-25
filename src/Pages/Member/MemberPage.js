@@ -26,7 +26,7 @@ const MemberPage = () => {
     const [currentMemberJob, setCurrentMemberJob] = useState("");
     const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
-    // const [currentAvator, setCurrentAvator] = useState("");
+
     const [memberVideoAll, setMemberVideoAll] = useState([]);
     // const [isSmallScreen, setIsSmaillScreen] = useState(false);
 
@@ -101,59 +101,108 @@ const MemberPage = () => {
     const [videoNameAll, setVideoNameAll] = useState([]);
     const [videoCategoryAll, setMemberCategoryAll] = useState([]);
     const [videoInfoAll, setVideoInfoAll] = useState({});
+
     useEffect(() => {
-        try {
-            async function getVideos(memberId) {
-                const response = await listAll(
-                    ref(storage, `videosForHomePage`)
-                );
+        async function getVideo(memberId) {
+            const data = query(
+                collection(db, "videoForAll"),
+                where("user", "==", memberId)
+            );
+            const docSnap = await getDocs(data);
+            const newEditorNameList = [];
+            const newVideoNameList = [];
+            const newVideoList = [];
+            const newCategoryList = [];
 
-                response.items.forEach(async (videos) => {
-                    const url = await getDownloadURL(videos);
-                    // setMemberVideoAll(url);
-                    const fileName = videos.name;
+            docSnap.forEach((doc) => {
+                // console.log("query");
+                const url = doc.data().videoUrlForHome;
+                const editor = doc.data().userName;
+                const videoName = doc.data().videoName;
+                const category = doc.data().videoCategory;
+                // const id = doc.data().user;
 
-                    const data = query(
-                        collection(db, "videoForAll"),
-                        where("user", "==", memberId)
-                    );
-                    const docSnap = await getDocs(data);
-                    docSnap.forEach((doc) => {
-                        const originalVideoName = doc.data().originalVideoName;
-                        const videoName = doc.data().videoName;
-                        const videoCategory = doc.data().videoCategory;
-                        // console.log(videoCategory);
-                        if (originalVideoName === fileName) {
-                            setMemberVideoAll((prev) =>
-                                !prev.includes(url) ? [...prev, url] : prev
-                            );
-                            setVideoNameAll((prev) =>
-                                !prev.includes(videoName)
-                                    ? [...prev, videoName]
-                                    : prev
-                            );
-                            setMemberCategoryAll((prev) =>
-                                !prev.includes(videoCategory)
-                                    ? [...prev, videoCategory]
-                                    : prev
-                            );
-                            setVideoInfoAll((prev) => ({
-                                ...prev,
-                                [videoCategory]: {
-                                    url,
-                                    videoName,
-                                },
-                            }));
-                        }
-                    });
-                });
-            }
-            getVideos(memberId);
-        } catch (error) {
-            console.log(error);
+                newVideoList.push(url);
+                newEditorNameList.push(editor);
+                newVideoNameList.push(videoName);
+                newCategoryList.push(category);
+
+                // setCurrentVideo(id);
+            });
+            setMemberVideoAll(newVideoList);
+            setVideoNameAll(newVideoNameList);
+            setMemberCategoryAll(newCategoryList);
         }
+        getVideo(memberId);
     }, [memberId]);
-    console.log(videoInfoAll);
+
+    useEffect(() => {
+        const getAvator = async (memberId) => {
+            const storageRef = await listAll(
+                ref(storage, `/avators/${memberId}/`),
+                false
+            );
+            // console.log(storageRef);
+            storageRef.items.forEach(async (avator) => {
+                const url = await getDownloadURL(avator);
+                setCurrentAvator(url);
+            });
+        };
+        getAvator(memberId);
+    }, [memberId]);
+    // useEffect(() => {
+    //     try {
+    //         async function getVideos(memberId) {
+    //             const response = await listAll(
+    //                 ref(storage, `videosForHomePage`)
+    //             );
+
+    //             response.items.forEach(async (videos) => {
+    //                 const url = await getDownloadURL(videos);
+    //                 // setMemberVideoAll(url);
+    //                 const fileName = videos.name;
+
+    //                 const data = query(
+    //                     collection(db, "videoForAll"),
+    //                     where("user", "==", memberId)
+    //                 );
+    //                 const docSnap = await getDocs(data);
+    //                 docSnap.forEach((doc) => {
+    //                     const originalVideoName = doc.data().originalVideoName;
+    //                     const videoName = doc.data().videoName;
+    //                     const videoCategory = doc.data().videoCategory;
+    //                     // console.log(videoCategory);
+    //                     if (originalVideoName === fileName) {
+    //                         setMemberVideoAll((prev) =>
+    //                             !prev.includes(url) ? [...prev, url] : prev
+    //                         );
+    //                         setVideoNameAll((prev) =>
+    //                             !prev.includes(videoName)
+    //                                 ? [...prev, videoName]
+    //                                 : prev
+    //                         );
+    //                         setMemberCategoryAll((prev) =>
+    //                             !prev.includes(videoCategory)
+    //                                 ? [...prev, videoCategory]
+    //                                 : prev
+    //                         );
+    //                         setVideoInfoAll((prev) => ({
+    //                             ...prev,
+    //                             [videoCategory]: {
+    //                                 url,
+    //                                 videoName,
+    //                             },
+    //                         }));
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //         getVideos(memberId);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }, [memberId]);
+    // console.log(videoInfoAll);
     // console.log(videoNameAll);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TOHERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
