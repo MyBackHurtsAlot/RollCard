@@ -29,7 +29,7 @@ export default Nav;
 //Styled Component
 const Nav_Wrapper = styled.nav`
     width: 100%;
-    height: 400px;
+    height: 500px;
     /* padding: 0 10%; */
     background-color: ${(props) => props.theme.colors.primary_white};
     display: flex;

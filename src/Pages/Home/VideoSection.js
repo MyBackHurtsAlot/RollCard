@@ -57,7 +57,7 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
     }, [videoList]);
     // console.log(showLoding);
     return (
-        <div>
+        <>
             {!showLoding ? (
                 <Loading progress={"Loading"} />
             ) : (
@@ -104,7 +104,7 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
                     })}
                 </Home_Video_Section_Wrapper>
             )}
-        </div>
+        </>
     );
 };
 
@@ -129,7 +129,7 @@ const Home_Video_Container = styled.div`
     cursor: pointer;
     video {
         width: 100%;
-        border-radius: 15px;
+        border-radius: 5px;
         /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
@@ -146,7 +146,7 @@ const Home_Video_Container = styled.div`
     }
     @media ${device.smallest} {
         width: 90%;
-        margin-top: 40px;
+        /* margin-top: 40px; */
     }
     @media ${device.mobile} {
         width: 90%;
@@ -161,7 +161,7 @@ const Home_Video_Container = styled.div`
 `;
 
 const Home_VideoInfo_Container = styled.div`
-    margin: 5px auto auto 5px;
+    margin: 5px auto auto 0;
     position: relative;
     h1 {
         font-size: 18px;

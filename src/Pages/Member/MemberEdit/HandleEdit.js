@@ -24,6 +24,9 @@ const HandleEdit = ({
     videoCategoryAll,
     videoDiscriptionAll,
     videoindex,
+    setVideoNameAll,
+    setVideoCategoryAll,
+    setVideoDiscriptionAll,
 }) => {
     // console.log(videoWrapperRef);
     const { user } = useContext(UserContext);
@@ -33,6 +36,8 @@ const HandleEdit = ({
     const [newVideoDescriptionAllTemp, setNewVideoDescriptionAllTemp] =
         useState("");
     const [videoTempCategory, setTempVideoCategory] = useState("");
+
+    const updatedRef = useRef(null);
 
     console.log("showEdit", showEdit);
     const handleEditClick = (i) => {
@@ -83,6 +88,21 @@ const HandleEdit = ({
                             videoCategory: videoTempCategory,
                             videoDescription: newVideoDescriptionAllTemp,
                         });
+                        setVideoNameAll((prev) => {
+                            const newState = [...prev];
+                            newState[videoindex] = newVideoNameTemp;
+                            return newState;
+                        });
+                        setVideoCategoryAll((prev) => {
+                            const newState = [...prev];
+                            newState[videoindex] = videoTempCategory;
+                            return newState;
+                        });
+                        setVideoDiscriptionAll((prev) => {
+                            const newState = [...prev];
+                            newState[videoindex] = newVideoDescriptionAllTemp;
+                            return newState;
+                        });
                     } catch (error) {
                         console.log(error);
                     }
@@ -97,6 +117,7 @@ const HandleEdit = ({
     useEffect(() => {
         if (videoNameAll === videoNameAll) {
             setNewVideoNameTemp(videoNameAll);
+            setTempVideoCategory(videoCategoryAll);
         }
     }, [videoNameAll]);
 
@@ -108,8 +129,28 @@ const HandleEdit = ({
     useEffect(() => {
         if (videoDiscriptionAll === videoDiscriptionAll) {
             setNewVideoDescriptionAllTemp(videoDiscriptionAll);
+            setTempVideoCategory(videoCategoryAll);
         }
     }, [videoDiscriptionAll]);
+
+    // useEffect(() => {
+    //     if (updatedRef.current) {
+    //         // 取得要更新的元素
+    //         const updatedElement = document.getElementById(
+    //             updatedRef.current.id
+    //         );
+    //         if (updatedElement) {
+    //             // 更動要更新的元素
+    //             updatedElement.querySelector(".videoName").textContent =
+    //                 newVideoNameTemp;
+    //             updatedElement.querySelector(".videoCategory").textContent =
+    //                 videoTempCategory;
+    //             updatedElement.querySelector(".videoDiscription").textContent =
+    //                 newVideoDescriptionAllTemp;
+    //         }
+    //         updatedRef.current = null; // 清除要更新的ref
+    //     }
+    // }, [newVideoNameTemp, newVideoDescriptionAllTemp, videoTempCategory]);
     // const aaa = parse(newVideoDescriptionAllTemp.toString());
     // console.log("fromHandle", videoTempCategory);
     // console.log("aaa", aaa);
@@ -118,7 +159,7 @@ const HandleEdit = ({
         <>
             {!showEdit ? (
                 <EditVideoContent>
-                    <p>修改標題</p>
+                    <p>變更標題</p>
                     <NewVideoName
                         html={`${newVideoNameTemp}`}
                         onChange={(e) => {
@@ -126,12 +167,13 @@ const HandleEdit = ({
                         }}
                     />
                     {/* {videoNameAll} */}
+                    <p>變更分類</p>
                     <VideoDropDown
                         videoCategoryAll={videoCategoryAll}
                         setTempVideoCategory={setTempVideoCategory}
                         videoTempCategory={videoTempCategory}
                     />
-                    <p>修改說明</p>
+                    <p>變更說明</p>
                     <NewVideoDescription
                         html={`${newVideoDescriptionAllTemp}`}
                         onChange={(e) => {
@@ -176,7 +218,7 @@ const EditVideoContent = styled.div`
     flex-direction: column;
     gap: 15px;
     p {
-        font-size: 1.5em;
+        font-size: 1.3em;
         font-weight: 500;
     }
 `;
@@ -184,21 +226,29 @@ const NewVideoName = styled(ContentEditable)`
     outline: none;
     border: 1px solid ${(props) => props.theme.colors.primary_white};
     cursor: auto;
-    border-radius: 15px;
+    border-radius: 5px;
     height: 50px;
     padding: 5px;
     display: flex;
     align-items: center;
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+    }
 `;
 const NewVideoDescription = styled(ContentEditable)`
     outline: none;
     border: 1px solid ${(props) => props.theme.colors.primary_white};
     cursor: auto;
-    border-radius: 15px;
+    border-radius: 5px;
     height: auto;
     padding: 15px 5px;
     /* display: flex;
     align-items: center; */
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+    }
 `;
 const ButtonWrapper = styled.div`
     margin: auto 15px 0 auto;
@@ -225,7 +275,7 @@ const EditButton = styled.span`
         props.showEdit
             ? props.theme.colors.primary_Dark
             : props.theme.colors.highLight};
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;

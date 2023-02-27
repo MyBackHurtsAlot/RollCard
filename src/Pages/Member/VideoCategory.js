@@ -9,6 +9,7 @@ const VideoCategory = ({
     videoNameAll,
     videoCategoryAll,
     currentMemberName,
+    videoEditorAll,
 }) => {
     const videoRefs = useRef([]);
     const [positionsX, setPositionsX] = useState([]);
@@ -54,6 +55,7 @@ const VideoCategory = ({
                     videoCategoryAll={videoCategoryAll}
                     setShowCategory={setShowCategory}
                     memberSelectedCategory={memberSelectedCategory}
+                    videoEditorAll={videoEditorAll}
                 />
             ) : (
                 <RandomWrapper>

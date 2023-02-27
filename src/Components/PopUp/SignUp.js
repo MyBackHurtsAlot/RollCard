@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import {
@@ -28,6 +28,15 @@ const SignUp = ({
     popColor,
 }) => {
     const navigate = useNavigate();
+    useEffect(() => {
+        if (popMessage) {
+            const timeoutId = setTimeout(() => {
+                setPopMessage("");
+            }, 2000);
+            return () => clearTimeout(timeoutId);
+        }
+    }, [popMessage]);
+
     const submitRegister = async () => {
         try {
             await createUserWithEmailAndPassword(
@@ -50,17 +59,22 @@ const SignUp = ({
                 error.message === "Firebase: Error (auth/email-already-in-use)."
             ) {
                 setPopMessage("信箱被用過啦");
+            } else if ("Firebase: Error (auth/invalid-email).") {
+                setPopMessage("請輸入正常的信箱");
             }
             console.log(error.message);
         }
     };
+    const submiRegestByKeyboard = (e) => {
+        if (e.key === "Enter") submitRegister();
+    };
     return (
-        <PopUp_Wrapper>
+        <PopUp_Wrapper onKeyPress={submiRegestByKeyboard}>
             <PopUp_Title>註冊會員</PopUp_Title>
             <PopUp_Input_Wrapper>
                 <PopUp_Input
                     type="input"
-                    placeholder="E-mail"
+                    placeholder="請輸入信箱"
                     onChange={(e) => {
                         setRegisterEmail(e.target.value);
                     }}
@@ -68,7 +82,7 @@ const SignUp = ({
                 ></PopUp_Input>
                 <PopUp_Password
                     type="password"
-                    placeholder="Password"
+                    placeholder="請輸入密碼"
                     onChange={(e) => {
                         setRegisterPassword(e.target.value);
                     }}
@@ -79,6 +93,8 @@ const SignUp = ({
             <PopUp_isLoggedin
                 onClick={() => {
                     setCurrentPage("Login");
+                    setRegisterEmail("");
+                    setRegisterPassword("");
                 }}
             >
                 我是會員

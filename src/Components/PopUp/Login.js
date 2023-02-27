@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     PopUp_Wrapper,
@@ -29,6 +29,15 @@ const SignUp = ({
     const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
 
+    useEffect(() => {
+        if (popMessage) {
+            const timeoutId = setTimeout(() => {
+                setPopMessage("");
+            }, 2000);
+            return () => clearTimeout(timeoutId);
+        }
+    }, [popMessage]);
+
     const submitLogin = async () => {
         try {
             const response = await signInWithEmailAndPassword(
@@ -36,7 +45,6 @@ const SignUp = ({
                 checkEmail,
                 checkPassword
             );
-
             setCurrentPage("");
             setDisplay("none");
             navigate("/");
@@ -50,15 +58,19 @@ const SignUp = ({
             if (!checkEmail || !checkPassword) {
                 setPopMessage("請輸入信箱及密碼");
             } else if (
-                error.message === "Firebase: Error (auth/invalid-email)."
+                error.message === "Firebase: Error (auth/wrong-password)." ||
+                "Firebase: Error (auth/invalid-email)."
             ) {
                 setPopMessage("信箱或密碼有誤");
             }
         }
     };
+    const submitLoginByKeyboard = (e) => {
+        if (e.key === "Enter") submitLogin();
+    };
     return (
         <>
-            <PopUp_Wrapper>
+            <PopUp_Wrapper onKeyPress={submitLoginByKeyboard}>
                 <PopUp_Title>會員登入</PopUp_Title>
                 <PopUp_Input_Wrapper>
                     <PopUp_Input
@@ -84,6 +96,8 @@ const SignUp = ({
                 <PopUp_isLoggedin
                     onClick={() => {
                         setCurrentPage("SignUp");
+                        setCheckEmail("");
+                        setCheckPassword("");
                     }}
                 >
                     我不是會員

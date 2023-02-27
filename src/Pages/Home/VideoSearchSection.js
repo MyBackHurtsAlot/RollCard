@@ -20,6 +20,7 @@ import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
 import img from "../../Assets/SH.png";
+import { device } from "../../Components/Rwd";
 
 const VideoSearchSection = ({
     selectedCategory,
@@ -57,7 +58,7 @@ const VideoSearchSection = ({
                 const url = doc.data().videoUrlForHome;
                 const editor = doc.data().userName;
                 const videoName = doc.data().videoName;
-                const id = doc.data().videoCategory;
+                const id = doc.data().user;
                 newVideoList.push(url);
                 newEditorNameList.push(editor);
                 newVideoNameList.push(videoName);
@@ -181,25 +182,24 @@ const VideoSearchSection = ({
                     const splitUrl = url.split("&token=")[1];
                     // console.log(splitUrl);
                     return (
-                        <Home_Video_Container key={uuidv4()}>
+                        <Home_Video_Container
+                            key={uuidv4()}
+                            editor={editorName[index]}
+                        >
                             <video
                                 src={url}
                                 onClick={() => {
                                     navigate(`/watch/${splitUrl}`);
                                 }}
                             />
-                            <p>{videoNameList[index]}</p>
-                            <p>{editorName[index]}</p>
-                            {/* <Home_Video_Avator
-                                editorAvator={editorAvator[index]}
-                            /> */}
-                            {/* <img src={editorAvator[index]} alt="" /> */}
-                            <Home_Video_Avator>
-                                {/* {editorAvator.map((img) => {
-                                    return <img src={img} />;
-                                })} */}
-                                {/* <img src={editorAvator[index]} alt="" /> */}
-                            </Home_Video_Avator>
+                            <h1>{videoNameList[index]}</h1>
+                            <p
+                                onClick={() =>
+                                    navigate(`/member/${userIdList[index]}`)
+                                }
+                            >
+                                {editorName[index]}
+                            </p>
                         </Home_Video_Container>
                     );
                 })}
@@ -220,12 +220,11 @@ const Home_Video_Section_Wrapper = styled.section`
 `;
 const Home_Video_Container = styled.div`
     width: 23%;
-    /* height: 230px; */
-    /* outline: 1px solid red; */
+    position: relative;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    &:hover {
+    /* &:hover {
         color: ${(props) => props.theme.colors.highLight};
-    }
+    } */
     cursor: pointer;
     video {
         width: 100%;
@@ -244,11 +243,46 @@ const Home_Video_Container = styled.div`
     img {
         width: 50px;
     }
+    h1 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    p {
+        font-weight: 200;
+        &:hover::after {
+            content: ${({ editor }) => `"${editor} 的所有作品"`};
+            position: absolute;
+            top: 110%;
+            left: 0;
+            border-radius: 5px;
+            background-color: #a6a6a6;
+            color: #f2f2f2;
+            padding: 5px;
+        }
+    }
+    @media ${device.smallest} {
+        width: 90%;
+        margin-top: 40px;
+    }
+    @media ${device.mobile} {
+        width: 90%;
+        margin-top: 40px;
+    }
+    @media ${device.tablet} {
+        width: 45%;
+    }
+    @media ${device.desktop} {
+        width: 23%;
+    }
 `;
-const Home_Video_Avator = styled.div`
-    width: 20px;
-    height: 20px;
+// const Home_Video_Avator = styled.div`
+//     width: 20px;
+//     height: 20px;
 
-    /* background-image: ${(props) =>
-        props.editorAvator ? `url(${props.editorAvator})` : `url(${img})`}; */
-`;
+//     /* background-image: ${(props) =>
+//         props.editorAvator ? `url(${props.editorAvator})` : `url(${img})`}; */
+// `;

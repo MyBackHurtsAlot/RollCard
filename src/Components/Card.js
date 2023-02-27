@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = () => {
+const Card = ({ message }) => {
     return (
         <>
             <CardWrapper>
-                <CardContextTop>成功上傳</CardContextTop>
-                <CardContextMid>成功上傳</CardContextMid>
-                <CardContextBot>成功上傳</CardContextBot>
+                <CardContextTop>{message}</CardContextTop>
+                <CardContextMid>{message}</CardContextMid>
+                <CardContextBot>{message}</CardContextBot>
             </CardWrapper>
         </>
     );

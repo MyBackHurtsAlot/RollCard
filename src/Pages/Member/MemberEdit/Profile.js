@@ -18,7 +18,7 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { auth } from "../../../Firebase-config";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../Firebase-config";
 import { db } from "../../../Firebase-config";
 import { UserInfoContext, UserContext } from "../../../Context/userContext";
@@ -80,18 +80,15 @@ const Profile = () => {
             }
             updateData(user);
             setShowCard(true);
+            setTimeout(() => {
+                setShowCard(false);
+            }, 2500);
         } catch (error) {
             console.log(error);
         }
     };
     // console.log(userAboutTemp);
     const AvatorChangePreview = async (e) => {
-        // const imageRef = ref(storage, `avators/${user}/${"avator" + user}`);
-        // if (imageRef) {
-        //     uploadBytes(imageRef, avator).then(() => {
-        //         console.log("Upload");
-        //     });
-        // }
         if (e.target.files[0]) {
             const file = e.target.files[0];
             const previewer = new FileReader();
@@ -100,6 +97,19 @@ const Profile = () => {
                 setAvator(file);
                 setAvatorPreview(previewer.result);
             };
+            try {
+                const imageRef = ref(
+                    storage,
+                    `avators/${user}/${"avator" + user}`
+                );
+                if (imageRef) {
+                    uploadBytes(imageRef, file).then(() => {
+                        console.log("Upload");
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
     useEffect(() => {
@@ -108,27 +118,38 @@ const Profile = () => {
             setUserEmail(email.email);
         }
     }, [user]);
-    const uploadImage = () => {
-        try {
-            const imageRef = ref(storage, `avators/${user}/${"avator" + user}`);
-            if (imageRef) {
-                uploadBytes(imageRef, avator).then(() => {
-                    console.log("Upload");
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+
+    // const uploadImage = () => {
+    //     try {
+    //         const imageRef = ref(storage, `avators/${user}/${"avator" + user}`);
+    //         if (imageRef) {
+    //             uploadBytes(imageRef, avator).then(() => {
+    //                 console.log("Upload");
+    //                 const img = getDownloadURL(imageRef);
+    //                 console.log(img);
+    //             });
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
     useEffect(() => {
         if (userNameTemp === "你的名字") {
             setUserNameTemp(userName);
+            setUserJobTemp(userJob);
         }
     }, [userName]);
 
     useEffect(() => {
+        if (userJob === userJob) {
+            setUserJobTemp(userJob);
+        }
+    }, []);
+
+    useEffect(() => {
         if (userAboutTemp === "關於你") {
             setUserAboutTemp(userAbout);
+            setUserJobTemp(userJob);
         }
     }, [userAbout]);
     return (
@@ -139,25 +160,30 @@ const Profile = () => {
                 >
                     <Profile_Section_Left_Avator_Uploader
                         type="file"
+                        accept="image/*"
                         onChange={AvatorChangePreview}
+                        // onChange={uploadImage}
                     />
                 </Profile_Section_Left_Avator_Container>
-                <Profile_Section_Left_Avator_Uploader_Confirm
-                    onClick={uploadImage}
+                {/* <Profile_Section_Left_Avator_Uploader_Confirm
+                // onClick={uploadImage}
                 >
                     上傳
-                </Profile_Section_Left_Avator_Uploader_Confirm>
+                </Profile_Section_Left_Avator_Uploader_Confirm> */}
             </Profile_Section_Left_Wrapper>
             <Profile_Section_Right_Wrapper>
+                <p>你的名字</p>
                 <Profile_Section_Right_Name_Editor
                     html={`${userNameTemp}`}
                     onChange={(e) => setUserNameTemp(e.target.value)}
                 />
+                <p>你的職業</p>
                 <JobDropDown
                     userJobTemp={userJobTemp}
                     setUserJobTemp={setUserJobTemp}
                     userJob={userJob}
                 />
+                <p>關於你</p>
                 <Profile_Section_Right_About_Editor
                     html={`${userAboutTemp}`}
                     onChange={(e) => setUserAboutTemp(e.target.value)}
@@ -168,7 +194,7 @@ const Profile = () => {
                     儲存
                 </Profile_Section_Right_Editor_Confirm>
             </Profile_Section_Right_Wrapper>
-            {showCard ? <Card /> : ""}
+            {showCard ? <Card message={"上傳成功"} /> : ""}
         </Profile_Section>
     );
 };
@@ -183,7 +209,7 @@ export const Profile_Section = styled.section`
     padding: 20px;
     width: 25%;
     min-height: 600px;
-    border-radius: 20px;
+    border-radius: 5px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
     background-color: ${(props) => props.theme.colors.primary_white};
     display: flex;
@@ -262,43 +288,57 @@ export const Profile_Section_Right_Wrapper = styled.div`
     width: 70%;
     min-height: 280px;
     align-items: center;
-    margin-top: 50px;
-    gap: 30px;
+    margin-top: 25px;
+    /* gap: 30px; */
+    p {
+        color: ${(props) => props.theme.colors.primary_Grey};
+        margin: 5px auto 5px 0;
+    }
 `;
 export const Profile_Section_Right_Name_Editor = styled(ContentEditable)`
-    font-size: 30px;
+    font-size: 1.5em;
     font-weight: 700;
-    max-width: 100%;
+    width: 100%;
     min-height: 50px;
+    margin-right: auto;
     outline: none;
+
+    border-radius: 5px;
     white-space: pre-wrap;
     word-wrap: break-word;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-wrap: wrap;
     /* line-height: 0; */
     color: ${(props) => props.theme.colors.primary_Dark};
-`;
-
-const Profile_Section_Right_Job_Editor = styled(ContentEditable)`
-    font-size: 24px;
-    font-weight: 500;
-    outline: none;
-    color: ${(props) => props.theme.colors.primary_Dark};
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+        padding: 5px;
+        border-radius: 5px;
+    }
 `;
 
 export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
     font-size: 16px;
     font-weight: 400;
     min-height: 160px;
+    line-height: 23px;
     width: 100%;
     white-space: pre-wrap;
     word-wrap: break-word;
-    outline: 1px solid #a6a6a6;
-    padding: 15px;
+    outline: none;
+    border: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
+    padding: 5px;
     border-radius: 5px;
     color: ${(props) => props.theme.colors.primary_Dark};
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        border: 1px solid ${(props) => props.theme.colors.highLight};
+
+        border-radius: 5px;
+    }
 `;
 
 // const JobDropDownWidth = styled(JobDropDown)`
@@ -307,13 +347,13 @@ export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
 
 export const Profile_Section_Right_Editor_Confirm = styled.div`
     font-size: 14px;
-    top: 370px;
-    right: 1%;
+    /* top: 370px;
+    right: 1%; */
     width: 100%;
     height: 50px;
     letter-spacing: 3px;
     border-radius: 5px;
-
+    margin-top: 10px;
     color: ${(props) => props.theme.colors.primary_Dark};
     background-color: ${(props) => props.theme.colors.highLight};
     display: flex;

@@ -78,9 +78,26 @@ const VideoPlayer = ({ videoList }) => {
     const handlePlayingLeave = () => {
         setShowPlaying(false);
     };
+    // const handleSpaceBar = () => {
+    //     togglePlay;
+    // };
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.code === "Space") {
+                event.preventDefault();
+                togglePlay();
+                setShowControls(!showControls);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [togglePlay]);
     return (
-        <div>
+        <>
             <Video_Wrapper
                 ref={fullScreenRef}
                 onMouseEnter={() => {
@@ -91,6 +108,7 @@ const VideoPlayer = ({ videoList }) => {
                     setShowSpeedControl(false);
                     setShowVolumeControl(false);
                 }}
+                // onKeyPress={handleSpaceBar}
             >
                 <video
                     src={url}
@@ -248,7 +266,7 @@ const VideoPlayer = ({ videoList }) => {
                     </FullScreen>
                 </Video_Controller_Wrapper>
             </Video_Wrapper>
-        </div>
+        </>
     );
 };
 
@@ -317,7 +335,6 @@ const Duration = styled.div`
     cursor: default;
 `;
 const TimeCode = styled(Duration)``;
-// ?????????????????????????? 要把input range 換掉嗎 ?????????????????????????????
 const TT = styled.div`
     width: ${(props) => props.width}px;
     height: 15px;
@@ -325,6 +342,7 @@ const TT = styled.div`
 `;
 const SettingsWrapper = styled.div`
     cursor: pointer;
+    position: relative;
 `;
 
 const Settings = styled.div`
@@ -352,8 +370,8 @@ const SpeedController = styled.ul`
     height: 150px;
     position: absolute;
     /* right: 11%; */
-    right: 209px;
-
+    /* right: 209px; */
+    transform: translate(-44%, 10px);
     bottom: ${(props) => (props.showSpeedControl ? "55px" : "50px")};
     opacity: ${(props) => (props.showSpeedControl ? 100 : 0)};
     display: flex;
@@ -416,17 +434,19 @@ const VolumeOff = styled(ImVolumeMute2)`
     }
 `;
 const VolumeBar = styled.input`
-    transform: rotate(-90deg);
+    transform: rotate(-90deg) translate(-50%, 10px);
     width: 100px;
     height: 5px;
     position: absolute;
+    /* left: 50%; */
     /* right: 4%; */
     /* right: 9.5%; */
-    right: -33px;
-    bottom: ${(props) => (props.showVolumeControl ? "100px" : "90px")};
+    /* transform: translate(10px, -50%); */
+    bottom: ${(props) => (props.showVolumeControl ? "80px" : "70px")};
     opacity: ${(props) => (props.showVolumeControl ? 110 : 0)};
     pointer-events: ${(props) => (props.volumeDisplay ? "auto" : "none")};
     transition: all 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    transform-origin: 0 0;
 `;
 
 const FullScreen = styled.div`

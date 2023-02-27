@@ -155,7 +155,7 @@ const CurrentMemberWrapper = styled.div`
     /* justify-content: space-around; */
     gap: 5px;
     z-index: 3;
-    position: relative;
+    position: fixed;
     /* @media ${device.underDesktop} {
         width: 90%;
         min-height: 300px;

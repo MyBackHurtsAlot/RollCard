@@ -40,25 +40,27 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
                 const newVideoNameList = [];
                 const newVideoList = [];
                 const newCategoryList = [];
-
+                const NewIdList = [];
                 docSnap.forEach((doc) => {
                     // console.log("query");
                     const url = doc.data().videoUrlForHome;
                     const editor = doc.data().userName;
                     const videoName = doc.data().videoName;
                     const category = doc.data().videoCategory;
+                    const id = doc.data().user;
                     // const id = doc.data().user;
-                    console.log(url);
+                    // console.log(url);
                     newVideoList.push(url);
                     newEditorNameList.push(editor);
                     newVideoNameList.push(videoName);
                     newCategoryList.push(category);
-
+                    NewIdList.push(id);
                     // setCurrentVideo(id);
                 });
                 setThisCategory(newVideoList);
                 setVideoNameList(newVideoNameList);
                 setEditorName(newEditorNameList);
+                setUserIdList(NewIdList);
             }
             getVideo(videoCategory);
         } catch (error) {
@@ -216,12 +218,12 @@ const ThisCat_Section_Wrapper = styled.section`
 
     gap: 20px;
     outline: 1px solid #404040;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 15px;
 `;
 const ThisCat_Title = styled.div`
     margin: 0 auto;
-    font-size: 1.5rem;
+    font-size: 1.3em;
     font-weight: 200;
 `;
 const VideoWrapper = styled.div`
@@ -238,7 +240,7 @@ const Home_Video_Container = styled.div`
     video {
         margin-top: 5px;
         width: 100%;
-        border-radius: 15px;
+        border-radius: 5px;
         /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
@@ -250,25 +252,34 @@ const Home_Video_Container = styled.div`
         }
     }
 
-    p {
+    /* p {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         margin-top: 5px;
-    }
+        color: ${(props) => props.theme.colors.primary_Lightgrey};
+        font-weight: 500;
+    } */
 `;
 const VideoContent = styled.div`
     width: 100%;
     padding: 10px;
     position: relative;
     h1 {
-        font-size: 1.3em;
+        font-size: 1.2em;
+        margin-top: 5px;
         font-weight: 500;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
     p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-top: 5px;
+        color: ${(props) => props.theme.colors.primary_Lightgrey};
+        font-weight: 500;
         &:hover::after {
             content: ${({ editor }) => `"${editor} 的所有作品"`};
             position: absolute;

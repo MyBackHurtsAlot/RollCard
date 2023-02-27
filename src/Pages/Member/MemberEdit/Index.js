@@ -163,6 +163,9 @@ const MemberEditPage = () => {
                         memberVideoAll={memberVideoAll}
                         videoCategoryAll={videoCategoryAll}
                         videoDiscriptionAll={videoDiscriptionAll}
+                        setVideoNameAll={setVideoNameAll}
+                        setVideoCategoryAll={setVideoCategoryAll}
+                        setVideoDiscriptionAll={setVideoDiscriptionAll}
                     />
                     <Member_EditPage_Video_Wrapper
                         style={{ display: displayNone }}
@@ -187,9 +190,9 @@ const MemberPageWrapper = styled.section`
 
 const Member_EditPage_Video_Section_Title = styled.div`
     color: ${(props) => props.theme.colors.primary_white};
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: 100;
-    margin-top: 70px;
+    margin-top: 30px;
     position: absolute;
     left: 0;
     top: 0;
@@ -216,7 +219,7 @@ const Member_EditPage_Video_Wrapper = styled.div`
     position: relative;
     video {
         width: 40%;
-        border-radius: 15px;
+        border-radius: 5px;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         aspect-ratio: 16/9;
         margin: 20px;

@@ -16,6 +16,9 @@ const MemberEditVideo = ({
     memberVideoAll,
     videoNameAll,
     videoDiscriptionAll,
+    setVideoNameAll,
+    setVideoCategoryAll,
+    setVideoDiscriptionAll,
 }) => {
     const navigate = useNavigate();
     const videoWrapperRef = useRef([]);
@@ -61,6 +64,9 @@ const MemberEditVideo = ({
                                 videoCategoryAll={videoCategoryAll[index]}
                                 videoDiscriptionAll={videoDiscriptionAll[index]}
                                 videoindex={index}
+                                setVideoNameAll={setVideoNameAll}
+                                setVideoCategoryAll={setVideoCategoryAll}
+                                setVideoDiscriptionAll={setVideoDiscriptionAll}
                             />
                         </EditVideoWrapper>
                     );
@@ -78,16 +84,16 @@ const Member_EditPage_Video_Wrapper = styled.div`
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 115px;
+    margin-top: 70px;
     position: relative;
     z-index: 1;
-    border-radius: 15px;
+    border-radius: 5px;
     gap: 15px;
 
     video {
         cursor: pointer;
         width: 30%;
-        border-radius: 15px;
+        border-radius: 5px;
         /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
         aspect-ratio: 16/9;
         margin: 5px;
@@ -104,7 +110,7 @@ const Member_EditPage_Video_Wrapper = styled.div`
 const EditVideoWrapper = styled.div`
     display: flex;
     padding: 15px 0 15px 0;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 100%;
     height: 180px;
     overflow: hidden;

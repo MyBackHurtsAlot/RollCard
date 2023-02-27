@@ -60,7 +60,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);
@@ -134,7 +134,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);
@@ -193,7 +193,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);
@@ -252,7 +252,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);
@@ -312,7 +312,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);
@@ -371,7 +371,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             const newVideoList = [];
 
             docSnap.forEach((doc) => {
-                console.log("query");
+                // console.log("query");
                 const url = doc.data().videoUrlForHome;
 
                 newVideoList.push(url);

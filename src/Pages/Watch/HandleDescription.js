@@ -47,7 +47,7 @@ const Member_Section_Description = styled.div`
     overflow: hidden;
     line-height: 1.5em;
     background-color: #404040;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 10px;
     position: relative;
     cursor: ${(props) => (!props.showExpand ? "auto" : "pointer")};

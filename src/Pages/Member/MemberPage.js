@@ -100,6 +100,7 @@ const MemberPage = () => {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! THIS PAGE FROM HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!
     const [videoNameAll, setVideoNameAll] = useState([]);
     const [videoCategoryAll, setMemberCategoryAll] = useState([]);
+    const [videoEditorAll, setVideoEditorAll] = useState([]);
     const [videoInfoAll, setVideoInfoAll] = useState({});
 
     useEffect(() => {
@@ -109,7 +110,6 @@ const MemberPage = () => {
                 where("user", "==", memberId)
             );
             const docSnap = await getDocs(data);
-            const newEditorNameList = [];
             const newVideoNameList = [];
             const newVideoList = [];
             const newCategoryList = [];
@@ -121,14 +121,13 @@ const MemberPage = () => {
                 const videoName = doc.data().videoName;
                 const category = doc.data().videoCategory;
                 // const id = doc.data().user;
-
                 newVideoList.push(url);
-                newEditorNameList.push(editor);
                 newVideoNameList.push(videoName);
                 newCategoryList.push(category);
-
+                setVideoEditorAll(editor);
                 // setCurrentVideo(id);
             });
+
             setMemberVideoAll(newVideoList);
             setVideoNameAll(newVideoNameList);
             setMemberCategoryAll(newCategoryList);
@@ -256,6 +255,7 @@ const MemberPage = () => {
                     videoNameAll={videoNameAll}
                     videoCategoryAll={videoCategoryAll}
                     currentMemberName={currentMemberName}
+                    videoEditorAll={videoEditorAll}
                 />
                 <VideoWapper>
                     <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>

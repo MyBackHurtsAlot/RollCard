@@ -257,7 +257,10 @@ const Watch = () => {
                 </Member_Section_Below_Left_Wrapper>
 
                 <CurrentMemberOthersWrapper>
-                    <CurrentMemberOthers videoEditor={videoEditor} />
+                    <CurrentMemberOthers
+                        videoEditor={videoEditor}
+                        videoList={videoList[0]}
+                    />
                 </CurrentMemberOthersWrapper>
             </Member_Section_Below_Wrapper>
         </div>
@@ -303,8 +306,12 @@ const Member_Section_VideoInfo_Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
+
     h1 {
-        font-size: 2em;
+        font-size: 1.5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 `;
 const Member_Section_Editor_Wrapper = styled.div`
@@ -313,7 +320,7 @@ const Member_Section_Editor_Wrapper = styled.div`
     align-items: center;
     gap: 5px;
     background-color: #404040;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);

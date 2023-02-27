@@ -23,6 +23,7 @@ import UploadVideoInfo from "./UploadVideoInfo";
 import Loading from "../../Loading/Index";
 import { v4 as uuidv4 } from "uuid";
 import { device } from "../../../Components/Rwd";
+import VideoPlayer from "../../../Components/VideoPlayer/Index";
 
 const VideoUpload = (selectedCategory) => {
     const id = uuidv4();
@@ -39,6 +40,7 @@ const VideoUpload = (selectedCategory) => {
     const [displayBlock, setDisplayBlock] = useState("block");
     const [visibility, setVisability] = useState("visable");
     const [notLoading, setNotLoading] = useState("none");
+    const [noUpload, setNoUpload] = useState(false);
     // console.log("first", uploading);
     const {
         // videoName,
@@ -235,7 +237,8 @@ const VideoUpload = (selectedCategory) => {
     // console.log("111", originalVideoName);
     useEffect(() => {
         if (progress === 100) {
-            setDisplayNone("block");
+            setDisplayNone("flex");
+            setNoUpload(true);
             setDisplayBlock("none");
             setVisability("hidden");
             setNotLoading("none");
@@ -256,20 +259,20 @@ const VideoUpload = (selectedCategory) => {
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
             >
-                <Upload_Video
-                    src={memberUrl}
-                    controls
-                    style={{ display: displayNone }}
-                    key={id}
-                />
-                <Upload_File_Input style={{ display: displayBlock }}>
-                    {progress}
-                    <h1>上傳影片</h1>
-                    <p>或把檔案拖進來</p>
-
-                    <input type="file" onChange={uploadVideo} />
-                </Upload_File_Input>
-
+                {noUpload ? (
+                    <VideoPlayer videoList={memberUrl} key={id} />
+                ) : (
+                    <Upload_File_Input style={{ display: displayBlock }}>
+                        {progress}
+                        <h1>上傳影片</h1>
+                        <p>或把檔案拖進來</p>
+                        <input
+                            type="file"
+                            accept="video/*"
+                            onChange={uploadVideo}
+                        />
+                    </Upload_File_Input>
+                )}
                 <Loading
                     style={{ display: notLoading }}
                     progress={`${Math.ceil(progress)}%`}
@@ -279,6 +282,8 @@ const VideoUpload = (selectedCategory) => {
                 fileName={fileName}
                 videoName={videoName}
                 originalVideoName={originalVideoName}
+                homePageUrl={homePageUrl}
+                memberUrl={memberUrl}
             />
         </>
     );

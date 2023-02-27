@@ -9,48 +9,62 @@ import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
 
-const CurrentMemberOthers = ({ videoEditor }) => {
+const CurrentMemberOthers = ({ videoEditor, videoList }) => {
     const { user } = useContext(UserContext);
     const [memberVideo, setMemberVideo] = useState([]);
     const [videoNameList, setVideoNameList] = useState([]);
     const [videoCategoryList, setVideoCategoryList] = useState([]);
+    const [noOthers, setNoOthers] = useState(false);
     const navigate = useNavigate();
-
+    // console.log(videoList);
     useEffect(() => {
-        async function getVideo(videoEditor) {
-            const data = query(
-                collection(db, "videoForAll"),
-                where("userName", "==", videoEditor),
-                limit(3)
-            );
-            const docSnap = await getDocs(data);
-            const newEditorNameList = [];
-            const newVideoNameList = [];
-            const newVideoList = [];
-            const newCategoryList = [];
+        try {
+            async function getVideo(videoEditor, videoList) {
+                // console.log("in", videoList);
+                const data = query(
+                    collection(db, "videoForAll"),
+                    where("userName", "==", videoEditor),
+                    where("videoUrlForHome", "!=", videoList || ""),
+                    limit(3)
+                );
+                // console.log(videoList);
+                const docSnap = await getDocs(data);
+                const newEditorNameList = [];
+                const newVideoNameList = [];
+                const newVideoList = [];
+                const newCategoryList = [];
+                docSnap.forEach((doc) => {
+                    // console.log("query", doc.data().videoUrlForHome);
+                    const url = doc.data().videoUrlForHome;
+                    const editor = doc.data().userName;
+                    const videoName = doc.data().videoName;
+                    const category = doc.data().videoCategory;
+                    // const id = doc.data().user;
 
-            docSnap.forEach((doc) => {
-                // console.log("query");
-                const url = doc.data().videoUrlForHome;
-                const editor = doc.data().userName;
-                const videoName = doc.data().videoName;
-                const category = doc.data().videoCategory;
-                // const id = doc.data().user;
+                    newVideoList.push(url);
+                    newEditorNameList.push(editor);
+                    newVideoNameList.push(videoName);
+                    newCategoryList.push(category);
 
-                newVideoList.push(url);
-                newEditorNameList.push(editor);
-                newVideoNameList.push(videoName);
-                newCategoryList.push(category);
-
-                // setCurrentVideo(id);
-            });
-            setMemberVideo(newVideoList);
-            setVideoNameList(newVideoNameList);
-            setVideoCategoryList(newCategoryList);
+                    // setCurrentVideo(id);
+                });
+                setMemberVideo(newVideoList);
+                setVideoNameList(newVideoNameList);
+                setVideoCategoryList(newCategoryList);
+            }
+            getVideo(videoEditor, videoList);
+        } catch (error) {
+            console.log(error);
         }
-        getVideo(videoEditor[0]);
-    }, [videoEditor]);
-
+    }, [videoEditor, videoList]);
+    // console.log(memberVideo);
+    useEffect(() => {
+        if (memberVideo.length === 0) {
+            setNoOthers(true);
+        } else {
+            setNoOthers(false);
+        }
+    }, [memberVideo]);
     // useEffect(() => {
     //     try {
     //         async function getVideos(videoEditor) {
@@ -102,27 +116,31 @@ const CurrentMemberOthers = ({ videoEditor }) => {
         <>
             <VideoWapper>
                 <VideoTitle> {videoEditor} 的其他作品</VideoTitle>
-                <VideoSectionWrapper>
-                    {memberVideo.map((url, index) => {
-                        const splitUrl = url.split("&token=")[1];
-                        // console.log("member", splitUrl);
-                        return (
-                            <VideoContainer key={uuidv4()}>
-                                <video
-                                    src={url}
-                                    onClick={() => {
-                                        navigate(`/watch/${splitUrl}`);
-                                        window.location.reload();
-                                        // console.log(splitUrl);
-                                        // console.log("navigate");
-                                    }}
-                                />
-                                <h1>{videoNameList[index]}</h1>
-                                <p>{videoCategoryList[index]}</p>
-                            </VideoContainer>
-                        );
-                    })}
-                </VideoSectionWrapper>
+                {!noOthers ? (
+                    <VideoSectionWrapper>
+                        {memberVideo.map((url, index) => {
+                            const splitUrl = url.split("&token=")[1];
+                            // console.log("member", splitUrl);
+                            return (
+                                <VideoContainer key={uuidv4()}>
+                                    <video
+                                        src={url}
+                                        onClick={() => {
+                                            navigate(`/watch/${splitUrl}`);
+                                            window.location.reload();
+                                            // console.log(splitUrl);
+                                            // console.log("navigate");
+                                        }}
+                                    />
+                                    <h1>{videoNameList[index]}</h1>
+                                    <p>{videoCategoryList[index]}</p>
+                                </VideoContainer>
+                            );
+                        })}
+                    </VideoSectionWrapper>
+                ) : (
+                    <NoOthers>{videoEditor} 沒有其他作品了</NoOthers>
+                )}
             </VideoWapper>
         </>
     );
@@ -139,11 +157,11 @@ const VideoWapper = styled.div`
     justify-content: center;
     gap: 30px;
     outline: 1px solid #404040;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 15px;
 `;
 const VideoTitle = styled.div`
-    font-size: 1.5rem;
+    font-size: 1.3em;
     font-weight: 200;
 `;
 
@@ -166,7 +184,7 @@ const VideoContainer = styled.div`
     video {
         margin-top: 5px;
         width: 100%;
-        border-radius: 15px;
+        border-radius: 5px;
         /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
@@ -180,12 +198,21 @@ const VideoContainer = styled.div`
 
     p {
         margin-top: 5px;
-    }
-    h1 {
-        font-size: 1.3em;
+        color: ${(props) => props.theme.colors.primary_Lightgrey};
         font-weight: 500;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    h1 {
+        font-size: 1.2em;
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-top: 5px;
+    }
+`;
+const NoOthers = styled.div`
+    white-space: nowrap;
 `;

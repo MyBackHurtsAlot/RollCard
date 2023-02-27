@@ -18,7 +18,13 @@ import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
 import { device } from "../../../Components/Rwd";
 import Card from "../../../Components/Card";
 
-const UploadVideoInfo = ({ videoName, originalVideoName }) => {
+const UploadVideoInfo = ({
+    videoName,
+    originalVideoName,
+    homePageUrl,
+    memberUrl,
+}) => {
+    const navigate = useNavigate();
     const { user } = useContext(UserContext);
     const [videoTempCategory, setTempVideoCategory] = useState("");
     const [videoDescriptionTemp, setVideoDescriptionTemp] = useState("");
@@ -43,8 +49,10 @@ const UploadVideoInfo = ({ videoName, originalVideoName }) => {
                 videoUrlForMember: memberUrl,
                 videoId: id,
             });
-            console.log(1234);
             setShowCard(true);
+            setTimeout(() => {
+                navigate(`/member/profile/${user}`);
+            }, 2500);
         } catch (error) {
             console.log(error);
         }
@@ -80,7 +88,7 @@ const UploadVideoInfo = ({ videoName, originalVideoName }) => {
                     上傳
                 </Upload_File_Confirm>
                 {/* <Card /> */}
-                {showCard ? <Card /> : ""}
+                {showCard ? <Card message={"成功上傳"} /> : ""}
             </Upload_File_Section_Wrapper>
         </>
     );

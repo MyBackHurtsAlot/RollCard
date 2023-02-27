@@ -16,18 +16,26 @@ const Controller = (videoRef, fullScreenRef) => {
         setMiniPlayer(!miniPlayer);
     };
     useEffect(() => {
-        miniPlayer
-            ? videoRef.current.requestPictureInPicture()
-            : document.exitPictureInPicture();
+        if (miniPlayer) {
+            videoRef.current.requestPictureInPicture();
+        } else {
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+                // setPlaying(!playing);
+            }
+        }
     }, [miniPlayer, videoRef]);
-
     const toggleFullScreen = () => {
         setFullScreen(!fullScreen);
     };
     useEffect(() => {
-        fullScreen
-            ? fullScreenRef.current.requestFullscreen()
-            : document.exitFullscreen();
+        if (fullScreen) {
+            fullScreenRef.current.requestFullscreen();
+        } else {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        }
     }, [fullScreen, fullScreenRef]);
     // console.log(fullScreen);
     const togglePlay = () => {
@@ -72,14 +80,17 @@ const Controller = (videoRef, fullScreenRef) => {
 
     const handleOnVolumeUpdate = () => {
         const volume = videoRef.current.volume * 100;
+        if (volume === 0) {
+            setMuted(true);
+        }
         setVolume(volume);
     };
     const handleVolumeChange = (e) => {
         const manualChange = Number(e.target.value);
         videoRef.current.volume = manualChange / 100;
         setVolume(manualChange);
+        volume !== 0 ? setMuted(false) : setMuted(true);
     };
-
     return {
         togglePlay,
         handleOnTimeUpdate,

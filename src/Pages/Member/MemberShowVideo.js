@@ -73,15 +73,16 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                                         style={{ display: "none" }}
                                     />
                                 )}
+
+                                <p
+                                    onMouseEnter={() => handleShowVideo(index)}
+                                    // onMouseMove={(e) => handleMouseMove(e)}
+                                >
+                                    {videoNameAll[index]}
+                                    {/* {console.log(showVideo)}
+                                {console.log(mousex)} */}
+                                </p>
                             </NavLink>
-                            <p
-                                onMouseEnter={() => handleShowVideo(index)}
-                                // onMouseMove={(e) => handleMouseMove(e)}
-                            >
-                                {videoNameAll[index]}
-                                {console.log(showVideo)}
-                                {console.log(mousex)}
-                            </p>
                         </VideoContainer>
                     );
                 })}
@@ -111,6 +112,9 @@ const VideoContainer = styled.div`
     align-content: space-between;
     cursor: pointer;
     z-index: 2;
+    a {
+        color: ${(props) => props.theme.colors.primary_white};
+    }
     video {
         position: absolute;
         right: 50px;
@@ -118,7 +122,7 @@ const VideoContainer = styled.div`
         width: 60%;
         border-radius: 15px;
         z-index: 3;
-        width: 45%;
+        width: 30%;
         aspect-ratio: 16/9;
         /* transform: rotate(5deg); */
         outline: 1px solid ${(props) => props.theme.colors.primary_white};

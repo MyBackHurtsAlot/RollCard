@@ -161,12 +161,13 @@ export default Category;
 const Category_Wrapper = styled.section`
     margin-top: 20px;
     width: 100%;
-    height: 400px;
+    height: 500px;
     outline: 1px solid #a6a6a6;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
+    padding: 10px;
 `;
 const Cat_And_All_Wrapper = styled.div`
     width: 100%;
@@ -215,7 +216,7 @@ const Category_Enterprise = styled.div`
     outline: 1px solid #a6a6a6;
     /* text-shadow: 5px 3px 3px rgba(64, 64, 64, 0.45); */
     color: #ffffff;
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
