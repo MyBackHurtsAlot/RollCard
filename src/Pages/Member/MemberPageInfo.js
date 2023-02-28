@@ -95,6 +95,7 @@ const MemberPageInfo = ({
                     currentMemberJob={currentMemberJob}
                     currentMemberEmail={currentMemberEmail}
                     setCurrentMemberName={setCurrentMemberName}
+                    currentMemberAbout={currentMemberAbout}
                     memberId={memberId}
                     currentAvator={currentAvator}
                 ></SmallScreen>
@@ -146,7 +147,7 @@ const CurrentMemberWrapper = styled.div`
     padding: 20px;
     width: 25%;
     min-height: 600px;
-    border-radius: 20px;
+    border-radius: 5px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
     background-color: ${(props) => props.theme.colors.primary_white};
     display: flex;
@@ -165,7 +166,7 @@ const CurrentMemberWrapper = styled.div`
 const Avator = styled.div`
     width: 80%;
     height: 200px;
-    border-radius: 15px;
+    border-radius: 5px;
     background-image: ${(props) =>
         props.currentAvator ? `url(${props.currentAvator})` : `url(${img})`};
     background-size: cover;

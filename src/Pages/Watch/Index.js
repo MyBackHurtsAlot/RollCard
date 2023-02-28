@@ -12,7 +12,7 @@ import VideoPlayer from "../../Components/VideoPlayer/Index";
 import CurrentMemberOthers from "./CurrentMemberOthers";
 import ThisCategory from "./ThisCategory";
 import { HandleDescription } from "./HandleDescription";
-import { async } from "@firebase/util";
+import { device } from "../../Components/Rwd";
 
 const Watch = () => {
     const { splitUrl } = useParams();
@@ -250,6 +250,7 @@ const Watch = () => {
                             {console.log("ori", videoDescription)} */}
                         </HandleDescription>
                     </Member_Section_Wrapper>
+
                     <ThisCategory
                         videoCategory={videoCategory}
                         currentVideo={currentVideo}
@@ -285,14 +286,25 @@ const Member_Section_Below_Wrapper = styled.div`
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 1000px) {
+        flex-direction: column;
+    }
 `;
 
 const CurrentMemberOthersWrapper = styled.div`
     width: 30%;
+    @media (max-width: 1000px) {
+        width: 90%;
+        margin: 10px auto;
+    }
 `;
 
 const Member_Section_Below_Left_Wrapper = styled.div`
     width: 65%;
+    @media (max-width: 1000px) {
+        width: 90%;
+        margin: 0 auto;
+    }
 `;
 const Member_Section_Wrapper = styled.div`
     width: 100%;

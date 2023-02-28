@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import SmallScreen from "./SmallScreen";
 import img from "../../Assets/SH.png";
-import SendEmail from "./SendEmail";
-import { device } from "../../Components/Rwd";
-const SmallScreen = ({
-    currentMemberName,
-    currentMemberJob,
-    currentMemberEmail,
-    currentMemberAbout,
-    currentMember,
-    setCurrentMemberName,
-    memberId,
+import MemberShowVideo from "./MemberShowVideo";
+
+const MemberPageTablet = ({
     memberVideoAll,
     videoNameAll,
+    videoCategoryAll,
+    currentMemberName,
+    videoEditorAll,
+    memberId,
     currentAvator,
+    currentMember,
+    currentMemberJob,
+    currentMemberEmail,
+    setCurrentMemberName,
+    currentMemberAbout,
 }) => {
-    const [sendEmail, setSendEmail] = useState(false);
     return (
         <>
-            <SmallScreenWrapper>
+            <TabletWrapper>
                 <TopWrapper>
                     <Avator currentAvator={currentAvator}></Avator>
                     <NameAndJob>
@@ -30,31 +32,45 @@ const SmallScreen = ({
                                 setSendEmail(true);
                             }}
                         >
-                            聯絡{currentMemberName}
+                            聯絡 {currentMemberName}
                         </Contact>
                     </NameAndJob>
                 </TopWrapper>
-            </SmallScreenWrapper>
-            {sendEmail ? (
-                <SendEmail
-                    setSendEmail={setSendEmail}
-                    sendEmail={sendEmail}
-                    currentMemberName={currentMemberName}
-                    currentMemberEmail={currentMemberEmail}
-                />
-            ) : (
-                ""
-            )}
+            </TabletWrapper>
+            {/* <SmallScreen
+                memberVideoAll={memberVideoAll}
+                videoNameAll={videoNameAll}
+                videoCategoryAll={videoCategoryAll}
+                currentMemberName={currentMemberName}
+                videoEditorAll={videoEditorAll}
+                memberId={memberId}
+                currentAvator={currentAvator}
+                currentMember={currentMember}
+                currentMemberJob={currentMemberJob}
+                currentMemberEmail={currentMemberEmail}
+                setCurrentMemberName={setCurrentMemberName}
+                currentMemberAbout={currentMemberAbout}
+            /> */}
+            <MemberShowVideo
+                memberVideoAll={memberVideoAll}
+                videoNameAll={videoNameAll}
+                videoCategoryAll={videoCategoryAll}
+                currentMemberName={currentMemberName}
+                videoEditorAll={videoEditorAll}
+                memberId={memberId}
+                currentAvator={currentAvator}
+            />
         </>
     );
 };
 
-export default SmallScreen;
-const SmallScreenWrapper = styled.div`
-    width: 90%;
+export default MemberPageTablet;
+
+const TabletWrapper = styled.div`
+    width: 80%;
     display: flex;
     margin: 0 auto;
-    /* outline: 1px solid red; */
+    outline: 1px solid red;
 `;
 const TopWrapper = styled.div`
     width: 100%;
@@ -78,11 +94,6 @@ const UserJob = styled.div`
 `;
 const UserAbout = styled.div`
     line-height: 23px;
-    /* @media ${device.underTablet} {
-        position: absolute;
-        left:10%;
-
-    } */
 `;
 const Contact = styled.div`
     padding: 10px;

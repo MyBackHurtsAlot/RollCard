@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
+import { device } from "../../Components/Rwd";
 
 const ThisMemberCategory = ({
     memberVideoAll,
@@ -34,9 +35,9 @@ const ThisMemberCategory = ({
     });
 
     // console.log(matchingVideos);
-    matchingVideos.map((url) => {
-        console.log(url.memberVideo);
-    });
+    // matchingVideos.map((url) => {
+    //     console.log(url.memberVideo);
+    // });
     return (
         <>
             <ThisMemberCategoryWrapper>
@@ -80,13 +81,20 @@ const ThisMemberCategoryWrapper = styled.div`
     display: flex;
     gap: 15px;
     position: relative;
+    @media ${device.underDesktop} {
+        /* outline: 1px solid red; */
+        width: 90%;
+        margin: 15px auto;
+        border-radius: 5px;
+        background-color: ${(props) => props.theme.colors.primary_white};
+    }
 `;
 const CatVideoCantainer = styled.div`
     margin-top: 15px;
     width: 25%;
     video {
         width: 100%;
-        border-radius: 15px;
+        border-radius: 5px;
         aspect-ratio: 16/9;
         cursor: pointer;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
@@ -96,6 +104,16 @@ const CatVideoCantainer = styled.div`
             transform: translateY(-5px);
             box-shadow: 5px 5px 0px 0px #a6a6a6;
         }
+    }
+    @media ${device.underDesktop} {
+        /* outline: 1px solid red; */
+        width: 45%;
+        margin-top: 0;
+        padding: 15px;
+    }
+    @media ${device.underDesktop} {
+        width: 90%;
+        margin: 0 auto;
     }
 `;
 const InfoContainer = styled.div`
@@ -107,6 +125,12 @@ const InfoContainer = styled.div`
     p {
         margin-top: 5px;
     }
+    @media ${device.underDesktop} {
+        h1 {
+            font-weight: 500;
+        }
+        color: ${(props) => props.theme.colors.primary_Dark};
+    }
 `;
 const Exit = styled.div`
     position: absolute;
@@ -115,7 +139,7 @@ const Exit = styled.div`
     font-size: 1.3em;
     padding: 10px;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: ${(props) => props.theme.colors.highLight};
     color: ${(props) => props.theme.colors.primary_Dark};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -123,5 +147,9 @@ const Exit = styled.div`
         transform: translateX(5px);
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
+    }
+    @media ${device.underDesktop} {
+        top: -1.6em;
+        background-color: ${(props) => props.theme.colors.primary_white};
     }
 `;

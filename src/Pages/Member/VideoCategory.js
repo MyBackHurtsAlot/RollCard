@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { NavLink, useParams } from "react-router-dom";
 import ThisMemberCategory from "./ThisMemberCategory";
+import { device } from "../../Components/Rwd";
 
 const VideoCategory = ({
     memberVideoAll,
@@ -93,9 +94,14 @@ const VideoCategory = ({
 
 export default VideoCategory;
 const RandomTitle = styled.div`
-    font-size: 1.8em;
+    font-size: 1.3em;
     font-weight: 200;
     margin-left: 33%;
+    @media ${device.underDesktop} {
+        margin: 15px auto 5px 10%;
+        color: ${(props) => props.theme.colors.primary_white};
+        margin-left: 5%;
+    }
 `;
 const RandomWrapper = styled.div`
     width: 60%;
@@ -103,6 +109,13 @@ const RandomWrapper = styled.div`
     /* outline: 1px solid red; */
     position: relative;
     margin-left: 33%;
+    @media ${device.underDesktop} {
+        /* outline: 1px solid red; */
+        width: 90%;
+        margin: 15px auto;
+        border-radius: 5px;
+        background-color: ${(props) => props.theme.colors.primary_white};
+    }
 `;
 const Random = styled.div`
     font-size: 1.8em;
@@ -195,5 +208,13 @@ const Random = styled.div`
             top: 100%;
             transform: translate(0, -100%);
         }
+    }
+    @media ${device.underDesktop} {
+        outline: 1px solid ${(props) => props.theme.colors.primary_Dark};
+        padding: 5px;
+        border-radius: 20px;
+        width: 200px;
+        text-align: center;
+        color: ${(props) => props.theme.colors.primary_Dark};
     }
 `;

@@ -15,6 +15,7 @@ import MemberPageInfo from "./MemberPageInfo";
 import MemberShowVideo from "./MemberShowVideo";
 import { device } from "../../Components/Rwd";
 import VideoCategory from "./VideoCategory";
+import MemberPageTablet from "./MemberPageTablet";
 
 // import Rotation from "../../Assets/Rotation.mp4";
 
@@ -102,6 +103,7 @@ const MemberPage = () => {
     const [videoCategoryAll, setMemberCategoryAll] = useState([]);
     const [videoEditorAll, setVideoEditorAll] = useState([]);
     const [videoInfoAll, setVideoInfoAll] = useState({});
+    const [isTablet, setIsTablet] = useState(false);
 
     useEffect(() => {
         async function getVideo(memberId) {
@@ -120,11 +122,13 @@ const MemberPage = () => {
                 const editor = doc.data().userName;
                 const videoName = doc.data().videoName;
                 const category = doc.data().videoCategory;
+                const userJob = doc.data().userJob;
                 // const id = doc.data().user;
                 newVideoList.push(url);
                 newVideoNameList.push(videoName);
                 newCategoryList.push(category);
                 setVideoEditorAll(editor);
+
                 // setCurrentVideo(id);
             });
 
@@ -134,6 +138,24 @@ const MemberPage = () => {
         }
         getVideo(memberId);
     }, [memberId]);
+
+    useEffect(() => {
+        if (window.innerWidth < 767) {
+            setIsTablet(true);
+        } else {
+            setIsTablet(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < 767) {
+                setIsTablet(true);
+            } else {
+                setIsTablet(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const getAvator = async (memberId) => {
@@ -223,6 +245,21 @@ const MemberPage = () => {
     // };
     return (
         <>
+            {/* <MemberPageTablet
+                memberVideoAll={memberVideoAll}
+                videoNameAll={videoNameAll}
+                videoCategoryAll={videoCategoryAll}
+                currentMemberName={currentMemberName}
+                videoEditorAll={videoEditorAll}
+                memberId={memberId}
+                currentAvator={currentAvator}
+                currentMember={currentMember}
+                currentMemberJob={currentMemberJob}
+                currentMemberEmail={currentMemberEmail}
+                setCurrentMemberName={setCurrentMemberName}
+                currentMemberAbout={currentMemberAbout}
+            /> */}
+
             <MemberPageWrapper>
                 <MemberPageInfo
                     currentMemberName={currentMemberName}
@@ -266,6 +303,7 @@ const MemberPage = () => {
                         <MemberShowVideo
                             memberVideoAll={memberVideoAll}
                             videoNameAll={videoNameAll}
+                            videoCategoryAll={videoCategoryAll}
                         />
                         {/* {currentVideo.map((member, index) => {
                             <VideoContainer ref={member[index]} />;
@@ -297,16 +335,14 @@ const MemberPage = () => {
 
 export default MemberPage;
 const MemberPageWrapper = styled.section`
-    margin-top: 150px;
-    width: 90%;
-    margin: 150px auto auto auto;
+    width: 80%;
+    margin: 100px auto auto auto;
     position: relative;
     /* display: flex;
     justify-content: space-between; */
-    /* @media ${device.underDesktop} {
-        display: flex;
-        flex-direction: column;
-    } */
+    @media ${device.underDesktop} {
+        width: 90%;
+    }
 `;
 
 const VideoWapper = styled.div`
@@ -316,9 +352,13 @@ const VideoWapper = styled.div`
     align-items: flex-start;
     gap: 10px;
     margin-left: 32%;
+    @media ${device.underDesktop} {
+        margin: 0 auto;
+        width: 90%;
+    }
 `;
 const VideoTitle = styled.div`
-    font-size: 1.5rem;
+    font-size: 1.3em;
     font-weight: 200;
     /* margin-left: 20px; */
     /* @media ${device.underDesktop} {
@@ -329,7 +369,7 @@ const VideoTitle = styled.div`
 const VideoSectionWrapper = styled.section`
     margin-top: 20px;
     width: 100%;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

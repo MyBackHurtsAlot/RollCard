@@ -8,7 +8,7 @@ import SignUp from "../PopUp/SignUp";
 import { PopUp_Mask } from "../PopUp/Style/PopUpStyle";
 import { UserContext } from "../../Context/userContext";
 import { device } from "../Rwd";
-const Header = () => {
+const Header = ({ setSelectedCategory }) => {
     const [display, setDisplay] = useState("none");
     const [currentPage, setCurrentPage] = useState("");
     const [registerEmail, setRegisterEmail] = useState("");
@@ -63,7 +63,11 @@ const Header = () => {
     return (
         <Header_Wrapper>
             <Header_Container>
-                <Header_Container_Logo>
+                <Header_Container_Logo
+                    onClick={() => {
+                        setSelectedCategory("");
+                    }}
+                >
                     <NavLink to="/"> Roll Card</NavLink>
                     <Outlet />
                 </Header_Container_Logo>

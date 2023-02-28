@@ -13,6 +13,11 @@ import { query, collection, getDocs, where, limit } from "firebase/firestore";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
+import { device } from "../../Components/Rwd";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import settings from "./Carousel";
 
 const ThisCategory = ({ videoCategory, currentVideo }) => {
     const [thisCategory, setThisCategory] = useState([]);
@@ -25,6 +30,7 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
     const [editorName, setEditorName] = useState([]);
     const [editorAvator, setEditorAvator] = useState([]);
     const [originalVideoName, setOriginalVideoName] = useState([]);
+    const [isTablet, setIsTablet] = useState(false);
 
     useEffect(() => {
         try {
@@ -67,6 +73,22 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
             console.log(error);
         }
     }, [videoCategory]);
+    useEffect(() => {
+        if (window.innerWidth < 999) {
+            setIsTablet(true);
+        } else {
+            setIsTablet(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < 1000) {
+                setIsTablet(true);
+            } else {
+                setIsTablet(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
     // console.log(thisCategory);
 
     // useEffect(() => {
@@ -171,40 +193,78 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
     //     });
     // }, [originalVideoName]);
     return (
-        <div>
+        <>
             <ThisCat_Section_Wrapper>
                 <ThisCat_Title>更多 {videoCategory} 分類的作品</ThisCat_Title>
-                <VideoWrapper>
-                    {thisCategory.map((url, index) => {
-                        const splitUrl = url.split("&token=")[1];
-                        // console.log(splitUrl);
-                        return (
-                            <Home_Video_Container key={uuidv4()}>
-                                <VideoContent editor={editorName[index]}>
-                                    <video
-                                        src={url}
-                                        onClick={() => {
-                                            navigate(`/watch/${splitUrl}`);
-                                            window.location.reload();
-                                        }}
-                                    />
-                                    <h1>{videoNameList[index]}</h1>
-                                    <p
-                                        onClick={() =>
-                                            navigate(
-                                                `/member/${userIdList[index]}`
-                                            )
-                                        }
-                                    >
-                                        {editorName[index]}
-                                    </p>
-                                </VideoContent>
-                            </Home_Video_Container>
-                        );
-                    })}
-                </VideoWrapper>
+                {isTablet ? (
+                    <VideoWrapper>
+                        <Slider {...settings} style={{ width: "100%" }}>
+                            {thisCategory.map((url, index) => {
+                                const splitUrl = url.split("&token=")[1];
+                                // console.log(splitUrl);
+                                return (
+                                    <Home_Video_Container key={uuidv4()}>
+                                        <VideoContent
+                                            editor={editorName[index]}
+                                        >
+                                            <video
+                                                src={url}
+                                                onClick={() => {
+                                                    navigate(
+                                                        `/watch/${splitUrl}`
+                                                    );
+                                                    window.location.reload();
+                                                }}
+                                            />
+                                            <h1>{videoNameList[index]}</h1>
+                                            <p
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/member/${userIdList[index]}`
+                                                    )
+                                                }
+                                            >
+                                                {editorName[index]}
+                                            </p>
+                                        </VideoContent>
+                                    </Home_Video_Container>
+                                );
+                            })}
+                        </Slider>
+                    </VideoWrapper>
+                ) : (
+                    <VideoWrapper>
+                        {thisCategory.map((url, index) => {
+                            const splitUrl = url.split("&token=")[1];
+                            // console.log(splitUrl);
+                            return (
+                                <Home_Video_Container key={uuidv4()}>
+                                    <VideoContent editor={editorName[index]}>
+                                        <video
+                                            src={url}
+                                            onClick={() => {
+                                                navigate(`/watch/${splitUrl}`);
+                                                window.location.reload();
+                                            }}
+                                        />
+                                        <h1>{videoNameList[index]}</h1>
+                                        <p
+                                            onClick={() =>
+                                                navigate(
+                                                    `/member/${userIdList[index]}`
+                                                )
+                                            }
+                                        >
+                                            {editorName[index]}
+                                        </p>
+                                    </VideoContent>
+                                </Home_Video_Container>
+                            );
+                        })}
+                    </VideoWrapper>
+                )}
             </ThisCat_Section_Wrapper>
-        </div>
+        </>
     );
 };
 
@@ -225,9 +285,17 @@ const ThisCat_Title = styled.div`
     margin: 0 auto;
     font-size: 1.3em;
     font-weight: 200;
+    @media (max-width: 1000px) {
+        font-size: 1em;
+    }
 `;
 const VideoWrapper = styled.div`
     display: flex;
+    @media (max-width: 1000px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 const Home_Video_Container = styled.div`
     width: 30%;
@@ -251,7 +319,9 @@ const Home_Video_Container = styled.div`
             box-shadow: 5px 5px 0px 0px #a6a6a6;
         }
     }
-
+    @media (max-width: 1000px) {
+        width: 90%;
+    }
     /* p {
         overflow: hidden;
         white-space: nowrap;

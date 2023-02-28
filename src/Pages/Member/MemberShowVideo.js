@@ -9,7 +9,11 @@ import { NavLink, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { device } from "../../Components/Rwd";
-const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
+const MemberShowVideo = ({
+    memberVideoAll,
+    videoNameAll,
+    videoCategoryAll,
+}) => {
     const [showVideo, setShowVideo] = useState(-1);
     const [mousex, setMousex] = useState(0);
     const videoRef = useRef(null);
@@ -52,6 +56,7 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                     return (
                         <VideoContainer
                             key={uuidv4()}
+                            onMouseEnter={() => handleShowVideo(index)}
                             onMouseLeave={() => handleHideVideo(index)}
                         >
                             <NavLink to={`/watch/${splitUrl}`}>
@@ -74,14 +79,15 @@ const MemberShowVideo = ({ memberVideoAll, videoNameAll }) => {
                                     />
                                 )}
 
-                                <p
-                                    onMouseEnter={() => handleShowVideo(index)}
-                                    // onMouseMove={(e) => handleMouseMove(e)}
+                                <h1
+
+                                // onMouseMove={(e) => handleMouseMove(e)}
                                 >
                                     {videoNameAll[index]}
                                     {/* {console.log(showVideo)}
                                 {console.log(mousex)} */}
-                                </p>
+                                </h1>
+                                {/* <p>{videoCategoryAll[index]}</p> */}
                             </NavLink>
                         </VideoContainer>
                     );
@@ -120,7 +126,7 @@ const VideoContainer = styled.div`
         right: 50px;
         top: -80px;
         width: 60%;
-        border-radius: 15px;
+        border-radius: 5px;
         z-index: 3;
         width: 30%;
         aspect-ratio: 16/9;
@@ -157,16 +163,28 @@ const VideoContainer = styled.div`
             box-shadow: 5px 5px 0px 0px #a6a6a6;
         }
     }
-    p {
+    h1 {
         width: 90%;
-        line-height: 50px;
-        font-size: 1.3em;
+        line-height: 45px;
+        font-size: 1.2em;
+        font-weight: 300;
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         border-bottom: 1px solid #a6a6a660;
         &:hover {
             color: #f2b705;
         }
     }
+    /* p {
+        width: 90%;
+        line-height: 45px;
+        font-size: 1em;
+        font-weight: 200;
+        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+        border-bottom: 1px solid #a6a6a660;
+        &:hover {
+            color: #f2b705;
+        }
+    } */
 
     /* outline: 1px solid red; */
 `;

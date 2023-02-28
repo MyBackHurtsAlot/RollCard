@@ -4,11 +4,6 @@ import Select from "react-select";
 import { UserInfoContext } from "../../Context/userContext";
 const JobDropDown = ({ userJobTemp, setUserJobTemp, userJob }) => {
     const handleVideoDropDown = (options) => {
-        console.log("onchange");
-        if (options.value === "你的職業") {
-            console.log("no");
-            return;
-        }
         setUserJobTemp(options.value);
     };
     const options = [

@@ -65,7 +65,6 @@ const App = () => {
                     const avator = await getDownloadURL(
                         ref(storage, avatorPath)
                     );
-                    // !!!!!!!!!!!!!!! 把 Preview 改回 avator !!!!!!!!!!!
                     setAvatorPreview(() => avator || null);
                 } catch (error) {
                     console.log(error);
@@ -117,7 +116,7 @@ const App = () => {
                         }}
                     >
                         <BrowserRouter>
-                            <Header />
+                            <Header setSelectedCategory={setSelectedCategory} />
                             <Routes>
                                 {/* <Route
                                     path="/"
