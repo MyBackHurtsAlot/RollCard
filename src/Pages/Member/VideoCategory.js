@@ -102,6 +102,9 @@ const RandomTitle = styled.div`
         color: ${(props) => props.theme.colors.primary_white};
         margin-left: 5%;
     }
+    @media ${device.underTablet} {
+        display: none;
+    }
 `;
 const RandomWrapper = styled.div`
     width: 60%;
@@ -115,6 +118,9 @@ const RandomWrapper = styled.div`
         margin: 15px auto;
         border-radius: 5px;
         background-color: ${(props) => props.theme.colors.primary_white};
+    }
+    @media ${device.underTablet} {
+        display: none;
     }
 `;
 const Random = styled.div`

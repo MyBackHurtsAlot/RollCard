@@ -78,11 +78,9 @@ const UserJob = styled.div`
 `;
 const UserAbout = styled.div`
     line-height: 23px;
-    /* @media ${device.underTablet} {
-        position: absolute;
-        left:10%;
-
-    } */
+    @media ${device.underTablet} {
+        display: none;
+    }
 `;
 const Contact = styled.div`
     padding: 10px;
@@ -98,6 +96,12 @@ const Contact = styled.div`
         transform: translateX(5px);
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
+    }
+    @media ${device.underTablet} {
+        position: absolute;
+        top: auto;
+        right: 0;
+        bottom: 0;
     }
 `;
 const Avator = styled.div`

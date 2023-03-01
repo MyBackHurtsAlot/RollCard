@@ -38,11 +38,7 @@ const Watch = () => {
                 // where("originalVideoName", "==", videoFileName)
             );
             const docSnap = await getDocs(data);
-            const newEditorNameList = [];
-            const newVideoNameList = [];
             const newVideoList = [];
-            const newUserJobList = [];
-            const newDescriptionList = [];
 
             docSnap.forEach((doc) => {
                 const url = doc.data().videoUrlForHome;
@@ -59,7 +55,9 @@ const Watch = () => {
                     setCurrentVideo(id);
                     setVideoName(videoName);
                     setVideoEditor(editor || "工作人員A");
-                    setVideoEditorJob(job || "影視從業人員");
+                    job === "你的職業"
+                        ? setVideoEditorJob("影視從業人員")
+                        : setVideoEditorJob(job || "影視從業人員");
                     setVideoDescription(description.toString());
                 }
             });
@@ -322,8 +320,8 @@ const Member_Section_VideoInfo_Wrapper = styled.div`
     h1 {
         font-size: 1.5em;
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        /* text-overflow: ellipsis;
+        white-space: nowrap; */
     }
 `;
 const Member_Section_Editor_Wrapper = styled.div`

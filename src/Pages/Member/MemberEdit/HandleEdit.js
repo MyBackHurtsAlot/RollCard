@@ -135,12 +135,11 @@ const HandleEdit = ({
 
     // useEffect(() => {
     //     if (updatedRef.current) {
-    //         // 取得要更新的元素
+
     //         const updatedElement = document.getElementById(
     //             updatedRef.current.id
     //         );
     //         if (updatedElement) {
-    //             // 更動要更新的元素
     //             updatedElement.querySelector(".videoName").textContent =
     //                 newVideoNameTemp;
     //             updatedElement.querySelector(".videoCategory").textContent =

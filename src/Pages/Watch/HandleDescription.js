@@ -52,6 +52,7 @@ const Member_Section_Description = styled.div`
     position: relative;
     cursor: ${(props) => (!props.showExpand ? "auto" : "pointer")};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+
     ${(props) =>
         props.showExpand &&
         css`

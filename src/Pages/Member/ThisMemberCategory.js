@@ -44,13 +44,13 @@ const ThisMemberCategory = ({
                 {matchingVideos.map((url, index) => {
                     const splitUrl = url.memberVideo.split("&token=")[1];
                     return (
-                        <CatVideoCantainer key={uuidv4()}>
-                            <video
-                                src={url.memberVideo}
-                                onClick={() => {
-                                    navigate(`/watch/${splitUrl}`);
-                                }}
-                            />
+                        <CatVideoCantainer
+                            key={uuidv4()}
+                            onClick={() => {
+                                navigate(`/watch/${splitUrl}`);
+                            }}
+                        >
+                            <video src={url.memberVideo} />
                             <InfoContainer>
                                 <h1>{url.videoName}</h1>
                                 <p>{videoEditorAll}</p>
@@ -84,6 +84,7 @@ const ThisMemberCategoryWrapper = styled.div`
     @media ${device.underDesktop} {
         /* outline: 1px solid red; */
         width: 90%;
+        min-height: 600px;
         margin: 15px auto;
         border-radius: 5px;
         background-color: ${(props) => props.theme.colors.primary_white};
@@ -92,6 +93,10 @@ const ThisMemberCategoryWrapper = styled.div`
 const CatVideoCantainer = styled.div`
     margin-top: 15px;
     width: 25%;
+    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+    &:hover {
+        color: ${(props) => props.theme.colors.highLight};
+    }
     video {
         width: 100%;
         border-radius: 5px;
@@ -104,20 +109,27 @@ const CatVideoCantainer = styled.div`
             transform: translateY(-5px);
             box-shadow: 5px 5px 0px 0px #a6a6a6;
         }
+        @media ${device.underDesktop} {
+            outline: 1px solid ${(props) => props.theme.colors.primary_Grey};
+        }
     }
     @media ${device.underDesktop} {
-        /* outline: 1px solid red; */
-        width: 45%;
+        /* border: 1px solid red; */
+        width: 40%;
         margin-top: 0;
         padding: 15px;
     }
-    @media ${device.underDesktop} {
+    /* @media ${device.underDesktop} {
         width: 90%;
         margin: 0 auto;
-    }
+    } */
 `;
 const InfoContainer = styled.div`
     margin-top: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
     h1 {
         font-size: 1.3em;
         font-weight: 700;
@@ -128,6 +140,9 @@ const InfoContainer = styled.div`
     @media ${device.underDesktop} {
         h1 {
             font-weight: 500;
+        }
+        p {
+            color: ${(props) => props.theme.colors.primary_Grey};
         }
         color: ${(props) => props.theme.colors.primary_Dark};
     }

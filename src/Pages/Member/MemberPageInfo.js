@@ -20,9 +20,10 @@ const MemberPageInfo = ({
     memberId,
     currentAvator,
     setCurrentAvator,
+    currentMemberAbout,
 }) => {
     const [currentMemberJob, setCurrentMemberJob] = useState("");
-    const [currentMemberAbout, setCurrentMemberAbout] = useState("");
+    // const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
     // const [currentAvator, setCurrentAvator] = useState("");
     const [isSmallScreen, setIsSmaillScreen] = useState(false);
@@ -71,12 +72,20 @@ const MemberPageInfo = ({
                 docSnap.forEach((doc) => {
                     const memberData = doc.data();
                     setCurrentMemberName(memberData.userName);
-                    setCurrentMemberJob(memberData.userJob);
+                    // setCurrentMemberJob(memberData.userJob);
                     setCurrentMemberEmail(memberData.userEmail);
                     // console.log(memberData.userAbout);
-                    setCurrentMemberAbout(
-                        parse(memberData.userAbout.toString())
-                    );
+                    // setCurrentMemberAbout(
+                    //     parse(memberData.userAbout.toString())
+                    // );
+                    console.log("1234", memberData.userJob);
+                    memberData.userJob === "你的職業"
+                        ? setCurrentMemberJob("影視從業人員")
+                        : setCurrentMemberJob(
+                              !memberData.userJob
+                                  ? "影視從業人員"
+                                  : memberData.userJob
+                          );
                 });
             }
             getMemberData(currentMember);
@@ -84,7 +93,6 @@ const MemberPageInfo = ({
             console.log(error);
         }
     }, [currentMember]);
-    console.log(device.underDesktop);
 
     return (
         <div>
@@ -194,6 +202,7 @@ const UserJob = styled.div`
 const UserAbout = styled.div`
     margin-top: 20px;
     text-align: left;
+    line-height: 23px;
     color: ${(props) => props.theme.colors.primary_Dark};
 `;
 

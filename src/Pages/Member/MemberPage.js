@@ -123,12 +123,13 @@ const MemberPage = () => {
                 const videoName = doc.data().videoName;
                 const category = doc.data().videoCategory;
                 const userJob = doc.data().userJob;
+                const about = doc.data().userAbout;
                 // const id = doc.data().user;
                 newVideoList.push(url);
                 newVideoNameList.push(videoName);
                 newCategoryList.push(category);
                 setVideoEditorAll(editor);
-
+                setCurrentMemberAbout(parse(about.toString()));
                 // setCurrentVideo(id);
             });
 
@@ -268,6 +269,7 @@ const MemberPage = () => {
                     memberId={memberId}
                     currentAvator={currentAvator}
                     setCurrentAvator={setCurrentAvator}
+                    currentMemberAbout={currentMemberAbout}
                 />
                 {/* <CurrentMemberWrapper>
                     <Avator currentAvator={currentAvator}></Avator>
@@ -295,7 +297,7 @@ const MemberPage = () => {
                     videoEditorAll={videoEditorAll}
                 />
                 <VideoWapper>
-                    <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>
+                    {/* <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle> */}
                     <VideoSectionWrapper
                     // ref={testRef}
                     // onMouseEnter={handleInfo}
@@ -304,6 +306,8 @@ const MemberPage = () => {
                             memberVideoAll={memberVideoAll}
                             videoNameAll={videoNameAll}
                             videoCategoryAll={videoCategoryAll}
+                            currentMemberAbout={currentMemberAbout}
+                            currentMemberName={currentMemberName}
                         />
                         {/* {currentVideo.map((member, index) => {
                             <VideoContainer ref={member[index]} />;
@@ -369,7 +373,7 @@ const VideoTitle = styled.div`
 const VideoSectionWrapper = styled.section`
     margin-top: 20px;
     width: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

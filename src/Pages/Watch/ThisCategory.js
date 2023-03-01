@@ -335,6 +335,7 @@ const VideoContent = styled.div`
     width: 100%;
     padding: 10px;
     position: relative;
+    cursor: pointer;
     h1 {
         font-size: 1.2em;
         margin-top: 5px;

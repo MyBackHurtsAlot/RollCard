@@ -17,6 +17,7 @@ const MemberPageTablet = ({
     currentMemberEmail,
     setCurrentMemberName,
     currentMemberAbout,
+    videoEditorAbout,
 }) => {
     return (
         <>
@@ -26,7 +27,7 @@ const MemberPageTablet = ({
                     <NameAndJob>
                         <UserName>{currentMemberName}</UserName>
                         <UserJob>{currentMemberJob}</UserJob>
-                        <UserAbout>{currentMemberAbout}</UserAbout>
+                        <UserAbout>{videoEditorAbout}</UserAbout>
                         <Contact
                             onClick={() => {
                                 setSendEmail(true);
@@ -37,7 +38,7 @@ const MemberPageTablet = ({
                     </NameAndJob>
                 </TopWrapper>
             </TabletWrapper>
-            {/* <SmallScreen
+            <SmallScreen
                 memberVideoAll={memberVideoAll}
                 videoNameAll={videoNameAll}
                 videoCategoryAll={videoCategoryAll}
@@ -49,8 +50,8 @@ const MemberPageTablet = ({
                 currentMemberJob={currentMemberJob}
                 currentMemberEmail={currentMemberEmail}
                 setCurrentMemberName={setCurrentMemberName}
-                currentMemberAbout={currentMemberAbout}
-            /> */}
+                videoEditorAbout={videoEditorAbout}
+            />
             <MemberShowVideo
                 memberVideoAll={memberVideoAll}
                 videoNameAll={videoNameAll}
@@ -69,7 +70,7 @@ export default MemberPageTablet;
 const TabletWrapper = styled.div`
     width: 80%;
     display: flex;
-    margin: 0 auto;
+    margin: 70px auto;
     outline: 1px solid red;
 `;
 const TopWrapper = styled.div`
@@ -84,6 +85,7 @@ const NameAndJob = styled.div`
     flex-direction: column;
     gap: 15px;
     margin-left: 15px;
+    color: white;
 `;
 const UserName = styled.div`
     font-size: 2em;

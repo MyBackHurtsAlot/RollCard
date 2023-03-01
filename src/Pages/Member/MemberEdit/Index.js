@@ -18,6 +18,7 @@ import {
 import Profile from "./Profile";
 import MemberEditVideo from "./MemberEditVideo";
 import Loading from "../../Loading/Index";
+import { device } from "../../../Components/Rwd";
 
 const MemberEditPage = () => {
     const { user } = useContext(UserContext);
@@ -186,6 +187,9 @@ export default MemberEditPage;
 // =================== Styled ==========================
 const MemberPageWrapper = styled.section`
     display: flex;
+    @media ${device.underW1000} {
+        flex-direction: column;
+    }
 `;
 
 const Member_EditPage_Video_Section_Title = styled.div`
@@ -198,14 +202,18 @@ const Member_EditPage_Video_Section_Title = styled.div`
     top: 0;
 `;
 const Member_EditPage_Video_Section = styled.div`
-    width: 60%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
-    margin: 70px auto auto auto;
+    margin: 70px auto auto 0;
     position: relative;
+    @media ${device.underW1000} {
+        width: 80%;
+        margin: 70px auto auto auto;
+    }
 `;
 
 const Member_EditPage_Video_Wrapper = styled.div`

@@ -13,8 +13,12 @@ const MemberShowVideo = ({
     memberVideoAll,
     videoNameAll,
     videoCategoryAll,
+    currentMemberAbout,
+    currentMemberName,
 }) => {
     const [showVideo, setShowVideo] = useState(-1);
+    const [isTablet, setIsTablet] = useState(false);
+    const [showsmallVideo, setShowSmallVideo] = useState(false);
     const [mousex, setMousex] = useState(0);
     const videoRef = useRef(null);
     const videoContainerRef = useRef(null);
@@ -47,52 +51,98 @@ const MemberShowVideo = ({
             }
         }, 200);
     };
+
+    useEffect(() => {
+        if (window.innerWidth < 767) {
+            setIsTablet(true);
+        } else {
+            setIsTablet(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < 767) {
+                setIsTablet(true);
+            } else {
+                setIsTablet(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    console.log(showsmallVideo);
     return (
         <>
-            <MemberShowVideoWrapper>
-                {memberVideoAll.map((url, index) => {
-                    const splitUrl = url.split("&token=")[1];
-                    // console.log(splitUrl);
-                    return (
-                        <VideoContainer
-                            key={uuidv4()}
-                            onMouseEnter={() => handleShowVideo(index)}
-                            onMouseLeave={() => handleHideVideo(index)}
+            {isTablet ? (
+                <MemberShowVideoWrapper>
+                    <VideoTitle> {currentMemberName}的</VideoTitle>
+                    <JobOrVideo showsmallVideo={showsmallVideo}>
+                        <p
+                            onClick={() => {
+                                setShowSmallVideo(false);
+                            }}
+                            // showsmallVideo={showsmallVideo}
                         >
-                            <NavLink to={`/watch/${splitUrl}`}>
-                                {showVideo === index ? (
-                                    <video
-                                        src={url}
-                                        ref={videoRef}
-                                        // style={{
-                                        //     display:
-                                        //         showVideo === index
-                                        //             ? "block"
-                                        //             : "none",
-                                        //     transform: `translateX(${mousex}px)`,
-                                        // }}
-                                    />
-                                ) : (
-                                    <video
-                                        src={url}
-                                        style={{ display: "none" }}
-                                    />
-                                )}
+                            介紹
+                        </p>
+                        <p
+                            onClick={() => {
+                                setShowSmallVideo(true);
+                            }}
+                        >
+                            作品
+                        </p>
+                    </JobOrVideo>
+                    {showsmallVideo ? (
+                        <SmallVideo>
+                            {memberVideoAll.map((url, index) => {
+                                const splitUrl = url.split("&token=")[1];
+                                // console.log(splitUrl);
+                                return (
+                                    <SmallVideoContainer key={uuidv4()}>
+                                        <NavLink to={`/watch/${splitUrl}`}>
+                                            <video src={url} ref={videoRef} />
 
-                                <h1
+                                            <h1>{videoNameAll[index]}</h1>
+                                            {/* <p>{videoCategoryAll[index]}</p> */}
+                                        </NavLink>
+                                    </SmallVideoContainer>
+                                );
+                            })}
+                        </SmallVideo>
+                    ) : (
+                        <SmallAbout>{currentMemberAbout}</SmallAbout>
+                    )}
+                </MemberShowVideoWrapper>
+            ) : (
+                <MemberShowVideoWrapper>
+                    <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>
+                    {memberVideoAll.map((url, index) => {
+                        const splitUrl = url.split("&token=")[1];
+                        // console.log(splitUrl);
+                        return (
+                            <VideoContainer
+                                key={uuidv4()}
+                                onMouseEnter={() => handleShowVideo(index)}
+                                onMouseLeave={() => handleHideVideo(index)}
+                            >
+                                <NavLink to={`/watch/${splitUrl}`}>
+                                    {showVideo === index ? (
+                                        <video src={url} ref={videoRef} />
+                                    ) : (
+                                        <video
+                                            src={url}
+                                            style={{ display: "none" }}
+                                        />
+                                    )}
 
-                                // onMouseMove={(e) => handleMouseMove(e)}
-                                >
-                                    {videoNameAll[index]}
-                                    {/* {console.log(showVideo)}
-                                {console.log(mousex)} */}
-                                </h1>
-                                {/* <p>{videoCategoryAll[index]}</p> */}
-                            </NavLink>
-                        </VideoContainer>
-                    );
-                })}
-            </MemberShowVideoWrapper>
+                                    <h1>{videoNameAll[index]}</h1>
+                                    {/* <p>{videoCategoryAll[index]}</p> */}
+                                </NavLink>
+                            </VideoContainer>
+                        );
+                    })}
+                </MemberShowVideoWrapper>
+            )}
         </>
     );
 };
@@ -105,6 +155,84 @@ const MemberShowVideoWrapper = styled.div`
     /* @media ${device.underDesktop} {
         width: 50%;
     } */
+`;
+const VideoTitle = styled.div`
+    font-size: 1.3em;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+`;
+
+const SmallVideo = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
+const SmallAbout = styled.div`
+    font-size: 1.2em;
+    margin-top: 20px;
+`;
+const JobOrVideo = styled.div`
+    display: flex;
+    justify-content: space-between;
+    /* gap: 5px; */
+    width: 100%;
+    padding: 1px;
+    /* outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey}; */
+    border-radius: 5px;
+    cursor: pointer;
+    p {
+        text-align: center;
+        padding: 5px;
+        /* background-color: ${(props) =>
+            props.showsmallVideo ? "red" : "blue"}; */
+        outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
+        border-radius: 5px;
+        width: 48%;
+        font-size: 1.2em;
+        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+        &:hover {
+            transform: translateX(5px);
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px 0px #a6a6a6;
+        }
+    }
+    & > p:first-child {
+        color: ${(props) => (props.showsmallVideo ? "" : "#0d0d0d")};
+        background-color: ${(props) => (props.showsmallVideo ? "" : "#F2B705")};
+    }
+    & > p:nth-child(2) {
+        background-color: ${(props) => (props.showsmallVideo ? "#F2B705" : "")};
+        color: ${(props) => (props.showsmallVideo ? "#0d0d0d" : "")};
+    }
+`;
+const SmallVideoContainer = styled.div`
+    margin: 20px 0 10px 0;
+    display: flex;
+
+    width: 48%;
+    gap: 10px;
+    video {
+        margin-bottom: 5px;
+        width: 100%;
+        border-radius: 5px;
+        /* max-width: 45%; */
+        aspect-ratio: 16/9;
+        outline: 1px solid ${(props) => props.theme.colors.primary_white};
+        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
+        &:hover {
+            transform: translateX(5px);
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 0px 0px #a6a6a6;
+            /* color: ${(props) => props.theme.colors.highLight}; */
+        }
+    }
+    a {
+        color: ${(props) => props.theme.colors.primary_white};
+    }
+    @media ${device.underMobile} {
+        width: 90%;
+    }
 `;
 
 const VideoContainer = styled.div`
