@@ -23,90 +23,92 @@ import img from "../../Assets/SH.png";
 import Loading from "../Loading/Index";
 import { device } from "../../Components/Rwd";
 
-const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
-    const navigate = useNavigate();
-    const [showLoding, setShowLoading] = useState(false);
-    // console.log(editorName);
-    // console.log(userIdList);
+const VideoSection = React.memo(
+    ({ videoList, videoNameList, userIdList, editorName }) => {
+        const navigate = useNavigate();
+        const [showLoding, setShowLoading] = useState(false);
+        // console.log(editorName);
+        // console.log(userIdList);
 
-    // useEffect(() => {
-    //     if (userIdList.length === 0) {
-    //         return;
-    //     }
-    //     async function getAvator(userId) {
-    //         // console.log(userIdList);
-    //         const avatorRef = await listAll(ref(storage, `avators/${userId}/`));
+        // useEffect(() => {
+        //     if (userIdList.length === 0) {
+        //         return;
+        //     }
+        //     async function getAvator(userId) {
+        //         // console.log(userIdList);
+        //         const avatorRef = await listAll(ref(storage, `avators/${userId}/`));
 
-    //         // const avatorArray = [];
-    //         avatorRef.items.forEach(async (avator) => {
-    //             const avatorUrl = await getDownloadURL(avator);
-    //             // avatorArray.push(url);
-    //             // console.log(avatorArray);
-    //             // setEditorAvator(avatorArray);
-    //             setEditorAvator((prev) =>
-    //                 !prev.includes(avatorUrl) ? [...prev, avatorUrl] : prev
-    //             );
-    //         });
-    //     }
-    //     userIdList.forEach((userId) => {
-    //         getAvator(userId);
-    //     });
-    // }, [editorName]);
-    useEffect(() => {
-        !videoList ? setShowLoading(false) : setShowLoading(true);
-    }, [videoList]);
-    // console.log(showLoding);
-    return (
-        <>
-            {!showLoding ? (
-                <Loading progress={"Loading"} />
-            ) : (
-                <Home_Video_Section_Wrapper>
-                    {videoList.map((url, index) => {
-                        const splitUrl = url.split("&token=")[1];
-                        // console.log(splitUrl);
-                        return (
-                            <Home_Video_Container key={uuidv4()}>
-                                <video
-                                    src={url}
-                                    onClick={() => {
-                                        navigate(`/watch/${splitUrl}`);
-                                    }}
-                                />
+        //         // const avatorArray = [];
+        //         avatorRef.items.forEach(async (avator) => {
+        //             const avatorUrl = await getDownloadURL(avator);
+        //             // avatorArray.push(url);
+        //             // console.log(avatorArray);
+        //             // setEditorAvator(avatorArray);
+        //             setEditorAvator((prev) =>
+        //                 !prev.includes(avatorUrl) ? [...prev, avatorUrl] : prev
+        //             );
+        //         });
+        //     }
+        //     userIdList.forEach((userId) => {
+        //         getAvator(userId);
+        //     });
+        // }, [editorName]);
+        useEffect(() => {
+            !videoList ? setShowLoading(false) : setShowLoading(true);
+        }, [videoList]);
+        // console.log(showLoding);
+        return (
+            <>
+                {!showLoding ? (
+                    <Loading progress={"Loading"} />
+                ) : (
+                    <Home_Video_Section_Wrapper>
+                        {videoList.map((url, index) => {
+                            const splitUrl = url.split("&token=")[1];
+                            // console.log(splitUrl);
+                            return (
+                                <Home_Video_Container key={uuidv4()}>
+                                    <video
+                                        src={url}
+                                        onClick={() => {
+                                            navigate(`/watch/${splitUrl}`);
+                                        }}
+                                    />
 
-                                <Home_VideoInfo_Container
-                                    editor={editorName[index]}
-                                >
-                                    <h1>{videoNameList[index]}</h1>
-                                    <p
-                                        onClick={() =>
-                                            navigate(
-                                                `/member/${userIdList[index]}`
-                                            )
-                                        }
+                                    <Home_VideoInfo_Container
+                                        editor={editorName[index]}
                                     >
-                                        {editorName[index]}
-                                    </p>
-                                </Home_VideoInfo_Container>
+                                        <h1>{videoNameList[index]}</h1>
+                                        <p
+                                            onClick={() =>
+                                                navigate(
+                                                    `/member/${userIdList[index]}`
+                                                )
+                                            }
+                                        >
+                                            {editorName[index]}
+                                        </p>
+                                    </Home_VideoInfo_Container>
 
-                                {/* <Home_Video_Avator
+                                    {/* <Home_Video_Avator
                                 editorAvator={editorAvator[index]}
                             /> */}
-                                {/* <img src={editorAvator[index]} alt="" /> */}
-                                <Home_Video_Avator>
-                                    {/* {editorAvator.map((img) => {
+                                    {/* <img src={editorAvator[index]} alt="" /> */}
+                                    <Home_Video_Avator>
+                                        {/* {editorAvator.map((img) => {
                                     return <img src={img} />;
                                 })} */}
-                                    {/* <img src={editorAvator[index]} alt="" /> */}
-                                </Home_Video_Avator>
-                            </Home_Video_Container>
-                        );
-                    })}
-                </Home_Video_Section_Wrapper>
-            )}
-        </>
-    );
-};
+                                        {/* <img src={editorAvator[index]} alt="" /> */}
+                                    </Home_Video_Avator>
+                                </Home_Video_Container>
+                            );
+                        })}
+                    </Home_Video_Section_Wrapper>
+                )}
+            </>
+        );
+    }
+);
 
 export default VideoSection;
 
@@ -146,7 +148,7 @@ const Home_Video_Container = styled.div`
     }
     @media ${device.smallest} {
         width: 90%;
-        /* margin-top: 40px; */
+        margin-top: 40px;
     }
     @media ${device.mobile} {
         width: 90%;

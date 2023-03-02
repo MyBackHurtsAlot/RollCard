@@ -20,6 +20,7 @@ import VideoSection from "./VideoSection";
 import Category from "./Category";
 import VideoSearchSection from "./VideoSearchSection";
 import NavOrCategory from "./NavOrCategory";
+import InfiniteScroll from "./InfiniteScroll";
 
 const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     // const [showCategory, setShowCategory] = useState(false);
@@ -58,17 +59,9 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     const [editorAvator, setEditorAvator] = useState([]);
     const navigate = useNavigate();
 
-    const [isEnd, setIsEnd] = useState(false);
-
-    // const nextPage = useRef(null);
-    const pageToken = useRef(null);
     const [nextPage, setNextPage] = useState();
-    const observer = useRef(null);
+    const [isEnd, setIsEnd] = useState(false);
     const lastVideoRef = useRef(null);
-
-    const [lastDoc, setLastDoc] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [endOfData, setEndOfData] = useState(false);
 
     // async function getVideos(pageToken) {
     //     const options = { maxResults: 8 };
@@ -92,108 +85,112 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     //         setIsEnd(true);
     //     }
     // }
-
-    useEffect(() => {
-        async function getVideo() {
-            const data = query(collection(db, "videoForAll"));
-            const docSnap = await getDocs(data);
-            const newEditorNameList = [];
-            const newVideoNameList = [];
-            const newVideoList = [];
-            const newUserIdList = [];
-            docSnap.forEach((doc) => {
-                console.log("query");
-                const url = doc.data().videoUrlForHome;
-                const editor = doc.data().userName;
-                const videoName = doc.data().videoName;
-                const category = doc.data().videoCategory;
-                const id = doc.data().user;
-                newVideoList.push(url);
-                newEditorNameList.push(editor);
-                newVideoNameList.push(videoName);
-                newUserIdList.push(id);
-            });
-            setVideoList(newVideoList);
-            setEditorName(newEditorNameList);
-            setVideoNameList(newVideoNameList);
-            setUserIdList(newUserIdList);
-        }
-        getVideo();
-    }, []);
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!No Scroll!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // useEffect(() => {
+    //     async function getVideo() {
+    //         const data = query(collection(db, "videoForAll"));
+    //         const docSnap = await getDocs(data);
+    //         const newEditorNameList = [];
+    //         const newVideoNameList = [];
+    //         const newVideoList = [];
+    //         const newUserIdList = [];
+    //         docSnap.forEach((doc) => {
+    //             console.log("query");
+    //             const url = doc.data().videoUrlForHome;
+    //             const editor = doc.data().userName;
+    //             const videoName = doc.data().videoName;
+    //             const category = doc.data().videoCategory;
+    //             const id = doc.data().user;
+    //             newVideoList.push(url);
+    //             newEditorNameList.push(editor);
+    //             newVideoNameList.push(videoName);
+    //             newUserIdList.push(id);
+    //         });
+    //         setVideoList(newVideoList);
+    //         setEditorName(newEditorNameList);
+    //         setVideoNameList(newVideoNameList);
+    //         setUserIdList(newUserIdList);
+    //     }
+    //     getVideo();
+    // }, []);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SCROLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // useEffect(() => {
-    // async function getVideo(nextPage) {
-    //     console.log("query");
-    //     let data;
-    //     if (nextPage) {
-    //         data = query(
-    //             startAfter(nextPage),
-    //             orderBy("videoUrlForHome"),
-    //             limit(4)
-    //         );
-    //     } else {
-    //         data = query(
-    //             collection(db, "videoForAll"),
-    //             orderBy("videoUrlForHome"),
-    //             limit(4)
-    //         );
-    //     }
-    //     const docSnap = await getDocs(data);
+    async function getVideo(nextPage) {
+        console.log("START", nextPage);
+        let data;
+        if (nextPage) {
+            console.log("ifNextPage", nextPage);
+            data = query(
+                collection(db, "videoForAll"),
+                orderBy("videoUrlForHome"),
+                startAfter(nextPage),
+                limit(4)
+            );
+        } else {
+            console.log("else");
+            data = query(
+                collection(db, "videoForAll"),
+                orderBy("videoUrlForHome"),
+                limit(4)
+            );
+        }
+        const docSnap = await getDocs(data);
 
-    //     const newEditorNameList = [];
-    //     const newVideoNameList = [];
-    //     const newVideoList = [];
-    //     const newUserIdList = [];
+        const newEditorNameList = [];
+        const newVideoNameList = [];
+        const newVideoList = [];
+        const newUserIdList = [];
 
-    //     docSnap.forEach((doc) => {
-    //         const url = doc.data().videoUrlForHome;
-    //         const editor = doc.data().userName;
-    //         const videoName = doc.data().videoName;
-    //         const category = doc.data().videoCategory;
-    //         const id = doc.id;
-    //         newVideoList.push(url);
-    //         newEditorNameList.push(editor);
-    //         newVideoNameList.push(videoName);
-    //         newUserIdList.push(id);
-    //     });
+        docSnap.forEach((doc) => {
+            const url = doc.data().videoUrlForHome;
+            const editor = doc.data().userName;
+            const videoName = doc.data().videoName;
+            const category = doc.data().videoCategory;
+            const id = doc.id;
+            newVideoList.push(url);
+            newEditorNameList.push(editor);
+            newVideoNameList.push(videoName);
+            newUserIdList.push(id);
+        });
 
-    //     setVideoList((prev) => [...prev, ...newVideoList]);
-    //     setEditorName((prev) => [...prev, ...newEditorNameList]);
-    //     setVideoNameList((prev) => [...prev, ...newVideoNameList]);
-    //     setUserIdList((prev) => [...prev, ...newUserIdList]);
+        setVideoList((prev) => [...prev, ...newVideoList]);
+        setEditorName((prev) => [...prev, ...newEditorNameList]);
+        setVideoNameList((prev) => [...prev, ...newVideoNameList]);
+        setUserIdList((prev) => [...prev, ...newUserIdList]);
 
-    //     const next = docSnap.docs[docSnap.docs.length - 1];
+        const last = docSnap.docs[docSnap.docs.length - 1];
+        console.log("last", last);
+        if (!last) {
+            setIsEnd(true);
+        } else {
+            setNextPage(last);
+        }
+    }
 
-    //     if (!next) {
-    //         setIsEnd(true);
-    //     } else {
-    //         setNextPage(next);
-    //     }
-    // }
-    // useEffect(() => {
-    //     async function init() {
-    //         await getVideo();
-    //     }
-    //     init();
-    // }, []);
-    // console.log(nextPage);
-    // console.log(isEnd);
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(async (entries) => {
-    //         if (entries.isIntersecting && isEnd) {
-    //             await getVideo(nextPage);
-    //         }
-    //     });
+    useEffect(() => {
+        const option = {
+            threshold: 0,
+        };
+        console.log("enter");
+        const observer = new IntersectionObserver(async (entries) => {
+            if (entries[0].isIntersecting && !isEnd) {
+                console.log("???", entries[0].isIntersecting);
+                await getVideo(nextPage);
+                console.log("here");
+            }
+        }, option);
 
-    //     const lastVideo = lastVideoRef.current;
-    //     if (lastVideo) {
-    //         observer.observe(lastVideo);
-    //     }
+        const lastVideo = lastVideoRef.current;
+        if (lastVideo) {
+            observer.observe(lastVideo);
+            console.log(lastVideo);
+        }
 
-    //     return () => {
-    //         observer.disconnect();
-    //     };
-    // }, [nextPage]);
+        return () => {
+            observer.disconnect();
+        };
+    }, [isEnd, nextPage]);
+
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // useEffect(() => {
     //     if (videoList.length === 0) {
@@ -249,26 +246,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                     setVideoCategoryList={setVideoCategoryList}
                     // onMouseEnter={handleShowCategory}
                     // onMouseLeave={handleHideCategory}
-                >
-                    {/* 1234
-                    {console.log("top")} */}
-                    {/* {showCategory ? (
-                        <Category
-                        // selectedCategory={selectedCategory}
-                        // setSelectedCategory={setSelectedCategory}
-                        // showEnterprise={showEnterprise}
-                        // showAnimation={showAnimation}
-                        // showEvent={showEvent}
-                        // showTrailer={showTrailer}
-                        // showDocumentory={showDocumentory}
-                        // showOthers={showOthers}
-                        // setVideoCategoryList={setVideoCategoryList}
-                        />
-                    ) : (
-                        <Nav />
-                    )} */}
-                </NavOrCategory>
-                {/* <Nav /> */}
+                ></NavOrCategory>
                 <Section>
                     {/* {console.log("bot")} */}
                     {/* <Category
@@ -289,6 +267,14 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
                             editorName={editorName}
                         />
                     )}
+                    {/* {videoList.length >= 0 && (
+                        <InfiniteScroll
+                            lastVideoRef={lastVideoRef}
+                            isEnd={isEnd}
+                            nextPage={nextPage}
+                            getVideo={getVideo}
+                        />
+                    )} */}
                     {videoList.length >= 0 && <div ref={lastVideoRef}></div>}
                     {/* {console.log(videoList.length)} */}
                 </Section>

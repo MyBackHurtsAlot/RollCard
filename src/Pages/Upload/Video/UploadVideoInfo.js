@@ -30,7 +30,7 @@ const UploadVideoInfo = ({
     const [videoDescriptionTemp, setVideoDescriptionTemp] = useState("");
     const [videoNameTemp, setVideoNameTemp] = useState("");
     const { videoDescription } = useContext(VideoContext);
-    const { userName, userJob, userEmail, setUserEmail } =
+    const { userName, userJob, userEmail, setUserEmail, userAbout } =
         useContext(UserInfoContext);
     const [showCard, setShowCard] = useState(false);
     const id = uuidv4();
@@ -41,6 +41,7 @@ const UploadVideoInfo = ({
                 userEmail: userEmail,
                 userName: userName,
                 userJob: userJob,
+                userAbout: userAbout,
                 videoName: videoNameTemp,
                 videoCategory: videoTempCategory,
                 originalVideoName: originalVideoName,

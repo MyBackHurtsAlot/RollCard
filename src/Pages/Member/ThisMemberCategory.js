@@ -13,27 +13,36 @@ const ThisMemberCategory = ({
     videoEditorAll,
 }) => {
     const navigate = useNavigate();
-    const thisMemberAllVideos = {
-        memberVideoAll: memberVideoAll,
-        videoNameAll: videoNameAll,
-        videoCategoryAll: videoCategoryAll,
-        videoEditorAll: videoEditorAll,
-    };
-    // console.log(thisMemberAllVideos.videoCategoryAll);
-    const thisCategory = thisMemberAllVideos.videoCategoryAll.filter(
-        (thisCat) => {
-            return thisCat === memberSelectedCategory;
-        }
-    );
-    const matchingVideos = thisCategory.map((category) => {
-        const index = thisMemberAllVideos.videoCategoryAll.indexOf(category);
-        return {
-            videoName: thisMemberAllVideos.videoNameAll[index],
-            memberVideo: thisMemberAllVideos.memberVideoAll[index],
-            videoEditorAll: videoEditorAll[index],
-        };
-    });
+    // const thisMemberAllVideos = {
+    //     memberVideoAll: memberVideoAll,
+    //     videoNameAll: videoNameAll,
+    //     videoCategoryAll: videoCategoryAll,
+    //     videoEditorAll: videoEditorAll,
+    // };
+    // // console.log(thisMemberAllVideos.videoCategoryAll);
+    // const thisCategory = thisMemberAllVideos.videoCategoryAll.filter(
+    //     (thisCat) => {
+    //         return thisCat === memberSelectedCategory;
+    //     }
+    // );
+    // console.log(thisCategory);
 
+    const matchingVideos = videoCategoryAll.reduce((acc, cur, index) => {
+        if (cur === memberSelectedCategory) {
+            return [
+                ...acc,
+                {
+                    videoName: videoNameAll[index],
+                    memberVideo: memberVideoAll[index],
+                    videoEditorAll: videoEditorAll[index],
+                },
+            ];
+        }
+        return acc;
+    }, []);
+
+    console.log(matchingVideos);
+    // console.log(thisCategory);
     // console.log(matchingVideos);
     // matchingVideos.map((url) => {
     //     console.log(url.memberVideo);
@@ -43,6 +52,7 @@ const ThisMemberCategory = ({
             <ThisMemberCategoryWrapper>
                 {matchingVideos.map((url, index) => {
                     const splitUrl = url.memberVideo.split("&token=")[1];
+                    // console.log(url.videoName);
                     return (
                         <CatVideoCantainer
                             key={uuidv4()}
@@ -79,6 +89,7 @@ const ThisMemberCategoryWrapper = styled.div`
     position: relative;
     margin-left: 33%;
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     position: relative;
     @media ${device.underDesktop} {
@@ -88,6 +99,9 @@ const ThisMemberCategoryWrapper = styled.div`
         margin: 15px auto;
         border-radius: 5px;
         background-color: ${(props) => props.theme.colors.primary_white};
+    }
+    @media ${device.underTablet} {
+        display: none;
     }
 `;
 const CatVideoCantainer = styled.div`
@@ -115,8 +129,7 @@ const CatVideoCantainer = styled.div`
     }
     @media ${device.underDesktop} {
         /* border: 1px solid red; */
-        width: 40%;
-        margin-top: 0;
+        width: 45%;
         padding: 15px;
     }
     /* @media ${device.underDesktop} {

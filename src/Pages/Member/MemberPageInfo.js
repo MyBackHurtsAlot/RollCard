@@ -78,7 +78,7 @@ const MemberPageInfo = ({
                     // setCurrentMemberAbout(
                     //     parse(memberData.userAbout.toString())
                     // );
-                    console.log("1234", memberData.userJob);
+                    // console.log("1234", memberData.userJob);
                     memberData.userJob === "你的職業"
                         ? setCurrentMemberJob("影視從業人員")
                         : setCurrentMemberJob(

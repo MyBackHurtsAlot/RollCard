@@ -46,9 +46,9 @@ const Profile = () => {
     } = useContext(UserInfoContext);
     // console.log(userJob);
     const [userEmail, setUserEmail] = useState("");
-    const [userNameTemp, setUserNameTemp] = useState("你的名字");
+    const [userNameTemp, setUserNameTemp] = useState("影視從業人員A");
     const [userJobTemp, setUserJobTemp] = useState("");
-    const [userAboutTemp, setUserAboutTemp] = useState("關於你");
+    const [userAboutTemp, setUserAboutTemp] = useState("說點什麼吧");
     const [showCard, setShowCard] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
     const [isFolded, setIsFolded] = useState(false);
@@ -137,7 +137,7 @@ const Profile = () => {
     //     }
     // };
     useEffect(() => {
-        if (userNameTemp === "你的名字") {
+        if (userNameTemp === "影視從業人員A") {
             setUserNameTemp(userName);
             setUserJobTemp(userJob);
         }
@@ -150,11 +150,8 @@ const Profile = () => {
     }, []);
 
     useEffect(() => {
-        if (userAboutTemp === "關於你") {
+        if (userAboutTemp === "說點什麼吧") {
             setUserAboutTemp(userAbout);
-            setUserJobTemp(userJob);
-        } else if (userAboutTemp === "") {
-            setUserAboutTemp("拍片仔");
             setUserJobTemp(userJob);
         }
     }, [userAbout]);
@@ -180,8 +177,7 @@ const Profile = () => {
 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    console.log("isFolded", isFolded);
+    console.log(userAboutTemp);
     return (
         <>
             {!isFolded ? (
