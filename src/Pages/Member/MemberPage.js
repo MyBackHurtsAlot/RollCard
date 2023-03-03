@@ -271,24 +271,6 @@ const MemberPage = () => {
                     setCurrentAvator={setCurrentAvator}
                     currentMemberAbout={currentMemberAbout}
                 />
-                {/* <CurrentMemberWrapper>
-                    <Avator currentAvator={currentAvator}></Avator>
-                    <UserContainer>
-                        <UserName>{currentMemberName}</UserName>
-                        <UserJob>{currentMemberJob}</UserJob>
-                        <UserAbout>{currentMemberAbout}</UserAbout>
-                    </UserContainer>
-                    <Contact
-                        onClick={() => {
-                            setSendEmail(true);
-                        }}
-                        currentMember={currentMember}
-                        currentMemberName={currentMemberName}
-                        currentMemberEmail={currentMemberEmail}
-                    >
-                        聯絡 {currentMemberName}
-                    </Contact>
-                </CurrentMemberWrapper> */}
                 <VideoCategory
                     memberVideoAll={memberVideoAll}
                     videoNameAll={videoNameAll}

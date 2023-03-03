@@ -113,7 +113,11 @@ const MemberPageInfo = ({
                     <UserContainer>
                         <UserName>{currentMemberName}</UserName>
                         <UserJob>{currentMemberJob}</UserJob>
-                        <UserAbout>{currentMemberAbout}</UserAbout>
+                        <UserAbout>
+                            {currentMemberAbout === "說點什麼吧"
+                                ? ""
+                                : currentMemberAbout}
+                        </UserAbout>
                     </UserContainer>
                     <Contact
                         onClick={() => {

@@ -60,8 +60,7 @@ const Member_Section_Description = styled.div`
                 background-color: rgba(0, 0, 0, 0.5);
                 color: #4d4d4d;
 
-                transform: translateX(5px);
-                transform: translateY(-5px);
+                transform: translateX(5px, -5px);
                 box-shadow: 5px 5px 0px 0px #a6a6a6;
 
                 ::after {

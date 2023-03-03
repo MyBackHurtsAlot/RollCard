@@ -7,7 +7,7 @@ import { RiFullscreenLine } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
 import { CgMiniPlayer } from "react-icons/cg";
 
-const VideoPlayer = ({ videoList }) => {
+const VideoPlayer = ({ videoList, doNotPlay }) => {
     const videoRef = useRef(null);
     const fullScreenRef = useRef(null);
     const url = videoList;
@@ -83,18 +83,20 @@ const VideoPlayer = ({ videoList }) => {
     // };
 
     useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.code === "Space") {
-                event.preventDefault();
-                togglePlay();
-                setShowControls(!showControls);
-            }
-        };
+        if (!doNotPlay) {
+            const handleKeyDown = (event) => {
+                if (event.code === "Space") {
+                    event.preventDefault();
+                    togglePlay();
+                    setShowControls(!showControls);
+                }
+            };
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
+            window.addEventListener("keydown", handleKeyDown);
+            return () => {
+                window.removeEventListener("keydown", handleKeyDown);
+            };
+        }
     }, [togglePlay]);
     return (
         <>
@@ -328,6 +330,13 @@ const Timeline = styled.input`
     width: 100%;
     height: 3px;
     cursor: pointer;
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: ${(props) => props.theme.colors.highLight};
+    }
 `;
 const Duration = styled.div`
     font-size: 16px;
@@ -435,16 +444,21 @@ const VolumeOff = styled(ImVolumeMute2)`
 `;
 const VolumeBar = styled.input`
     transform: rotate(-90deg) translate(-50%, 10px);
+
     width: 100px;
     height: 5px;
     position: absolute;
-    /* left: 50%; */
-    /* right: 4%; */
-    /* right: 9.5%; */
-    /* transform: translate(10px, -50%); */
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: ${(props) => props.theme.colors.highLight};
+    }
     bottom: ${(props) => (props.showVolumeControl ? "80px" : "70px")};
     opacity: ${(props) => (props.showVolumeControl ? 110 : 0)};
-    pointer-events: ${(props) => (props.volumeDisplay ? "auto" : "none")};
+    pointer-events: ${(props) => (props.volumeDisplay ? "pointer" : "none")};
     transition: all 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     transform-origin: 0 0;
 `;

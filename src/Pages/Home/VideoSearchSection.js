@@ -215,11 +215,10 @@ const Home_Video_Section_Wrapper = styled.section`
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-
     gap: 50px;
 `;
 const Home_Video_Container = styled.div`
-    width: 23%;
+    width: 20%;
     position: relative;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     /* &:hover {
@@ -276,7 +275,7 @@ const Home_Video_Container = styled.div`
         width: 45%;
     }
     @media ${device.desktop} {
-        width: 23%;
+        width: 20%;
     }
 `;
 // const Home_Video_Avator = styled.div`

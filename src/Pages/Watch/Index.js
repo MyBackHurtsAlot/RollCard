@@ -332,6 +332,7 @@ const Member_Section_Editor_Wrapper = styled.div`
     background-color: #404040;
     border-radius: 5px;
     padding: 10px;
+
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
@@ -349,16 +350,18 @@ const Member_Section_Editor_Wrapper = styled.div`
         color: #f2f2f2;
         padding: 5px;
     }
+    h1,
+    p {
+        @media (max-width: 600px) {
+            font-size: 14px;
+        }
+    }
 `;
 const Member_Section_Editor_Text_Wrapper = styled.div`
     display: flex;
     gap: 15px;
     font-size: 1.3em;
-    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    /* &:hover h1 {
-        font-size: 1.4em;
-    } */
-    /* flex-direction: column; */
+    margin-left: 10px;
 `;
 const Member_Section_Avator_container = styled.div`
     width: 30px;

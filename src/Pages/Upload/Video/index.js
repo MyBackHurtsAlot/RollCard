@@ -216,21 +216,12 @@ const VideoUpload = (selectedCategory) => {
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-
-                    // console.log(video);
-
-                    // useEffect(() => {
-                    //     videoRefForMember.current = storage.ref(
-                    //         `videos/${user}/${videoName + user}`
-                    //     );
-                    // }, [videoName, user]);
+                    console.log(memberUrl);
                 }
             } catch (error) {
                 console.log(error);
             }
         }
-        // setUploading(false);
-        // console.log("end", uploading);
 
         console.log("uploaded");
     };
@@ -248,6 +239,10 @@ const VideoUpload = (selectedCategory) => {
             // setUploading(true);
         }
     }, [progress]);
+    const [doNotPlay, setDoNotPlay] = useState(false);
+    useEffect(() => {
+        setDoNotPlay(true);
+    }, []);
 
     const fileName = `${videoName + user}`;
 
@@ -260,7 +255,11 @@ const VideoUpload = (selectedCategory) => {
                 onDragOver={(e) => e.preventDefault()}
             >
                 {noUpload ? (
-                    <VideoPlayer videoList={memberUrl} key={id} />
+                    <VideoPlayer
+                        videoList={memberUrl}
+                        key={id}
+                        doNotPlay={doNotPlay}
+                    />
                 ) : (
                     <Upload_File_Input style={{ display: displayBlock }}>
                         {progress}

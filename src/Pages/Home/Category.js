@@ -242,7 +242,7 @@ const Category_Enterprise = styled.div`
         height: 100%;
         z-index: -1;
         object-fit: cover;
-        border-radius: 15px;
+        border-radius: 5px;
     }
     &:hover {
         font-size: 4em;

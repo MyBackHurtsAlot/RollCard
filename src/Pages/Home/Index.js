@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+    useState,
+    useEffect,
+    useContext,
+    useRef,
+    useMemo,
+    useCallback,
+} from "react";
 import { CSSTransition } from "react-transition-group";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage";
 import {
@@ -114,7 +121,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
     //     getVideo();
     // }, []);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SCROLL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // useEffect(() => {
+
     async function getVideo(nextPage) {
         console.log("START", nextPage);
         let data;
@@ -146,7 +153,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
             const editor = doc.data().userName;
             const videoName = doc.data().videoName;
             const category = doc.data().videoCategory;
-            const id = doc.id;
+            const id = doc.data().user;
             newVideoList.push(url);
             newEditorNameList.push(editor);
             newVideoNameList.push(videoName);
@@ -166,7 +173,9 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
             setNextPage(last);
         }
     }
-
+    const getVideoCallback = useCallback(async (nextPage) => {
+        await getVideo(nextPage);
+    }, []);
     useEffect(() => {
         const option = {
             threshold: 0,
@@ -176,6 +185,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
             if (entries[0].isIntersecting && !isEnd) {
                 console.log("???", entries[0].isIntersecting);
                 await getVideo(nextPage);
+
                 console.log("here");
             }
         }, option);
@@ -189,7 +199,7 @@ const HomePage = ({ selectedCategory, setSelectedCategory }) => {
         return () => {
             observer.disconnect();
         };
-    }, [isEnd, nextPage]);
+    }, [isEnd, nextPage, getVideoCallback]);
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // useEffect(() => {

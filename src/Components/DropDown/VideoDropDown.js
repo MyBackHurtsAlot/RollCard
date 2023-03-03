@@ -31,6 +31,7 @@ const VideoDropDown = ({
                 menuPortalTarget={document.body}
                 captureMenuScroll={false}
                 menuShouldScrollIntoView={true}
+                // menuPlacement="auto"
             />
         </div>
     );
@@ -77,6 +78,7 @@ const customStyles = {
         maxHeight: 120,
         overflowY: "auto",
         backgroundColor: "#0d0d0d",
+        marginBottom: "50px",
     }),
     menuList: () => ({
         color: "#f2f2f2",

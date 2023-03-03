@@ -105,7 +105,7 @@ const Profile = () => {
                     storage,
                     `avators/${user}/${"avator" + user}`
                 );
-                if (imageRef) {
+                if (file) {
                     uploadBytes(imageRef, file).then(() => {
                         console.log("Upload");
                     });
@@ -431,6 +431,7 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     width: 100%;
     height: 200px;
     border-radius: 5px;
+    outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
     background-color: ${(props) => props.theme.colors.primary_white};
     background-image: ${(props) =>
         props.avatorPreview ? `url(${props.avatorPreview})` : `url(${img})`};
@@ -439,18 +440,16 @@ export const Profile_Section_Left_Avator_Container = styled.label`
     background-position: center;
     cursor: pointer;
     &:hover::after {
-        content: "人為什麼要拍照人活得好好的他為什麼要拍照 到底是為了要回味兒 回什麼味 回自己的味 回自己和大家生活的味 回經歷和體驗的味 回經歷和體驗的味 回感受深刻的味 回悲歡離合喜怒哀樂的味 什麼味的照片才叫好呢？拍得漂亮 拍得瀟灑 拍得清楚 拍得得意 拍得精彩 拍得出色 拍得深情 拍得智慧 拍得天真浪漫反璞歸真 拍得喜事連連無怨無悔 拍得恍然大悟破鏡重圓 拍得平常心是道 拍得日日好日年年好年 如夢似真止於至善";
+        content: "換照片嗎";
         display: flex;
-        /* align-items: center; */
         justify-content: center;
         font-size: 18px;
         font-weight: 200;
-        position: absolute;
-        border-radius: 15px;
-        top: 0;
-        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        max-height: 200px;
+        height: 100%;
         overflow: hidden;
         background-color: #16161664;
     }
