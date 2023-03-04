@@ -220,6 +220,7 @@ const Category_Enterprise = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-shadow: 1px 1.3px 2px #404040;
     z-index: 1;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);

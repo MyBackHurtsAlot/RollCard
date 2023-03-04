@@ -1,20 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
+
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
-import { storage } from "../../../Firebase-config";
 
 import { db } from "../../../Firebase-config";
-import { v4 as uuidv4 } from "uuid";
 
 import { useNavigate, navLink } from "react-router-dom";
 import { auth } from "../../../Firebase-config";
-import {
-    UserInfoContext,
-    UserContext,
-    VideoContext,
-} from "../../../Context/userContext";
+import { UserContext, VideoContext } from "../../../Context/userContext";
 import Profile from "./Profile";
 import MemberEditVideo from "./MemberEditVideo";
 import Loading from "../../Loading/Index";
@@ -23,9 +17,6 @@ import { device } from "../../../Components/Rwd";
 const MemberEditPage = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const { memberVideo, setMemberVideo } = useContext(VideoContext);
-
-    // const videoListRef = ref(storage, `videos/${user}/`);
     onAuthStateChanged(auth, (user) => {
         if (!user) {
             navigate("/");
@@ -39,59 +30,6 @@ const MemberEditPage = () => {
     const [displayNone, setDisplayNone] = useState("none");
     const [editor, setEditor] = useState("");
 
-    // useEffect(() => {
-    //     try {
-    //         async function getVideos(user) {
-    //             const response = await listAll(
-    //                 ref(storage, `videosForHomePage`)
-    //             );
-
-    //             response.items.forEach(async (videos) => {
-    //                 const url = await getDownloadURL(videos);
-    //                 // setMemberVideoAll(url);
-    //                 const fileName = videos.name;
-
-    //                 const data = query(
-    //                     collection(db, "videoForAll"),
-    //                     where("user", "==", user)
-    //                 );
-    //                 const docSnap = await getDocs(data);
-    //                 docSnap.forEach((doc) => {
-    //                     const originalVideoName = doc.data().originalVideoName;
-    //                     const videoName = doc.data().videoName;
-    //                     const videoCategory = doc.data().videoCategory;
-    //                     const videoDescription = doc.data().videoDescription;
-    //                     const userName = doc.data().userName;
-    //                     // console.log(doc.data().userName);
-    //                     setEditor(userName);
-    //                     if (originalVideoName === fileName) {
-    //                         setMemberVideoAll((prev) =>
-    //                             !prev.includes(url) ? [...prev, url] : prev
-    //                         );
-    //                         setVideoNameAll((prev) =>
-    //                             !prev.includes(videoName)
-    //                                 ? [...prev, videoName]
-    //                                 : prev
-    //                         );
-    //                         setVideoCategoryAll((prev) =>
-    //                             !prev.includes(videoCategory)
-    //                                 ? [...prev, videoCategory]
-    //                                 : prev
-    //                         );
-    //                         setVideoDiscriptionAll((prev) =>
-    //                             !prev.includes(videoDescription)
-    //                                 ? [...prev, videoDescription]
-    //                                 : prev
-    //                         );
-    //                     }
-    //                 });
-    //             });
-    //         }
-    //         getVideos(user);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [user]);
     useEffect(() => {
         const fetchData = async (userUid) => {
             try {
@@ -128,7 +66,6 @@ const MemberEditPage = () => {
     }, [user]);
     useEffect(() => {
         if (memberVideoAll.length === 0) {
-            console.log(videoNameAll.length);
             const fetchData = async (userUid) => {
                 try {
                     const data = query(
@@ -150,7 +87,6 @@ const MemberEditPage = () => {
             setDisplayNone("none");
         }
     }, [memberVideoAll]);
-    console.log(videoNameAll.length);
     return (
         <>
             <MemberPageWrapper>

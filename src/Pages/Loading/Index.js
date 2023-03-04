@@ -53,9 +53,5 @@ const Preload = styled.div`
             transform: translate(-100%, 100%);
             color: #ffac38;
         }
-
-        /* 100% {
-            transform: translate(100%, 0);
-        } */
     }
 `;

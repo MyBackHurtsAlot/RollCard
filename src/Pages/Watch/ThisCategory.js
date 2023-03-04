@@ -1,19 +1,9 @@
-import { connectStorageEmulator } from "firebase/storage";
-
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-    UserInfoContext,
-    UserContext,
-    VideoContext,
-} from "../../Context/userContext";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
-import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
-import { device } from "../../Components/Rwd";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -21,15 +11,12 @@ import settings from "./Carousel";
 
 const ThisCategory = ({ videoCategory, currentVideo }) => {
     const [thisCategory, setThisCategory] = useState([]);
-    const [videoList, setVideoList] = useState([]);
-    const videoListRef = ref(storage, `videosForHomePage/`);
     const navigate = useNavigate();
     const [videoNameList, setVideoNameList] = useState([]);
-    const [videoFileNameList, setVideoFileNameList] = useState([]);
+
     const [userIdList, setUserIdList] = useState([]);
     const [editorName, setEditorName] = useState([]);
-    const [editorAvator, setEditorAvator] = useState([]);
-    const [originalVideoName, setOriginalVideoName] = useState([]);
+
     const [isTablet, setIsTablet] = useState(false);
 
     useEffect(() => {
@@ -89,109 +76,7 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-    // console.log(thisCategory);
 
-    // useEffect(() => {
-    //     async function getVideos() {
-    //         const response = await listAll(videoListRef, false);
-    //         response.items.forEach(async (videos) => {
-    //             const url = await getDownloadURL(videos);
-
-    //             const fileName = videos.name;
-    //             // console.log(fileName);
-    //             setVideoFileNameList((prev) =>
-    //                 !prev.includes(fileName) ? [...prev, fileName] : prev
-    //             );
-    //             // setVideoFileName(fileName);
-    //             setVideoList((prev) =>
-    //                 !prev.includes(url) ? [...prev, url] : prev
-    //             );
-    //         });
-    //     }
-    //     getVideos();
-    // }, [videoCategory]);
-
-    // useEffect(() => {
-    //     if (videoList.length === 0) {
-    //         return;
-    //     }
-    //     setVideoNameList([]);
-    //     try {
-    //         async function getMemberInfo(videoFileName, videoCategory) {
-    //             const data = query(
-    //                 collection(db, "videoForAll"),
-    //                 where("originalVideoName", "==", videoFileName),
-    //                 where("videoCategory", "==", videoCategory),
-    //                 limit(3)
-    //             );
-    //             const docSnap = await getDocs(data);
-    //             const videoInfoArray = [];
-    //             docSnap.forEach((doc) => {
-    //                 videoInfoArray.push(doc.data());
-    //             });
-    //             if (videoInfoArray.length === 0) {
-    //                 return [];
-    //             }
-    //             return videoInfoArray;
-    //         }
-    //         Promise.all(
-    //             videoFileNameList.map((fileName) => {
-    //                 return getMemberInfo(fileName, videoCategory);
-    //             })
-    //         )
-    //             .then((results) => {
-    //                 const videoNameArray = [];
-    //                 const EditorNameArray = [];
-    //                 const userIdArray = [];
-    //                 const originalVideoNameArray = [];
-
-    //                 // console.log(results);
-    //                 results.forEach((allNames) => {
-    //                     if (allNames.length === 0) {
-    //                         return;
-    //                     } else {
-    //                         videoNameArray.push(allNames[0].videoName);
-    //                         EditorNameArray.push(allNames[0].userName);
-    //                         userIdArray.push(allNames[0].user);
-    //                         originalVideoNameArray.push(
-    //                             allNames[0].originalVideoName
-    //                         );
-    //                         setVideoNameList(videoNameArray);
-    //                         setEditorName(EditorNameArray);
-    //                         setUserIdList(userIdArray);
-    //                         setOriginalVideoName(originalVideoNameArray);
-    //                     }
-    //                 });
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //             });
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [videoList, videoCategory]);
-    // console.log(originalVideoName);
-    // console.log(thisCategory);
-    // useEffect(() => {
-    //     async function filteredVideo(filteredName) {
-    //         // console.log(filteredName);
-    //         const response = await listAll(videoListRef, false);
-    //         response.items.forEach(async (videos) => {
-    //             const url = await getDownloadURL(videos);
-
-    //             const fileName = videos.name;
-    //             // console.log(filteredName);
-    //             if (fileName === filteredName) {
-    //                 setThisCategory((prev) =>
-    //                     !prev.includes(url) ? [...prev, url] : prev
-    //                 );
-    //             }
-    //         });
-    //     }
-    //     originalVideoName.map((filteredName) => {
-    //         return filteredVideo(filteredName);
-    //     });
-    // }, [originalVideoName]);
     return (
         <>
             <ThisCat_Section_Wrapper>
@@ -303,13 +188,11 @@ const Home_Video_Container = styled.div`
     &:hover {
         color: ${(props) => props.theme.colors.highLight};
     }
-    /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
     cursor: pointer;
     video {
         margin-top: 5px;
         width: 100%;
         border-radius: 5px;
-        /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -322,14 +205,6 @@ const Home_Video_Container = styled.div`
     @media (max-width: 1000px) {
         width: 90%;
     }
-    /* p {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin-top: 5px;
-        color: ${(props) => props.theme.colors.primary_Lightgrey};
-        font-weight: 500;
-    } */
 `;
 const VideoContent = styled.div`
     width: 100%;

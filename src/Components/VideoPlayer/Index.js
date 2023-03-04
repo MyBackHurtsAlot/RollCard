@@ -28,11 +28,8 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
         handleVolumeChange,
         volume,
         toggleFullScreen,
-        fullScreen,
         toggleMiniPlayer,
     } = Controller(videoRef, fullScreenRef);
-    // const {toggleFullScreen,
-    //     fullScreen,} = Controller(fullScreenRef)
     const [showControls, setShowControls] = useState(false);
     const [showSpeedControl, setShowSpeedControl] = useState(false);
     const [speedDisplay, setSpeedDisplay] = useState(false);
@@ -78,9 +75,6 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
     const handlePlayingLeave = () => {
         setShowPlaying(false);
     };
-    // const handleSpaceBar = () => {
-    //     togglePlay;
-    // };
 
     useEffect(() => {
         if (!doNotPlay) {
@@ -149,18 +143,14 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                             onChange={(e) => handleVideoProgress(e)}
                         />
                         <Duration>{formatDuration(duration)}</Duration>
-                        {/* <TT width={progress} progress={progress}></TT> */}
                     </TimelineWapper>
                     <SettingsWrapper
                         onMouseEnter={() => {
                             setShowSpeedControl(true);
                             setSpeedDisplay(true);
-                            // setMouseOverSpeedControl(true);
                         }}
                         onMouseLeave={() => {
                             setShowSpeedControl(false);
-                            // setSpeedDisplay(false);
-                            // setMouseOverSpeedControl(true);
                         }}
                     >
                         <Settings
@@ -279,13 +269,11 @@ const Video_Wrapper = styled.div`
     width: 100%;
     margin: 70px auto 20px auto;
     aspect-ratio: 16/9;
-    text-shadow: 5px 3px 3px rgba(64, 64, 64, 0.45);
+    text-shadow: 1px 1.3px 2px rgba(64, 64, 64, 0.45);
     video {
-        /* cursor: pointer; */
         width: 100%;
-        /* max-width: 45%; */
+
         aspect-ratio: 16/9;
-        /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
     }
 `;
 
@@ -294,7 +282,7 @@ const Video_Controller_Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    bottom: ${(props) => (props.isHovered ? "20px" : "5px")};
+    bottom: ${(props) => (props.isHovered ? "15px" : "5px")};
     width: 100%;
     height: 50px;
     z-index: 5;
@@ -311,14 +299,11 @@ const IsPlaying = styled.div`
 const PlayIcon = styled(FaPlay)`
     width: 20px;
     height: 20px;
-
-    /* color: ${(props) => props.theme.colors.highLight}; */
 `;
 
 const PauseIcon = styled(FaPause)`
     width: 20px;
     height: 20px;
-    /* color: ${(props) => props.theme.colors.highLight}; */
 `;
 const TimelineWapper = styled.div`
     display: flex;
@@ -336,6 +321,7 @@ const Timeline = styled.input`
         height: 15px;
         border-radius: 50%;
         background-color: ${(props) => props.theme.colors.highLight};
+        color: ${(props) => props.theme.colors.highLight};
     }
 `;
 const Duration = styled.div`
@@ -344,18 +330,13 @@ const Duration = styled.div`
     cursor: default;
 `;
 const TimeCode = styled(Duration)``;
-const TT = styled.div`
-    width: ${(props) => props.width}px;
-    height: 15px;
-    background-color: #c60000;
-`;
+
 const SettingsWrapper = styled.div`
     cursor: pointer;
     position: relative;
 `;
 
 const Settings = styled.div`
-    /* color: ${(props) => props.theme.colors.highLight}; */
     width: 20px;
     height: 20px;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -365,7 +346,6 @@ const Settings = styled.div`
 `;
 
 const SettingsIcon = styled(AiFillSetting)`
-    /* color: ${(props) => props.theme.colors.highLight}; */
     width: 20px;
     height: 20px;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -378,8 +358,6 @@ const SpeedController = styled.ul`
     width: 100px;
     height: 150px;
     position: absolute;
-    /* right: 11%; */
-    /* right: 209px; */
     transform: translate(-44%, 10px);
     bottom: ${(props) => (props.showSpeedControl ? "55px" : "50px")};
     opacity: ${(props) => (props.showSpeedControl ? 100 : 0)};
@@ -427,7 +405,6 @@ const VolumeContainer = styled.div`
 `;
 const VolumeOn = styled(ImVolumeHigh)`
     width: 20px;
-    /* color: ${(props) => props.theme.colors.highLight}; */
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
         color: ${(props) => props.theme.colors.highLight};
@@ -436,11 +413,9 @@ const VolumeOn = styled(ImVolumeHigh)`
 const VolumeOff = styled(ImVolumeMute2)`
     width: 20px;
     height: 20px;
-    /* color: ${(props) => props.theme.colors.highLight}; */
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    &:hover {
-        color: ${(props) => props.theme.colors.highLight};
-    }
+
+    color: ${(props) => props.theme.colors.highLight};
 `;
 const VolumeBar = styled.input`
     transform: rotate(-90deg) translate(-50%, 10px);

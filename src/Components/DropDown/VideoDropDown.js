@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 import Select from "react-select";
 
 const VideoDropDown = ({
@@ -19,7 +18,6 @@ const VideoDropDown = ({
         { value: "其他", label: "其他" },
     ];
     const placeholder = videoCategoryAll ? videoCategoryAll : "請選擇分類";
-    // console.log("from drop", videoTempCategory);
     return (
         <div>
             <Select
@@ -31,7 +29,6 @@ const VideoDropDown = ({
                 menuPortalTarget={document.body}
                 captureMenuScroll={false}
                 menuShouldScrollIntoView={true}
-                // menuPlacement="auto"
             />
         </div>
     );
@@ -43,7 +40,6 @@ const customStyles = {
         ...provided,
         borderRadius: "10px ",
         borderColor: state.isFocused ? "none" : "none",
-        // outline: state.isFocused ? "1px solid #F2B705" : "none",
         color: state.isSelected ? "#F2B705" : "#a6a6a6",
         backgroundColor: state.isSelected ? "#0d0d0d" : "#f2f2f2",
         backgroundColor: state.isFocused ? "#f2f2f2" : "#0d0d0d",
@@ -85,7 +81,6 @@ const customStyles = {
         backgroundColor: "${(props) => props.theme.colors.primary_white}",
     }),
     dropdownIndicator: () => ({
-        // color: "#f2f2f2",
         backgroundColor: "${(props) => props.theme.colors.primary_white}",
     }),
 };

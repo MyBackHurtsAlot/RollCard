@@ -8,12 +8,9 @@ import {
     VideoContext,
 } from "../../../Context/userContext";
 import { v4 as uuidv4 } from "uuid";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../../Firebase-config";
+import { addDoc, collection } from "firebase/firestore";
+
 import { db } from "../../../Firebase-config";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../../Firebase-config";
 import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
 import { device } from "../../../Components/Rwd";
 import Card from "../../../Components/Card";
@@ -64,8 +61,6 @@ const UploadVideoInfo = ({
     useEffect(() => {
         setVideoDescriptionTemp(videoDescription);
     }, []);
-    console.log(showCard);
-    // console.log(videoName);
     return (
         <>
             <Upload_File_Section_Wrapper>
@@ -143,8 +138,6 @@ const Upload_File_Confirm = styled.div`
     width: 60px;
     height: 40px;
     margin-left: auto;
-    /* direction: rtl; */
-    /* outline: 1px solid #f2f2f2; */
     border-radius: 15px;
     padding: 5px;
     display: flex;
@@ -160,9 +153,4 @@ const Upload_File_Confirm = styled.div`
     @media ${device.underDesktop} {
         width: 100%;
     }
-`;
-const Upload_Video = styled.video`
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
 `;

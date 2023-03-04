@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Select from "react-select";
-import { UserInfoContext } from "../../Context/userContext";
+
 const JobDropDown = ({ userJobTemp, setUserJobTemp, userJob }) => {
     const handleVideoDropDown = (options) => {
         setUserJobTemp(options.value);
@@ -42,7 +42,7 @@ const customStyles = {
         ...provided,
         borderRadius: "10px ",
         borderColor: state.isFocused ? "none" : "none",
-        // outline: state.isFocused ? "1px solid #F2B705" : "none",
+
         color: state.isSelected ? "#F2B705" : "#a6a6a6",
         backgroundColor: state.isSelected ? "#0d0d0d" : "#f2f2f2",
         backgroundColor: state.isFocused ? "#0d0d0d" : "#f2f2f2",
@@ -54,7 +54,7 @@ const customStyles = {
         ...baseStyles,
         backgroundColor: "none",
         color: "#f2f2f2",
-        // borderColor: state.isOpen ? "none" : "none",
+
         boxShadow: "none",
         border: "1px solid #a6a6a6",
         "&:hover": {
@@ -75,8 +75,6 @@ const customStyles = {
         maxHeight: 130,
         overflowY: "auto",
         backgroundColor: "#f2f2f2",
-
-        // backgroundColor: "blue",
     }),
     menuList: () => ({
         color: "#f2f2f2",

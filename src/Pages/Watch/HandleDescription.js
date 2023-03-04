@@ -9,23 +9,17 @@ export const HandleDescription = (videoDescription) => {
     useEffect(() => {
         const descriptionHeight = measureRef.current.scrollHeight;
         if (videoDescription) {
-            // console.log(descriptionHeight);
             if (descriptionHeight > 100) {
                 setShowExpand(true);
             }
         }
     }, [videoDescription]);
-    // console.log("show", showExpand);
-    // console.log("Desc", videoDescription);
 
     const handleDescripiton = () => {
         setShowExpand(false);
-        // setExpanded(true);
+
         const descriptionHeight = measureRef.current.scrollHeight;
         descriptionHeight > 100 ? setExpanded(true) : setExpanded(false);
-        // if (descriptionHeight < 100) {
-        //     setShowExpand(true);
-        // }
     };
     return (
         <>
@@ -70,7 +64,6 @@ const Member_Section_Description = styled.div`
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    /* padding: 10px; */
                 }
             }
         `};

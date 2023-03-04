@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import ContentEditable from "react-contenteditable";
-import parse from "html-react-parser";
+
 import styled from "styled-components";
 import VideoDropDown from "../../../Components/DropDown/VideoDropDown";
 import {
-    getFirestore,
-    doc,
-    setDoc,
     query,
     collection,
     getDocs,
@@ -31,7 +28,6 @@ const HandleEdit = ({
     // console.log(videoWrapperRef);
     const { user } = useContext(UserContext);
     const [showEdit, setShowEdit] = useState(true);
-    const [videoBlock, setVideoBlock] = useState("");
     const [newVideoNameTemp, setNewVideoNameTemp] = useState("");
     const [newVideoDescriptionAllTemp, setNewVideoDescriptionAllTemp] =
         useState("");
@@ -41,11 +37,7 @@ const HandleEdit = ({
 
     console.log("showEdit", showEdit);
     const handleEditClick = (i) => {
-        // console.log("videoindex", i);
-        // console.log(videoWrapperRef.current[i]);
         if (videoWrapperRef.current[i]) {
-            // console.log(videoNameAll);
-            // console.log(videoCategoryAll);
             const newHeight = showEdit ? "auto" : "auto";
             videoWrapperRef.current[i].style.height = newHeight;
             const newDisplay = showEdit ? "column" : "row";
@@ -72,7 +64,6 @@ const HandleEdit = ({
     };
 
     const submitNewVideoInfo = () => {
-        console.log("triggered");
         try {
             async function updateData(videoNameAll) {
                 const d = query(
@@ -81,7 +72,6 @@ const HandleEdit = ({
                 );
                 const docSnap = await getDocs(d);
                 docSnap.forEach((doc) => {
-                    // console.log("videoTempCategory", videoTempCategory);
                     try {
                         updateDoc(doc.ref, {
                             videoName: newVideoNameTemp,
@@ -133,27 +123,6 @@ const HandleEdit = ({
         }
     }, [videoDiscriptionAll]);
 
-    // useEffect(() => {
-    //     if (updatedRef.current) {
-
-    //         const updatedElement = document.getElementById(
-    //             updatedRef.current.id
-    //         );
-    //         if (updatedElement) {
-    //             updatedElement.querySelector(".videoName").textContent =
-    //                 newVideoNameTemp;
-    //             updatedElement.querySelector(".videoCategory").textContent =
-    //                 videoTempCategory;
-    //             updatedElement.querySelector(".videoDiscription").textContent =
-    //                 newVideoDescriptionAllTemp;
-    //         }
-    //         updatedRef.current = null; // 清除要更新的ref
-    //     }
-    // }, [newVideoNameTemp, newVideoDescriptionAllTemp, videoTempCategory]);
-    // const aaa = parse(newVideoDescriptionAllTemp.toString());
-    // console.log("fromHandle", videoTempCategory);
-    // console.log("aaa", aaa);
-    // console.log(showEdit);
     return (
         <>
             {!showEdit ? (
@@ -242,8 +211,6 @@ const NewVideoDescription = styled(ContentEditable)`
     border-radius: 5px;
     height: auto;
     padding: 15px 5px;
-    /* display: flex;
-    align-items: center; */
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
         border: 1px solid ${(props) => props.theme.colors.highLight};

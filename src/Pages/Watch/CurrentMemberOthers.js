@@ -1,32 +1,28 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { UserContext } from "../../Context/userContext";
-import parse from "html-react-parser";
+
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../Firebase-config";
+
 import { db } from "../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
-import { device } from "../../Components/Rwd";
+import { useWindowResize } from "../../Components/Rwd";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import settings from "./Carousel";
 
 const CurrentMemberOthers = ({ videoEditor, videoList }) => {
-    const { user } = useContext(UserContext);
     const [memberVideo, setMemberVideo] = useState([]);
     const [videoNameList, setVideoNameList] = useState([]);
     const [videoCategoryList, setVideoCategoryList] = useState([]);
     const [noOthers, setNoOthers] = useState(false);
-    const [isTablet, setIsTablet] = useState(false);
+    // const [isTablet, setIsTablet] = useState(false);
     const navigate = useNavigate();
-    // console.log(videoList);
+
     useEffect(() => {
         try {
             async function getVideo(videoEditor, videoList) {
-                // console.log("in", videoList);
                 const data = query(
                     collection(db, "videoForAll"),
                     where("userName", "==", videoEditor),
@@ -40,19 +36,15 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                 const newVideoList = [];
                 const newCategoryList = [];
                 docSnap.forEach((doc) => {
-                    // console.log("query", doc.data().videoUrlForHome);
                     const url = doc.data().videoUrlForHome;
                     const editor = doc.data().userName;
                     const videoName = doc.data().videoName;
                     const category = doc.data().videoCategory;
-                    // const id = doc.data().user;
 
                     newVideoList.push(url);
                     newEditorNameList.push(editor);
                     newVideoNameList.push(videoName);
                     newCategoryList.push(category);
-
-                    // setCurrentVideo(id);
                 });
                 setMemberVideo(newVideoList);
                 setVideoNameList(newVideoNameList);
@@ -63,7 +55,7 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
             console.log(error);
         }
     }, [videoEditor, videoList]);
-    // console.log(memberVideo);
+
     useEffect(() => {
         if (memberVideo.length === 0) {
             setNoOthers(true);
@@ -71,69 +63,8 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
             setNoOthers(false);
         }
     }, [memberVideo]);
-    useEffect(() => {
-        if (window.innerWidth < 999) {
-            setIsTablet(true);
-        } else {
-            setIsTablet(false);
-        }
-        const handleResize = () => {
-            if (window.innerWidth < 1000) {
-                setIsTablet(true);
-            } else {
-                setIsTablet(false);
-            }
-        };
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-    // useEffect(() => {
-    //     try {
-    //         async function getVideos(videoEditor) {
-    //             const response = await listAll(
-    //                 ref(storage, `videosForHomePage`)
-    //             );
+    const isTablet = useWindowResize(999, 1000);
 
-    //             response.items.forEach(async (videos) => {
-    //                 const url = await getDownloadURL(videos);
-    //                 // setMemberVideoAll(url);
-    //                 const fileName = videos.name;
-
-    //                 const data = query(
-    //                     collection(db, "videoForAll"),
-    //                     where("userName", "==", videoEditor),
-    //                     limit(3)
-    //                 );
-    //                 const docSnap = await getDocs(data);
-    //                 docSnap.forEach((doc) => {
-    //                     const originalVideoName = doc.data().originalVideoName;
-    //                     const videoName = doc.data().videoName;
-    //                     const category = doc.data().videoCategory;
-    //                     if (originalVideoName === fileName) {
-    //                         setMemberVideo((prev) =>
-    //                             !prev.includes(url) ? [...prev, url] : prev
-    //                         );
-    //                         setVideoNameList((prev) =>
-    //                             !prev.includes(videoName)
-    //                                 ? [...prev, videoName]
-    //                                 : prev
-    //                         );
-    //                         setVideoCategoryList((prev) =>
-    //                             !prev.includes(category)
-    //                                 ? [...prev, category]
-    //                                 : prev
-    //                         );
-    //                     }
-    //                 });
-    //             });
-    //         }
-    //         getVideos(videoEditor);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [videoEditor]);
-    // console.log("asdf", memberVideo);
-    // console.log(videoCategoryList);
     return (
         <>
             <VideoWapper>
@@ -147,7 +78,6 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                         <Slider {...settings} style={{ width: "100%" }}>
                             {memberVideo.map((url, index) => {
                                 const splitUrl = url.split("&token=")[1];
-                                // console.log("member", splitUrl);
                                 return (
                                     <VideoContainerSlider key={uuidv4()}>
                                         <VideoContainer>
@@ -158,8 +88,6 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                                                         `/watch/${splitUrl}`
                                                     );
                                                     window.location.reload();
-                                                    // console.log(splitUrl);
-                                                    // console.log("navigate");
                                                 }}
                                             />
                                             <h1>{videoNameList[index]}</h1>
@@ -174,7 +102,6 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                     <VideoSectionWrapper>
                         {memberVideo.map((url, index) => {
                             const splitUrl = url.split("&token=")[1];
-                            // console.log("member", splitUrl);
                             return (
                                 <VideoContainer key={uuidv4()}>
                                     <video
@@ -182,8 +109,6 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                                         onClick={() => {
                                             navigate(`/watch/${splitUrl}`);
                                             window.location.reload();
-                                            // console.log(splitUrl);
-                                            // console.log("navigate");
                                         }}
                                     />
                                     <h1>{videoNameList[index]}</h1>
@@ -236,7 +161,7 @@ const VideoSectionWrapper = styled.section`
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    /* flex-wrap: nowrap; */
+
     justify-content: space-evenly;
     align-items: center;
     gap: 30px;
@@ -250,16 +175,14 @@ const VideoContainerSlider = styled.div`
     &:hover {
         color: ${(props) => props.theme.colors.highLight};
     }
-    /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
+
     cursor: pointer;
     video {
         margin-top: 5px;
         width: 100%;
         border-radius: 5px;
-        /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        /* outline: 1px solid red; */
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         &:hover {
             transform: translateX(5px);

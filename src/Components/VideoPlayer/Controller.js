@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import React, { useState, useEffect } from "react";
 
 const Controller = (videoRef, fullScreenRef) => {
@@ -21,7 +20,6 @@ const Controller = (videoRef, fullScreenRef) => {
         } else {
             if (document.pictureInPictureElement) {
                 document.exitPictureInPicture();
-                // setPlaying(!playing);
             }
         }
     }, [miniPlayer, videoRef]);

@@ -1,14 +1,8 @@
-import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { NavLink, useParams, useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
 import styled, { css } from "styled-components";
-import { UserContext, VideoContext } from "../../../Context/userContext";
-import { query, collection, getDocs, where } from "firebase/firestore";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
-import { storage } from "../../../Firebase-config";
-import { db } from "../../../Firebase-config";
 import { v4 as uuidv4 } from "uuid";
-
 import HandleEdit from "./HandleEdit";
 
 const MemberEditVideo = ({
@@ -94,7 +88,6 @@ const Member_EditPage_Video_Wrapper = styled.div`
         cursor: pointer;
         width: 30%;
         border-radius: 5px;
-        /* outline: 1px solid ${(props) => props.theme.colors.primary_white}; */
         aspect-ratio: 16/9;
         margin: 5px;
         z-index: 2;
@@ -140,22 +133,5 @@ const VideoTextWrapper = styled.div`
         font-weight: 500;
         border-bottom: 1px solid #f2f2f270;
         padding-bottom: 10px;
-    }
-`;
-const EditButton = styled.div`
-    margin: auto 15px 0 auto;
-    font-size: 0.8em;
-    width: 60px;
-    height: 40px;
-    outline: 1px solid ${(props) => props.theme.colors.primary_white};
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    &:hover {
-        transform: translateX(5px);
-        transform: translateY(-5px);
-        box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;

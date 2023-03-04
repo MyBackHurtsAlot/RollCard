@@ -8,7 +8,7 @@ import React, {
 import { NavLink, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { device } from "../../Components/Rwd";
+import { device, useWindowResize } from "../../Components/Rwd";
 const MemberShowVideo = ({
     memberVideoAll,
     videoNameAll,
@@ -17,31 +17,15 @@ const MemberShowVideo = ({
     currentMemberName,
 }) => {
     const [showVideo, setShowVideo] = useState(-1);
-    const [isTablet, setIsTablet] = useState(false);
+
     const [showsmallVideo, setShowSmallVideo] = useState(false);
-    const [mousex, setMousex] = useState(0);
+
     const videoRef = useRef(null);
-    const videoContainerRef = useRef(null);
-    const mouse = useRef({ x: 0 });
 
     const handleShowVideo = (index) => {
         setShowVideo(index);
     };
-    // const handleMouseMove = (e) => {
-    //     const container = e.currentTarget.getBoundingClientRect();
-    //     const distanceFromLeft = e.clientX - container.left;
-    //     const distanceFromRight = container.right - e.clientX;
-    //     const containerWidth = container.right - container.left;
-    //     const videoWidth = 0.45 * containerWidth;
-    //     const maxDistance = containerWidth - videoWidth;
 
-    //     const videoX =
-    //         distanceFromLeft < maxDistance
-    //             ? -distanceFromLeft
-    //             : maxDistance - distanceFromRight;
-
-    //     setMousex(videoX);
-    // };
     const handleHideVideo = (index = -1) => {
         setTimeout(() => {
             if (index !== -1) {
@@ -52,24 +36,8 @@ const MemberShowVideo = ({
         }, 200);
     };
 
-    useEffect(() => {
-        if (window.innerWidth < 767) {
-            setIsTablet(true);
-        } else {
-            setIsTablet(false);
-        }
-        const handleResize = () => {
-            if (window.innerWidth < 767) {
-                setIsTablet(true);
-            } else {
-                setIsTablet(false);
-            }
-        };
-        window.addEventListener("resize", handleResize);
+    const isTablet = useWindowResize(767, 767);
 
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-    console.log(showsmallVideo);
     return (
         <>
             {isTablet ? (
@@ -80,7 +48,6 @@ const MemberShowVideo = ({
                             onClick={() => {
                                 setShowSmallVideo(false);
                             }}
-                            // showsmallVideo={showsmallVideo}
                         >
                             介紹
                         </p>
@@ -96,14 +63,13 @@ const MemberShowVideo = ({
                         <SmallVideo>
                             {memberVideoAll.map((url, index) => {
                                 const splitUrl = url.split("&token=")[1];
-                                // console.log(splitUrl);
+
                                 return (
                                     <SmallVideoContainer key={uuidv4()}>
                                         <NavLink to={`/watch/${splitUrl}`}>
                                             <video src={url} ref={videoRef} />
 
                                             <h1>{videoNameAll[index]}</h1>
-                                            {/* <p>{videoCategoryAll[index]}</p> */}
                                         </NavLink>
                                     </SmallVideoContainer>
                                 );

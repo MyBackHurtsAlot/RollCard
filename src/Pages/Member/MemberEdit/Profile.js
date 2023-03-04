@@ -1,10 +1,4 @@
-import React, {
-    useCallback,
-    useContext,
-    useEffect,
-    useState,
-    useRef,
-} from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -18,7 +12,7 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { auth } from "../../../Firebase-config";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../Firebase-config";
 import { db } from "../../../Firebase-config";
 import { UserInfoContext, UserContext } from "../../../Context/userContext";
@@ -90,7 +84,6 @@ const Profile = () => {
             console.log(error);
         }
     };
-    // console.log(userAboutTemp);
     const AvatorChangePreview = async (e) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
@@ -122,20 +115,6 @@ const Profile = () => {
         }
     }, [user]);
 
-    // const uploadImage = () => {
-    //     try {
-    //         const imageRef = ref(storage, `avators/${user}/${"avator" + user}`);
-    //         if (imageRef) {
-    //             uploadBytes(imageRef, avator).then(() => {
-    //                 console.log("Upload");
-    //                 const img = getDownloadURL(imageRef);
-    //                 console.log(img);
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
     useEffect(() => {
         if (userNameTemp === "影視從業人員A") {
             setUserNameTemp(userName);
@@ -177,7 +156,7 @@ const Profile = () => {
 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-    console.log(userAboutTemp);
+
     return (
         <>
             {!isFolded ? (
@@ -195,11 +174,6 @@ const Profile = () => {
                                         // onChange={uploadImage}
                                     />
                                 </Profile_Section_Left_Avator_Container>
-                                {/* <Profile_Section_Left_Avator_Uploader_Confirm
-                // onClick={uploadImage}
-                >
-                    上傳
-                </Profile_Section_Left_Avator_Uploader_Confirm> */}
                             </Profile_Section_Left_Wrapper>
                             <Profile_Section_Right_Wrapper>
                                 <p>你的名字</p>
@@ -223,7 +197,6 @@ const Profile = () => {
                                     }
                                 />
 
-                                {/* <Profile_Section_Right_Editor_Email html={`${userEmail}`} /> */}
                                 <Profile_Section_Right_Editor_Confirm
                                     onClick={submitUserInfo}
                                 >
@@ -244,11 +217,6 @@ const Profile = () => {
                                         // onChange={uploadImage}
                                     />
                                 </Profile_Section_Left_Avator_Container>
-                                {/* <Profile_Section_Left_Avator_Uploader_Confirm
-                // onClick={uploadImage}
-                >
-                    上傳
-                </Profile_Section_Left_Avator_Uploader_Confirm> */}
                             </Profile_Section_Left_Wrapper>
                             <Profile_Section_Right_Wrapper>
                                 <p>你的名字</p>
@@ -272,7 +240,6 @@ const Profile = () => {
                                     }
                                 />
 
-                                {/* <Profile_Section_Right_Editor_Email html={`${userEmail}`} /> */}
                                 <Profile_Section_Right_Editor_Confirm
                                     onClick={submitUserInfo}
                                 >

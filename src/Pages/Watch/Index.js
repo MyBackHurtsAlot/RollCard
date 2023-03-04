@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import parse from "html-react-parser";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useParams } from "react-router-dom";
@@ -24,19 +23,12 @@ const Watch = () => {
     const [videoDescription, setVideoDescription] = useState("");
     const [videoCategory, setVideoCategory] = useState("");
     const [currentVideo, setCurrentVideo] = useState("");
-    // const [expanded, setExpanded] = useState(false);
-    // const [showExpand, setShowExpand] = useState(false);
-    const [videoListAll, setVideoListAll] = useState([]);
-    const videoListRef = ref(storage, `videosForHomePage/`);
+
     const navigate = useNavigate();
-    const measureRef = useRef(null);
 
     useEffect(() => {
         async function getVideo() {
-            const data = query(
-                collection(db, "videoForAll")
-                // where("originalVideoName", "==", videoFileName)
-            );
+            const data = query(collection(db, "videoForAll"));
             const docSnap = await getDocs(data);
             const newVideoList = [];
 
@@ -80,142 +72,11 @@ const Watch = () => {
         };
         getAvator(currentVideo);
     }, [currentVideo]);
-    // useEffect(() => {
-    //     // console.log(StorageReference.toString());
-    //     // async function getVideos() {
-    //     //     const response = await listAll(videoListRef, false);
-    //     //     response.items.forEach(async (videos) => {
-    //     //         const url = await getDownloadURL(videos);
-    //     //         const fileName = videos.name;
-    //     //         // console.log("fileName", fileName);
-    //     //         if (url.includes(splitUrl)) {
-    //     //             setVideoList((prev) =>
-    //     //                 !prev.includes(url) ? [...prev, url, fileName] : prev
-    //     //             );
-    //     //         }
-    //     //         setVideoListAll((prev) =>
-    //     //             !prev.find((item) => item.url === url)
-    //     //                 ? [...prev, { url: url, fileName: fileName }]
-    //     //                 : prev
-    //     //         );
-    //     //     });
-    //     // }
-    //     async function getMemberInfo() {
-    //         const data = query(
-    //             collection(db, "videoForAll")
-    //             // where("originalVideoName", "==", videoFileName)
-    //         );
-    //         const docSnap = await getDocs(data);
-    //         docSnap.forEach((doc) => {
-    //             const url = doc.data().videoUrlForHome;
-    //             const fileName = doc.data().name;
-    //             if (url.includes(splitUrl)) {
-    //                 setVideoList((prev) =>
-    //                     !prev.includes(url) ? [...prev, url, fileName] : prev
-    //                 );
-    //             }
-    //             setVideoListAll((prev) =>
-    //                 !prev.find((item) => item.url === url)
-    //                     ? [...prev, { url: url, fileName: fileName }]
-    //                     : prev
-    //             );
-    //         });
-    //     }
-    //     getMemberInfo();
-    //     // getVideos();
-    // }, []);
-    // // console.log("videoListAll", videoListAll);
-
-    // // console.log(videoListAll[0]);
-
-    // useEffect(() => {
-    //     if (videoList.length === 0) {
-    //         return;
-    //     }
-    //     try {
-    //         // const videoUrl = videoList[0];
-    //         const fileName = videoList[1];
-
-    //         async function getMemberInfo(fileName) {
-    //             const data = query(
-    //                 collection(db, `videoForAll`),
-    //                 where("originalVideoName", "==", fileName)
-    //             );
-    //             const docSnap = await getDocs(data);
-    //             docSnap.forEach((doc) => {
-    //                 const videoInfo = doc.data();
-    //                 setCurrentVideo(videoInfo.user);
-    //                 setVideoName(videoInfo.videoName);
-    //                 setVideoDescription(videoInfo.videoDescription);
-    //                 setVideoCategory(videoInfo.videoCategory);
-    //                 // console.log(videoInfo.videoDescription);
-    //             });
-    //         }
-    //         getMemberInfo(fileName);
-
-    //         // async function getAllNeededData(videoListAll) {
-    //         //     console.log(videoListAll);
-    //         //     // const fileNameAll = videoListAll[0].fileName;
-    //         //     // console.log(fileNameAll);
-    //         // }
-    //         // getAllNeededData(videoListAll);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [videoList]);
-
-    // useEffect(() => {
-    //     if (!videoName) {
-    //         return;
-    //     }
-    //     async function getCurrentVideo(currentVideo) {
-    //         const EditorData = query(
-    //             collection(db, "User"),
-    //             where("userUid", "==", currentVideo)
-    //         );
-    //         const docSnapEdit = await getDocs(EditorData);
-    //         docSnapEdit.forEach((doc) => {
-    //             const editorInfo = doc.data();
-    //             setVideoEditor(editorInfo.userName || "工作人員A");
-    //             setVideoEditorJob(editorInfo.userJob || "影視從業人員");
-    //         });
-
-    //         const storageRef = await listAll(
-    //             ref(storage, `/avators/${currentVideo}/`),
-    //             false
-    //         );
-    //         // console.log(storageRef);
-    //         storageRef.items.forEach(async (avator) => {
-    //             const url = await getDownloadURL(avator);
-    //             setvideoAvator(url);
-    //         });
-    //     }
-    //     getCurrentVideo(currentVideo);
-    // }, [videoName]);
-    // console.log(videoList[0]);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // useEffect(() => {
-    //     if (videoDescription) {
-    //         const descriptionHeight = measureRef.current.scrollHeight;
-
-    //         console.log(descriptionHeight);
-    //         if (descriptionHeight > 100) {
-    //             setShowExpand(true);
-    //         }
-    //     }
-    // }, [videoDescription]);
-    // console.log("show", showExpand);
-
-    // const handleDescripiton = () => {
-    //     setShowExpand(false);
-    //     setExpanded(true);
-    // };
 
     return (
         <div>
             <Watch_Player_wrapper>
                 <VideoPlayer videoList={videoList[0]} />
-                {/* <video src={videoList[0]} controls /> */}
             </Watch_Player_wrapper>
             <Member_Section_Below_Wrapper>
                 <Member_Section_Below_Left_Wrapper>
@@ -238,15 +99,8 @@ const Watch = () => {
                             </Member_Section_Editor_Text_Wrapper>
                         </Member_Section_Editor_Wrapper>
                         <HandleDescription
-                            // ref={measureRef}
-                            // expanded={expanded}
-                            // showExpand={showExpand}
-                            // onClick={handleDescripiton}
                             videoDescription={videoDescription}
-                        >
-                            {/* <div>{parse(`${videoDescription}`)}</div>
-                            {console.log("ori", videoDescription)} */}
-                        </HandleDescription>
+                        ></HandleDescription>
                     </Member_Section_Wrapper>
 
                     <ThisCategory
@@ -277,6 +131,9 @@ const Watch_Player_wrapper = styled.div`
         width: 100%;
         aspect-ratio: 16/9;
     }
+    @media ${device.underDesktop} {
+        width: 95%;
+    }
 `;
 
 const Member_Section_Below_Wrapper = styled.div`
@@ -306,7 +163,6 @@ const Member_Section_Below_Left_Wrapper = styled.div`
 `;
 const Member_Section_Wrapper = styled.div`
     width: 100%;
-    /* margin: 30px auto; */
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -319,9 +175,6 @@ const Member_Section_VideoInfo_Wrapper = styled.div`
 
     h1 {
         font-size: 1.5em;
-        overflow: hidden;
-        /* text-overflow: ellipsis;
-        white-space: nowrap; */
     }
 `;
 const Member_Section_Editor_Wrapper = styled.div`
@@ -355,6 +208,9 @@ const Member_Section_Editor_Wrapper = styled.div`
         @media (max-width: 600px) {
             font-size: 14px;
         }
+        @media (max-width: 453px) {
+            font-size: 12px;
+        }
     }
 `;
 const Member_Section_Editor_Text_Wrapper = styled.div`
@@ -371,37 +227,3 @@ const Member_Section_Avator_container = styled.div`
     background-size: cover;
     background-position: center;
 `;
-// const Member_Section_Description = styled.div`
-//     width: 100%;
-//     height: ${(props) => (props.expanded ? "auto" : "100px")};
-//     overflow: hidden;
-//     line-height: 1.5em;
-//     background-color: #404040;
-//     border-radius: 15px;
-//     padding: 10px;
-//     position: relative;
-//     cursor: ${(props) => (!props.showExpand ? "auto" : "pointer")};
-//     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-//     ${(props) =>
-//         props.showExpand &&
-//         css`
-//             &:hover {
-//                 background-color: rgba(0, 0, 0, 0.5);
-//                 color: #4d4d4d;
-
-//                 transform: translateX(5px);
-//                 transform: translateY(-5px);
-//                 box-shadow: 5px 5px 0px 0px #a6a6a6;
-
-//                 ::after {
-//                     content: "展開全文";
-//                     color: #f2f2f2;
-//                     position: absolute;
-//                     top: 50%;
-//                     left: 50%;
-//                     transform: translate(-50%, -50%);
-//                     /* padding: 10px; */
-//                 }
-//             }
-//         `};
-// `;

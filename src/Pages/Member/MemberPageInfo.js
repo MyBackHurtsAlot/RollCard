@@ -1,16 +1,11 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import parse from "html-react-parser";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { UserContext } from "../../Context/userContext";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";
 import img from "../../Assets/SH.png";
-import { v4 as uuidv4 } from "uuid";
 import SendEmail from "./SendEmail";
-import { device } from "../../Components/Rwd";
 import SmallScreen from "./SmallScreen";
 
 const MemberPageInfo = ({
@@ -23,9 +18,7 @@ const MemberPageInfo = ({
     currentMemberAbout,
 }) => {
     const [currentMemberJob, setCurrentMemberJob] = useState("");
-    // const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
-    // const [currentAvator, setCurrentAvator] = useState("");
     const [isSmallScreen, setIsSmaillScreen] = useState(false);
     const [sendEmail, setSendEmail] = useState(false);
 
@@ -72,13 +65,9 @@ const MemberPageInfo = ({
                 docSnap.forEach((doc) => {
                     const memberData = doc.data();
                     setCurrentMemberName(memberData.userName);
-                    // setCurrentMemberJob(memberData.userJob);
+
                     setCurrentMemberEmail(memberData.userEmail);
-                    // console.log(memberData.userAbout);
-                    // setCurrentMemberAbout(
-                    //     parse(memberData.userAbout.toString())
-                    // );
-                    // console.log("1234", memberData.userJob);
+
                     memberData.userJob === "你的職業"
                         ? setCurrentMemberJob("影視從業人員")
                         : setCurrentMemberJob(
@@ -142,11 +131,6 @@ const MemberPageInfo = ({
             ) : (
                 ""
             )}
-            {/* <SendEmail
-                currentMemberName={currentMemberName}
-                currentMemberEmail={currentMemberEmail}
-                sendEmail={sendEmail}
-            /> */}
         </div>
     );
 };
@@ -165,14 +149,10 @@ const CurrentMemberWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-around; */
+
     gap: 5px;
     z-index: 3;
-    position: fixed;
-    /* @media ${device.underDesktop} {
-        width: 90%;
-        min-height: 300px;
-    } */
+    position: relative;
 `;
 
 const Avator = styled.div`
@@ -184,9 +164,6 @@ const Avator = styled.div`
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
-    /* @media ${device.underDesktop} {
-        width: 40%;
-    } */
 `;
 const UserContainer = styled.div`
     width: 80%;

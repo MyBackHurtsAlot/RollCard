@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { NavLink, useParams } from "react-router-dom";
 import ThisMemberCategory from "./ThisMemberCategory";
 import { device } from "../../Components/Rwd";
 
@@ -37,8 +36,6 @@ const VideoCategory = ({
         }));
         setPositionsY(newPositionsY);
     }, [videoCategoryAll]);
-    // console.log("randomAnimations", randomAnimations);
-    // console.log(positions);
 
     const handleClick = (category) => {
         console.log(category);
@@ -62,8 +59,6 @@ const VideoCategory = ({
             ) : (
                 <RandomWrapper>
                     {Array.from(filteredCategoryName).map((url, index) => {
-                        // const splitUrl = url.split("&token=")[1];
-
                         return (
                             <Random
                                 key={uuidv4()}
@@ -78,13 +73,8 @@ const VideoCategory = ({
                                         videoRefs.current[index]?.innerHTML
                                     );
                                 }}
-                                // {...console.log(
-                                //     videoRefs.current[index]?.innerHTML
-                                // )}
                             >
-                                {/* <NavLink to={`/watch/${splitUrl}`}> */}
                                 {videoCategoryAll[index]}
-                                {/* </NavLink> */}
                             </Random>
                         );
                     })}
@@ -111,11 +101,10 @@ const RandomTitle = styled.div`
 const RandomWrapper = styled.div`
     width: 60%;
     height: 600px;
-    /* outline: 1px solid red; */
+
     position: relative;
     margin-left: 33%;
     @media ${device.underDesktop} {
-        /* outline: 1px solid red; */
         width: 90%;
         margin: 15px auto;
         border-radius: 5px;

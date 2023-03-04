@@ -1,3 +1,28 @@
+import { useState, useEffect } from "react";
+
+export function useWindowResize(breakPointA, breakPointB) {
+    const [isTablet, setIsTablet] = useState(false);
+
+    useEffect(() => {
+        if (innerWidth < breakPointA) {
+            setIsTablet(true);
+        } else {
+            setIsTablet(false);
+        }
+        const handleResize = () => {
+            if (window.innerWidth < breakPointB) {
+                setIsTablet(true);
+            } else {
+                setIsTablet(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return isTablet;
+}
+
 const size = {
     destop: "1200px",
     w1000: "1000px",

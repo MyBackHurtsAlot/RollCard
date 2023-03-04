@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate, NavLink, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { device } from "../../Components/Rwd";
 
 const ThisMemberCategory = ({
@@ -13,19 +13,6 @@ const ThisMemberCategory = ({
     videoEditorAll,
 }) => {
     const navigate = useNavigate();
-    // const thisMemberAllVideos = {
-    //     memberVideoAll: memberVideoAll,
-    //     videoNameAll: videoNameAll,
-    //     videoCategoryAll: videoCategoryAll,
-    //     videoEditorAll: videoEditorAll,
-    // };
-    // // console.log(thisMemberAllVideos.videoCategoryAll);
-    // const thisCategory = thisMemberAllVideos.videoCategoryAll.filter(
-    //     (thisCat) => {
-    //         return thisCat === memberSelectedCategory;
-    //     }
-    // );
-    // console.log(thisCategory);
 
     const matchingVideos = videoCategoryAll.reduce((acc, cur, index) => {
         if (cur === memberSelectedCategory) {
@@ -42,11 +29,6 @@ const ThisMemberCategory = ({
     }, []);
 
     console.log(matchingVideos);
-    // console.log(thisCategory);
-    // console.log(matchingVideos);
-    // matchingVideos.map((url) => {
-    //     console.log(url.memberVideo);
-    // });
     return (
         <>
             <ThisMemberCategoryWrapper>

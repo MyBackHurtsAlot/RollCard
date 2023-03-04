@@ -74,45 +74,9 @@ const VideoUpload = (selectedCategory) => {
         }
     });
 
-    // const submitVideoContent = async () => {
-    //     try {
-    // const url = await videoRef.getDownloadURL();
-    // await addDoc(collection(db, "Videos", user), {
-    //     user: user,
-    //     userEmail: userEmail,
-    //     userName: userName,
-    //     userJob: userJob,
-    //     videoName: videoName,
-    //     videoCategory: videoTempCategory,
-    //     originalVideoName: originalVideoName,
-    //     videoDescription: videoDescription,
-    //     videoUrlForHome: homePageUrl,
-    //     videoUrlForMember: memberUrl,
-    //     videoId: id,
-    // });
-    //         await addDoc(collection(db, "videoForAll"), {
-    //             user: user,
-    //             userEmail: userEmail,
-    //             userName: userName,
-    //             userJob: userJob,
-    //             videoName: videoName,
-    //             videoCategory: videoTempCategory,
-    //             originalVideoName: originalVideoName,
-    //             videoDescription: videoDescription,
-    //             videoUrlForHome: homePageUrl,
-    //             videoUrlForMember: memberUrl,
-    //             videoId: id,
-    //         });
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-    // const timeStamp = new Date(new Date().getTime()).toLocaleString();
-    // !!!!!!!!!!!!!!!!!!!!!!!! 會上傳空值 ！！！！！！！！！！！！！！！！！！
     const handleDrop = async (e) => {
         e.preventDefault();
         if (e.dataTransfer.files[0]) {
-            // console.log(e.dataTransfer.files[0]);
             const file = e.dataTransfer.files[0];
             setVideoName(file.name);
             try {
@@ -124,22 +88,19 @@ const VideoUpload = (selectedCategory) => {
                     storage,
                     `videosForHomePage/${file.name + user}`
                 );
-                // const videoForCateGory = ref(storage, ``);
+
                 if (videoRefForHomePage) {
                     const task = uploadBytesResumable(
                         videoRefForHomePage,
                         file,
                         metadata
                     );
-                    // console.log("task", task);
                     setNotLoading("block");
                     setDisplayBlock("none");
-                    // console.log("start", uploading);
                     task.on("state_changed", (snapshot) => {
                         let progress =
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
-                        // progress = 100 ? null : setUploading(true);
                         setProgress(progress);
                         console.log("Upload is " + progress + "% done");
                     });
@@ -159,8 +120,6 @@ const VideoUpload = (selectedCategory) => {
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-                    // console.log("fileName", file.name);
-                    // console.log("1234", originalVideoName);
                 }
             } catch (error) {
                 console.log(error);
@@ -182,22 +141,20 @@ const VideoUpload = (selectedCategory) => {
                     `videosForHomePage/${file.name + user}`
                 );
 
-                // const videoRefForCategory = ref(storage, `videosForCategory`);
                 if (videoRefForHomePage) {
                     const task = uploadBytesResumable(
                         videoRefForHomePage,
                         file,
                         metadata
                     );
-                    // console.log("task", task);
+
                     setNotLoading("block");
-                    setDisplayBlock("none");
-                    // console.log("start", uploading);
+
                     task.on("state_changed", (snapshot) => {
                         let progress =
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
-                        // progress = 100 ? null : setUploading(true);
+
                         setProgress(progress);
                         console.log("Upload is " + progress + "% done");
                     });
@@ -225,7 +182,7 @@ const VideoUpload = (selectedCategory) => {
 
         console.log("uploaded");
     };
-    // console.log("111", originalVideoName);
+
     useEffect(() => {
         if (progress === 100) {
             setDisplayNone("flex");
@@ -234,9 +191,7 @@ const VideoUpload = (selectedCategory) => {
             setVisability("hidden");
             setNotLoading("none");
             setVideoName(videoName);
-            // console.log("Change");
         } else {
-            // setUploading(true);
         }
     }, [progress]);
     const [doNotPlay, setDoNotPlay] = useState(false);
@@ -246,8 +201,6 @@ const VideoUpload = (selectedCategory) => {
 
     const fileName = `${videoName + user}`;
 
-    // console.log("rerender");
-    // console.log(notLoading);
     return (
         <>
             <Upload_Area_Wrapper
@@ -291,13 +244,12 @@ const VideoUpload = (selectedCategory) => {
 export default VideoUpload;
 
 // =========== Styled ============
-// const UploadVideoInfo = styled.div``;
+
 const Upload_Area_Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 70%;
-    /* max-height: 1080px; */
     margin: 66px auto 0 auto;
     aspect-ratio: 16/9;
     position: relative;
@@ -316,7 +268,6 @@ const Upload_File_Input = styled.label`
         text-align: center;
         color: ${(props) => props.theme.colors.primary_Dark};
         background-color: ${(props) => props.theme.colors.highLight};
-        /* outline: 1px solid #a6a6a6; */
         border-radius: 15px;
         padding: 10px;
         font-size: 1.5em;
@@ -338,9 +289,4 @@ const Upload_File_Input = styled.label`
         width: 100%;
         height: 100%;
     }
-`;
-const Upload_Video = styled.video`
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
 `;

@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 
 const SendEmail = ({
     setSendEmail,
-    currentMember,
+
     currentMemberName,
     currentMemberEmail,
 }) => {
@@ -222,17 +222,6 @@ const Notice = styled.div`
     line-height: 30px;
 `;
 const Message = styled.div`
-    /* width: 800px;
-    height: 600px;
-    margin: 0 auto;
-    border-radius: 15px;
-    position: absolute;
-    left: 50%;
-
-    color: #0d0d0d;
-    z-index: 6;
-    transform: translate(-50%);
-    background-color: #f2f2f2; */
     color: #f2b705;
     margin: 0 auto;
 `;

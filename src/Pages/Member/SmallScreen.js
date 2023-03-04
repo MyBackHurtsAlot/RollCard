@@ -8,11 +8,6 @@ const SmallScreen = ({
     currentMemberJob,
     currentMemberEmail,
     currentMemberAbout,
-    currentMember,
-    setCurrentMemberName,
-    memberId,
-    memberVideoAll,
-    videoNameAll,
     currentAvator,
 }) => {
     const [sendEmail, setSendEmail] = useState(false);
