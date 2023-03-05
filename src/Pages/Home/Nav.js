@@ -120,18 +120,6 @@ const Nav_Left_Title = styled.div`
             opacity: 100;
         }
     }
-    /* @media ${device.smallest} {
-        font-size: 50px;
-    }
-    @media ${device.mobile} {
-        font-size: 50px;
-    }
-    @media ${device.tablet} {
-        font-size: 64px;
-    }
-    @media ${device.desktop} {
-        font-size: 64px;
-    } */
 `;
 const Nav_Left_Content = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};

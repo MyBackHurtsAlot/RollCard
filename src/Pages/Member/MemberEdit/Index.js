@@ -168,4 +168,7 @@ const Member_EditPage_Video_Wrapper = styled.div`
         aspect-ratio: 16/9;
         margin: 20px;
     }
+    @media ${device.underDesktop} {
+        width: 90%;
+    }
 `;

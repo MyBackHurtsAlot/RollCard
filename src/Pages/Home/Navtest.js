@@ -71,22 +71,17 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             console.log(error);
         }
     }, []);
-    // console.log("List", showEnterpriseList[0]);
 
     useEffect(() => {
         async function getEnterpriseVideo(enterprise) {
-            console.log("inside", enterprise);
             const response = await listAll(videoListRef, false);
             const tempArray = [];
             response.items.forEach(async (videos) => {
                 const url = await getDownloadURL(videos);
                 const fileName = videos.name;
                 tempArray.push(fileName);
-                console.log(tempArray);
                 tempArray.map((item) => {
-                    // console.log("item", item);
                     if (item === enterprise) {
-                        // console.log(item === enterprise);
                         setShowEnterprise(url);
                     }
                 });
@@ -94,7 +89,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         }
         getEnterpriseVideo(showEnterpriseList[0]);
     }, [showEnterpriseList]);
-    // console.log("enter", showEnterprise);
+
     // ================= Animation ==================
     useEffect(() => {
         try {
@@ -107,7 +102,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
                 const animationList = [];
                 docSnap.forEach((doc) => {
                     const animation = doc.data();
-                    // console.log(animation);
                     animationList.push(animation.originalVideoName);
                     setShowAnimationList(animationList);
                 });
@@ -115,7 +109,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             getAnimation();
         } catch (error) {}
     }, []);
-    // console.log("showAnimation", showAnimation);
     useEffect(() => {
         async function getAnimationVideo(animation) {
             const response = await listAll(videoListRef, false);
@@ -133,7 +126,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         }
         getAnimationVideo(showAnimationList[0]);
     }, [showAnimationList]);
-    // console.log("ani", showAnimation);
     // ================= Event ==================
     useEffect(() => {
         try {
@@ -156,7 +148,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     useEffect(() => {
         async function getEventVideo(event) {
-            // console.log(event);
             const response = await listAll(videoListRef, false);
             const tempArray = [];
             response.items.forEach(async (videos) => {
@@ -172,7 +163,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         }
         getEventVideo(showEventList[0]);
     }, [showEventList]);
-    // console.log(showEvent);
     // ================= Trailer ==================
     useEffect(() => {
         try {
@@ -195,7 +185,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     useEffect(() => {
         async function getTrailerVideo(trailer) {
-            // console.log(trailer);
             const response = await listAll(videoListRef, false);
             const tempArray = [];
             response.items.forEach(async (videos) => {
@@ -211,7 +200,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         }
         getTrailerVideo(showTrailerList[0]);
     }, [showTrailerList]);
-    // console.log("showTrailer", showTrailer);
 
     // ================= Documentory ==================
     useEffect(() => {
@@ -235,7 +223,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     useEffect(() => {
         async function getDocumentoryVideo(documentory) {
-            // console.log(documentory);
             const response = await listAll(videoListRef, false);
             const tempArray = [];
             response.items.forEach(async (videos) => {
@@ -251,7 +238,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         }
         getDocumentoryVideo(showDocumentoryList[0]);
     }, [showDocumentoryList]);
-    // console.log(showDocumentory);
     // ================= Others ==================
     useEffect(() => {
         try {
@@ -274,7 +260,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
     useEffect(() => {
         async function getOthersVideo(others) {
-            // console.log(others);
             const response = await listAll(videoListRef, false);
             const tempArray = [];
             response.items.forEach(async (videos) => {
@@ -297,7 +282,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
                 onMouseEnter={handleShowCategory}
                 onMouseLeave={handleHideCategory}
             >
-                {/* {console.log("top")} */}
                 {showCategory ? (
                     <Category
                         // selectedCategory={selectedCategory}

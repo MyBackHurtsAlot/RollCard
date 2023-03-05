@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
+import { device } from "../../Components/Rwd";
 
 const Loading = ({ style, progress }) => {
     return <Preload style={style}>{`${progress}`}</Preload>;
@@ -25,33 +26,36 @@ const Preload = styled.div`
         25% {
             left: 100%;
             top: 90%;
-            transform: translate(-100%, -100%);
+            transform: translate(-100%, -90%);
             color: #fe4f4f;
         }
         30% {
             left: 90%;
             top: 100%;
-            transform: translate(-100%, -100%);
+            transform: translate(-90%, -100%);
             color: #dc4949;
         }
 
         50% {
             left: 0;
-            top: 10px;
-            /* transform: translate(100%, 100%); */
+            top: 10%;
+            transform: translate(0, -10%);
             color: #ffbb5c;
         }
         65% {
             left: 10%;
             top: 100%;
-            transform: translate(100%, -100%);
+            transform: translate(-10%, -100%);
             color: #ffa750;
         }
         80% {
             left: 100%;
             top: 10%;
-            transform: translate(-100%, 100%);
+            transform: translate(-100%, -10%);
             color: #ffac38;
         }
+    }
+    @media ${device.underDesktop} {
+        font-size: 1em;
     }
 `;

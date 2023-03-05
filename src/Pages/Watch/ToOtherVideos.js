@@ -4,16 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const ToOtherVideos = ({ memberVideo }) => {
-    // useEffect(() => {
-    //     console.log(memberVideo);
-    // }, [memberVideo]);
     const navigate = useNavigate();
 
     return (
         <div>
             {memberVideo.map((url) => {
                 const splitUrl = url.split("&token=")[1];
-                // console.log("others", splitUrl);
                 return (
                     <VideoContainer key={uuidv4()}>
                         <video

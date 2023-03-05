@@ -105,6 +105,8 @@ const Home_VideoInfo_Container = styled.div`
         font-size: 18px;
         font-weight: 500;
         margin-bottom: 5px;
+        line-height: 23px;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }

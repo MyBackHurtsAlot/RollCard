@@ -44,7 +44,6 @@ const SendEmail = ({
             )
             .then(
                 (result) => {
-                    console.log(result.text);
                     if (result.text) {
                         setShowMessage(true);
                         setMessage("成功寄出，感謝你的聯絡");

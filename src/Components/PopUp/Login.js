@@ -48,8 +48,6 @@ const SignUp = ({
             setCurrentPage("");
             setDisplay("none");
             navigate("/");
-            // console.log(userData.user.uid);
-            // setUser(userData.user.uid);
             sessionStorage.setItem(
                 "Auth Token",
                 response._tokenResponse.refreshToken
@@ -79,7 +77,6 @@ const SignUp = ({
                         onChange={(e) => {
                             setCheckEmail(e.target.value);
                         }}
-                        // onClick={setPopMessage("")}
                         value={checkEmail}
                     ></PopUp_Input>
                     <PopUp_Password

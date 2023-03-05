@@ -38,7 +38,7 @@ const Profile = () => {
         avatorPreview,
         setAvatorPreview,
     } = useContext(UserInfoContext);
-    // console.log(userJob);
+
     const [userEmail, setUserEmail] = useState("");
     const [userNameTemp, setUserNameTemp] = useState("影視從業人員A");
     const [userJobTemp, setUserJobTemp] = useState("");
@@ -99,9 +99,7 @@ const Profile = () => {
                     `avators/${user}/${"avator" + user}`
                 );
                 if (file) {
-                    uploadBytes(imageRef, file).then(() => {
-                        console.log("Upload");
-                    });
+                    uploadBytes(imageRef, file).then(() => {});
                 }
             } catch (error) {
                 console.log(error);
@@ -171,7 +169,6 @@ const Profile = () => {
                                         type="file"
                                         accept="image/*"
                                         onChange={AvatorChangePreview}
-                                        // onChange={uploadImage}
                                     />
                                 </Profile_Section_Left_Avator_Container>
                             </Profile_Section_Left_Wrapper>
@@ -214,7 +211,6 @@ const Profile = () => {
                                         type="file"
                                         accept="image/*"
                                         onChange={AvatorChangePreview}
-                                        // onChange={uploadImage}
                                     />
                                 </Profile_Section_Left_Avator_Container>
                             </Profile_Section_Left_Wrapper>
@@ -262,7 +258,7 @@ const Profile = () => {
                     <FoldedName>{userNameTemp}</FoldedName>
                     <FoldedExtend
                         onClick={() => {
-                            setIsFolded(true);
+                            setIsFolded(false);
                         }}
                     >
                         編輯個人檔案
@@ -383,7 +379,6 @@ export const Profile_Section_Left_Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: top;
-    /* outline: 1px solid red; */
     @media ${device.underDesktop} {
         width: 90%;
     }
@@ -427,27 +422,6 @@ const Profile_Section_Left_Avator_Uploader = styled.input`
     top: 0;
     left: 0;
 `;
-const Profile_Section_Left_Avator_Uploader_Confirm = styled.div`
-    background-color: ${(props) => props.theme.colors.highLight};
-    color: ${(props) => props.theme.colors.primary_Dark};
-    position: absolute;
-    left: 93%;
-    top: 45%;
-    width: 40px;
-    height: 40px;
-    z-index: 9;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    &:hover {
-        transform: translateX(5px);
-        transform: translateY(-5px);
-        box-shadow: 5px 5px 0px 0px #a6a6a6;
-    }
-`;
 export const Profile_Section_Right_Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -455,7 +429,6 @@ export const Profile_Section_Right_Wrapper = styled.div`
     min-height: 280px;
     align-items: center;
     margin-top: 25px;
-    /* gap: 30px; */
     p {
         color: ${(props) => props.theme.colors.primary_Grey};
         margin: 5px auto 5px 0;
@@ -479,10 +452,8 @@ export const Profile_Section_Right_Name_Editor = styled(ContentEditable)`
     white-space: pre-wrap;
     word-wrap: break-word;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     flex-wrap: wrap;
-    /* line-height: 0; */
     color: ${(props) => props.theme.colors.primary_Dark};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
@@ -513,14 +484,8 @@ export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
     }
 `;
 
-// const JobDropDownWidth = styled(JobDropDown)`
-//     width: 100%;
-// `;
-
 export const Profile_Section_Right_Editor_Confirm = styled.div`
     font-size: 14px;
-    /* top: 370px;
-    right: 1%; */
     width: 100%;
     height: 50px;
     letter-spacing: 3px;
@@ -538,10 +503,4 @@ export const Profile_Section_Right_Editor_Confirm = styled.div`
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
-`;
-const Profile_Section_Right_Editor_Email = styled(ContentEditable)`
-    font-size: 16px;
-    font-weight: 400;
-    outline: none;
-    color: ${(props) => props.theme.colors.primary_Dark};
 `;

@@ -29,7 +29,6 @@ const VideoSearchSection = ({
             const newVideoNameList = [];
             const newUserIdList = [];
             docSnap.forEach((doc) => {
-                console.log("query");
                 const url = doc.data().videoUrlForHome;
                 const editor = doc.data().userName;
                 const videoName = doc.data().videoName;
@@ -115,7 +114,7 @@ const Home_Video_Container = styled.div`
     h1 {
         font-size: 18px;
         font-weight: 500;
-        margin-bottom: 5px;
+        margin: 5px 0 10px 0;
         text-overflow: ellipsis;
         white-space: nowrap;
     }

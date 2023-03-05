@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { device } from "../../Components/Rwd";
 
 const Category = ({
     selectedCategory,
@@ -214,7 +215,6 @@ const Category_Enterprise = styled.div`
     width: 30%;
     height: 150px;
     outline: 1px solid #a6a6a6;
-    /* text-shadow: 5px 3px 3px rgba(64, 64, 64, 0.45); */
     color: #ffffff;
     border-radius: 5px;
     display: flex;
@@ -262,8 +262,13 @@ const Category_Enterprise = styled.div`
             left: 0;
             right: 0;
             bottom: 0;
-            /* background-color: #9c9c9c77; */
             filter: blur(2px);
+        }
+        @media (max-width: 1000px) {
+            font-size: 2em;
+        }
+        @media ${device.underMobile} {
+            font-size: 1.4em;
         }
     }
 `;

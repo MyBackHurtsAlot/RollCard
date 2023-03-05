@@ -25,7 +25,6 @@ const HandleEdit = ({
     setVideoCategoryAll,
     setVideoDiscriptionAll,
 }) => {
-    // console.log(videoWrapperRef);
     const { user } = useContext(UserContext);
     const [showEdit, setShowEdit] = useState(true);
     const [newVideoNameTemp, setNewVideoNameTemp] = useState("");
@@ -35,7 +34,6 @@ const HandleEdit = ({
 
     const updatedRef = useRef(null);
 
-    console.log("showEdit", showEdit);
     const handleEditClick = (i) => {
         if (videoWrapperRef.current[i]) {
             const newHeight = showEdit ? "auto" : "auto";
@@ -134,7 +132,6 @@ const HandleEdit = ({
                             setNewVideoNameTemp(e.target.value);
                         }}
                     />
-                    {/* {videoNameAll} */}
                     <p>變更分類</p>
                     <VideoDropDown
                         videoCategoryAll={videoCategoryAll}

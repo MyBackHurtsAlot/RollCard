@@ -64,7 +64,6 @@ const Watch = () => {
                 ref(storage, `/avators/${currentVideo}/`),
                 false
             );
-            // console.log(storageRef);
             storageRef.items.forEach(async (avator) => {
                 const url = await getDownloadURL(avator);
                 setvideoAvator(url);

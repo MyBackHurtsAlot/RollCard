@@ -44,8 +44,9 @@ const MemberEditVideo = ({
                                 videoindex={index}
                                 ref={(el) => (videoTextRef.current[index] = el)}
                             >
-                                <p>{videoNameAll[index]}</p>
-                                <p>{videoCategoryAll[index]}</p>
+                                <p>{parse(`${videoNameAll[index]}`)}</p>
+                                <p> {parse(`${videoCategoryAll[index]}`)}</p>
+
                                 <div>
                                     {parse(`${videoDiscriptionAll[index]}`)}
                                 </div>

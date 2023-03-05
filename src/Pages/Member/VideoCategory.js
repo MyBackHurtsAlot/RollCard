@@ -38,11 +38,11 @@ const VideoCategory = ({
     }, [videoCategoryAll]);
 
     const handleClick = (category) => {
-        console.log(category);
         setMemberSelectedCategory(category);
         setShowCategory(true);
     };
     const filteredCategoryName = new Set(videoCategoryAll);
+    console.log(filteredCategoryName);
 
     return (
         <>

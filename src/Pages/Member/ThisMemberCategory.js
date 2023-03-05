@@ -27,14 +27,11 @@ const ThisMemberCategory = ({
         }
         return acc;
     }, []);
-
-    console.log(matchingVideos);
     return (
         <>
             <ThisMemberCategoryWrapper>
                 {matchingVideos.map((url, index) => {
                     const splitUrl = url.memberVideo.split("&token=")[1];
-                    // console.log(url.videoName);
                     return (
                         <CatVideoCantainer
                             key={uuidv4()}
@@ -67,7 +64,6 @@ export default ThisMemberCategory;
 const ThisMemberCategoryWrapper = styled.div`
     width: 60%;
     height: 600px;
-    /* outline: 1px solid red; */
     position: relative;
     margin-left: 33%;
     display: flex;
@@ -75,7 +71,6 @@ const ThisMemberCategoryWrapper = styled.div`
     gap: 15px;
     position: relative;
     @media ${device.underDesktop} {
-        /* outline: 1px solid red; */
         width: 90%;
         min-height: 600px;
         margin: 15px auto;

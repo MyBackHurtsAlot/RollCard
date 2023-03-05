@@ -63,7 +63,6 @@ const MemberShowVideo = ({
                         <SmallVideo>
                             {memberVideoAll.map((url, index) => {
                                 const splitUrl = url.split("&token=")[1];
-
                                 return (
                                     <SmallVideoContainer key={uuidv4()}>
                                         <NavLink to={`/watch/${splitUrl}`}>
@@ -84,7 +83,6 @@ const MemberShowVideo = ({
                     <VideoTitle>更多 {currentMemberName} 的作品</VideoTitle>
                     {memberVideoAll.map((url, index) => {
                         const splitUrl = url.split("&token=")[1];
-                        // console.log(splitUrl);
                         return (
                             <VideoContainer
                                 key={uuidv4()}
@@ -102,7 +100,6 @@ const MemberShowVideo = ({
                                     )}
 
                                     <h1>{videoNameAll[index]}</h1>
-                                    {/* <p>{videoCategoryAll[index]}</p> */}
                                 </NavLink>
                             </VideoContainer>
                         );
@@ -116,11 +113,7 @@ const MemberShowVideo = ({
 export default MemberShowVideo;
 const MemberShowVideoWrapper = styled.div`
     width: 100%;
-    /* display: flex;
-    justify-content: space-between; */
-    /* @media ${device.underDesktop} {
-        width: 50%;
-    } */
+    line-height: 26px;
 `;
 const VideoTitle = styled.div`
     font-size: 1.3em;
@@ -137,21 +130,19 @@ const SmallVideo = styled.div`
 const SmallAbout = styled.div`
     font-size: 1.2em;
     margin-top: 20px;
+    line-height: 26px;
 `;
 const JobOrVideo = styled.div`
     display: flex;
     justify-content: space-between;
-    /* gap: 5px; */
     width: 100%;
     padding: 1px;
-    /* outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey}; */
     border-radius: 5px;
     cursor: pointer;
     p {
         text-align: center;
         padding: 5px;
-        /* background-color: ${(props) =>
-            props.showsmallVideo ? "red" : "blue"}; */
+
         outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
         border-radius: 5px;
         width: 48%;
@@ -182,7 +173,6 @@ const SmallVideoContainer = styled.div`
         margin-bottom: 5px;
         width: 100%;
         border-radius: 5px;
-        /* max-width: 45%; */
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -190,7 +180,6 @@ const SmallVideoContainer = styled.div`
             transform: translateX(5px);
             transform: translateY(-5px);
             box-shadow: 5px 5px 0px 0px #a6a6a6;
-            /* color: ${(props) => props.theme.colors.highLight}; */
         }
     }
     a {
@@ -204,8 +193,6 @@ const SmallVideoContainer = styled.div`
 const VideoContainer = styled.div`
     width: 90%;
     position: relative;
-    /* height: 324px; */
-    /* outline: 1px solid blue; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -224,12 +211,10 @@ const VideoContainer = styled.div`
         z-index: 3;
         width: 30%;
         aspect-ratio: 16/9;
-        /* transform: rotate(5deg); */
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
         animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         animation: moveToMouse 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         opacity: 100;
-        /* transform: translateX(-${(props) => props.mousex}px); */
         @keyframes slideInFromTop {
             from {
                 transform: translateX(-80%);
@@ -242,14 +227,6 @@ const VideoContainer = styled.div`
                 opacity: 100;
             }
         }
-        /* @keyframes moveToMouse {
-            from {
-                transform: translateX(1);
-            }
-            to {
-                transform: translateX(${(props) => props.mousex}px);
-            }
-        } */
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         &:hover {
             transform: translateX(5px);
@@ -268,17 +245,4 @@ const VideoContainer = styled.div`
             color: #f2b705;
         }
     }
-    /* p {
-        width: 90%;
-        line-height: 45px;
-        font-size: 1em;
-        font-weight: 200;
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        border-bottom: 1px solid #a6a6a660;
-        &:hover {
-            color: #f2b705;
-        }
-    } */
-
-    /* outline: 1px solid red; */
 `;

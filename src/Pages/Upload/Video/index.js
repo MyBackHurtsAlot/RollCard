@@ -41,7 +41,6 @@ const VideoUpload = (selectedCategory) => {
     const [visibility, setVisability] = useState("visable");
     const [notLoading, setNotLoading] = useState("none");
     const [noUpload, setNoUpload] = useState(false);
-    // console.log("first", uploading);
     const {
         // videoName,
         // setVideoName,
@@ -102,7 +101,6 @@ const VideoUpload = (selectedCategory) => {
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
                         setProgress(progress);
-                        console.log("Upload is " + progress + "% done");
                     });
                     await uploadBytesResumable(
                         videoRefForMember,
@@ -130,7 +128,6 @@ const VideoUpload = (selectedCategory) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
             setVideoName(file.name);
-            console.log(file.name);
             try {
                 const videoRefForMember = ref(
                     storage,
@@ -147,16 +144,14 @@ const VideoUpload = (selectedCategory) => {
                         file,
                         metadata
                     );
-
                     setNotLoading("block");
-
+                    setDisplayBlock("none");
                     task.on("state_changed", (snapshot) => {
                         let progress =
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
 
                         setProgress(progress);
-                        console.log("Upload is " + progress + "% done");
                     });
                     await uploadBytesResumable(
                         videoRefForMember,
@@ -173,14 +168,11 @@ const VideoUpload = (selectedCategory) => {
                     setMemberUrl(urlForMember);
                     setHomePageUrl(urlRefForHomePage);
                     setOriginalVideoName(`${file.name + user}`);
-                    console.log(memberUrl);
                 }
             } catch (error) {
                 console.log(error);
             }
         }
-
-        console.log("uploaded");
     };
 
     useEffect(() => {

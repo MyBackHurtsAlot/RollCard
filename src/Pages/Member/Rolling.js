@@ -14,7 +14,6 @@ const Rolling = ({ memberVideoAll, videoNameAll }) => {
             setPosition({ x, y });
         }
     }, []);
-    console.log("position.x", position.x, "position.y", position.y);
     return (
         <>
             <RollingWrapper>

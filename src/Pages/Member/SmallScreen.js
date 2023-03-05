@@ -49,7 +49,6 @@ const SmallScreenWrapper = styled.div`
     width: 90%;
     display: flex;
     margin: 0 auto;
-    /* outline: 1px solid red; */
 `;
 const TopWrapper = styled.div`
     width: 100%;

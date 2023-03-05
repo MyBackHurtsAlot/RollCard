@@ -53,13 +53,6 @@ const Header = ({ setSelectedCategory }) => {
         });
     };
 
-    // const menuHanlder = () => {
-    //     setShowMenu(true);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NAVIGATE !!!!!!!!!!!!!!!!!!
-    //     // navigate(`/memberPage/${uid}`);
-    //     // console.log(uid);
-    // };
-    // console.log("o", uid);
     return (
         <Header_Wrapper>
             <Header_Container>

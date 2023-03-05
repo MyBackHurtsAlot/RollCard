@@ -10,8 +10,6 @@ import {
     UserInfoContext,
     VideoContext,
 } from "./Context/userContext";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./Firebase-config";
 import { storage } from "./Firebase-config";
 import Header from "./Components/Header/Index";
 import HomePage from "./Pages/Home/Index";
@@ -19,7 +17,6 @@ import MemberEditPage from "./Pages/Member/MemberEdit/Index";
 import MemberPage from "./Pages/Member/MemberPage";
 import VideoUpload from "./Pages/Upload/Video/index";
 import Watch from "./Pages/Watch/Index";
-import VideoPlayer from "./Components/VideoPlayer/Index";
 import SendEmail from "./Pages/Member/SendEmail";
 
 const App = () => {
