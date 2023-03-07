@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const PopUp_Wrapper = styled.div`
+const PopUpWrapper = styled.div`
     background-color: ${(props) => props.theme.colors.primary_white};
     width: 300px;
     min-height: 300px;
@@ -15,31 +15,13 @@ const PopUp_Wrapper = styled.div`
     transform: translate(-50%, 0);
     z-index: 3;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    /* &:hover {
-        transform: translateX(5px);
-        transform: translateY(-5px);
-        box-shadow: 5px 5px 0px 0px #a6a6a6;
-    } */
-    /* animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-    opacity: 100;
-
-    @keyframes slideInFromTop {
-        from {
-            transform: translateY(-80%);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(1);
-            opacity: 100;
-        }
-    } */
 
     label {
         min-height: 0;
         margin: 30px auto 5px auto;
     }
 `;
-const PopUp_Mask = styled.div`
+const PopUpMask = styled.div`
     position: absolute;
     display: ${(props) => props.style.display};
     top: 0px;
@@ -49,14 +31,14 @@ const PopUp_Mask = styled.div`
     filter: blur(8px);
     z-index: 2;
 `;
-const PopUp_Title = styled.p`
+const PopUpTitle = styled.p`
     color: ${(props) => props.theme.colors.primary_Dark};
     text-align: center;
     font-size: 2em;
     font-weight: 700;
     margin-top: 20px;
 `;
-const PopUp_Input_Wrapper = styled.div`
+const PopUpInputWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +46,7 @@ const PopUp_Input_Wrapper = styled.div`
     gap: 10px;
     margin-top: 15px;
 `;
-const PopUp_Input = styled.input`
+const PopUpInput = styled.input`
     outline: none;
     width: 80%;
     height: 40px;
@@ -79,10 +61,10 @@ const PopUp_Input = styled.input`
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
-const PopUp_Password = styled(PopUp_Input)`
+const PopUpPassword = styled(PopUpInput)`
     width: 80%;
 `;
-const PopUp_Button = styled.div`
+const PopUpButton = styled.div`
     width: 80%;
     height: 40px;
     background-color: ${(props) => props.theme.colors.highLight};
@@ -101,7 +83,7 @@ const PopUp_Button = styled.div`
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
-const PopUp_isLoggedin = styled.div`
+const PopUpisLoggedin = styled.div`
     align-items: center;
     width: 80%;
     height: 40px;
@@ -119,20 +101,20 @@ const PopUp_isLoggedin = styled.div`
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
-const PopUp_Message = styled.div`
+const PopUpMessage = styled.div`
     font-size: 14px;
     color: ${(prop) => prop.color};
     z-index: 3;
     margin-bottom: 15px;
 `;
 export {
-    PopUp_Wrapper,
-    PopUp_Mask,
-    PopUp_Title,
-    PopUp_Input,
-    PopUp_Password,
-    PopUp_Input_Wrapper,
-    PopUp_Button,
-    PopUp_isLoggedin,
-    PopUp_Message,
+    PopUpWrapper,
+    PopUpMask,
+    PopUpTitle,
+    PopUpInput,
+    PopUpPassword,
+    PopUpInputWrapper,
+    PopUpButton,
+    PopUpisLoggedin,
+    PopUpMessage,
 };

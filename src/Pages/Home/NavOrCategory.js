@@ -156,7 +156,6 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
             >
                 {showCategory ? (
                     <Category
-                        // selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
                         showEnterprise={showEnterprise}
                         showAnimation={showAnimation}

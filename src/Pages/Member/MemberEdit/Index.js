@@ -91,10 +91,10 @@ const MemberEditPage = () => {
         <>
             <MemberPageWrapper>
                 <Profile />
-                <Member_EditPage_Video_Section>
-                    <Member_EditPage_Video_Section_Title>
+                <MemberEditPageVideoSection>
+                    <MemberEditPageVideoSectionTitle>
                         你的影片
-                    </Member_EditPage_Video_Section_Title>
+                    </MemberEditPageVideoSectionTitle>
                     <MemberEditVideo
                         videoNameAll={videoNameAll}
                         memberVideoAll={memberVideoAll}
@@ -104,15 +104,15 @@ const MemberEditPage = () => {
                         setVideoCategoryAll={setVideoCategoryAll}
                         setVideoDiscriptionAll={setVideoDiscriptionAll}
                     />
-                    <Member_EditPage_Video_Wrapper
+                    <MemberEditPageVideoWrapper
                         style={{ display: displayNone }}
                     >
                         <Loading progress={`${editor} 傳支影片吧`} />
                         {/* {memberVideo.map((url) => {
                             return <video src={url} key={uuidv4()} controls />;
                         })} */}
-                    </Member_EditPage_Video_Wrapper>
-                </Member_EditPage_Video_Section>
+                    </MemberEditPageVideoWrapper>
+                </MemberEditPageVideoSection>
             </MemberPageWrapper>
         </>
     );
@@ -128,7 +128,7 @@ const MemberPageWrapper = styled.section`
     }
 `;
 
-const Member_EditPage_Video_Section_Title = styled.div`
+const MemberEditPageVideoSectionTitle = styled.div`
     color: ${(props) => props.theme.colors.primary_white};
     font-size: 1.3em;
     font-weight: 100;
@@ -137,7 +137,7 @@ const Member_EditPage_Video_Section_Title = styled.div`
     left: 0;
     top: 0;
 `;
-const Member_EditPage_Video_Section = styled.div`
+const MemberEditPageVideoSection = styled.div`
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -152,7 +152,7 @@ const Member_EditPage_Video_Section = styled.div`
     }
 `;
 
-const Member_EditPage_Video_Wrapper = styled.div`
+const MemberEditPageVideoWrapper = styled.div`
     width: 100%;
     min-height: 580px;
     display: flex;

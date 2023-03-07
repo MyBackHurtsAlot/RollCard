@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../Firebase-config";
 import Login from "../PopUp/Login";
 import SignUp from "../PopUp/SignUp";
-import { PopUp_Mask } from "../PopUp/Style/PopUpStyle";
+import { PopUpMask } from "../PopUp/Style/PopUpStyle";
 import { UserContext } from "../../Context/userContext";
 import { device } from "../Rwd";
 const Header = ({ setSelectedCategory }) => {
@@ -54,19 +54,19 @@ const Header = ({ setSelectedCategory }) => {
     };
 
     return (
-        <Header_Wrapper>
-            <Header_Container>
-                <Header_Container_Logo
+        <HeaderWrapper>
+            <HeaderContainer>
+                <HeaderContainerLogo
                     onClick={() => {
                         setSelectedCategory("");
                     }}
                 >
                     <NavLink to="/"> Roll Card</NavLink>
                     <Outlet />
-                </Header_Container_Logo>
+                </HeaderContainerLogo>
                 {loggedIn === true ? (
-                    <Header_menu_container>
-                        <Header_menu_YourPage
+                    <HeaderMenuContainer>
+                        <HeaderMenuYourPage
                             onClick={() => {
                                 // navigate(`/member/profile/${uid}`);
                                 setDisplay("none");
@@ -76,21 +76,21 @@ const Header = ({ setSelectedCategory }) => {
                                 你的頁面
                             </NavLink>
                             {/* 你的頁面 */}
-                        </Header_menu_YourPage>
-                        <Header_menu_UpLoad
+                        </HeaderMenuYourPage>
+                        <HeaderMenuUpLoad
                             onClick={() => {
                                 // navigate(`/upload`);
                                 setDisplay("none");
                             }}
                         >
                             <NavLink to="/upload">上傳影片</NavLink>
-                        </Header_menu_UpLoad>
-                        <Header_menu_LogOut onClick={logoutHandler}>
+                        </HeaderMenuUpLoad>
+                        <HeaderMenuLogOut onClick={logoutHandler}>
                             登出
-                        </Header_menu_LogOut>
-                    </Header_menu_container>
+                        </HeaderMenuLogOut>
+                    </HeaderMenuContainer>
                 ) : (
-                    <Header_container_Login
+                    <HeadercontainerLogin
                         onClick={() => {
                             setCurrentPage("Login");
                             setDisplay("flex");
@@ -98,7 +98,7 @@ const Header = ({ setSelectedCategory }) => {
                         }}
                     >
                         登入
-                    </Header_container_Login>
+                    </HeadercontainerLogin>
                 )}
 
                 {currentPage === "Login" && (
@@ -131,49 +131,24 @@ const Header = ({ setSelectedCategory }) => {
                         popColor={popColor}
                     />
                 )}
-            </Header_Container>
-            {/* {showMenu === true && (
-                <Header_menu_container style={{ display: display }}>
-                    <Header_menu_YourPage
-                        onClick={() => {
-                           
-                            setDisplay("none");
-                        }}
-                    >
-                        <NavLink to={`/member/profile/${uid}`}>
-                            你的頁面
-                        </NavLink>
-                      
-                    </Header_menu_YourPage>
-                    <Header_menu_UpLoad
-                        onClick={() => {
-                     
-                            setDisplay("none");
-                        }}
-                    >
-                        <NavLink to="/upload">上傳影片</NavLink>
-                    </Header_menu_UpLoad>
-                    <Header_menu_LogOut onClick={logoutHandler}>
-                        登出
-                    </Header_menu_LogOut>
-                </Header_menu_container>
-            )} */}
-            <PopUp_Mask
+            </HeaderContainer>
+
+            <PopUpMask
                 style={{ display: display }}
                 onClick={() => {
                     setCurrentPage("");
                     setDisplay("none");
                     setShowMenu(false);
                 }}
-            ></PopUp_Mask>
-        </Header_Wrapper>
+            ></PopUpMask>
+        </HeaderWrapper>
     );
 };
 
 export default Header;
 
 // Styled Component
-const Header_Wrapper = styled.header`
+const HeaderWrapper = styled.header`
     width: 100%;
     background-color: #0d0d0deb;
     border-bottom: 1px solid #404040d1;
@@ -187,7 +162,7 @@ const Header_Wrapper = styled.header`
     z-index: 10;
 `;
 
-const Header_Container = styled.div`
+const HeaderContainer = styled.div`
     width: 80%;
     display: flex;
     justify-content: space-between;
@@ -206,7 +181,7 @@ const Header_Container = styled.div`
         flex-direction: row;
     }
 `;
-const Header_Container_Logo = styled.div`
+const HeaderContainerLogo = styled.div`
     cursor: pointer;
     font-family: "Ubuntu Condensed";
     letter-spacing: 1px;
@@ -219,31 +194,24 @@ const Header_Container_Logo = styled.div`
         letter-spacing: 1.5px;
     }
 `;
-const Header_container_Login = styled(Header_Container_Logo)`
+const HeadercontainerLogin = styled(HeaderContainerLogo)`
     color: ${(props) => props.theme.colors.primary_white};
     font-size: 1em;
     font-weight: 200;
 `;
-const Header_container_Member = styled(Header_container_Login)``;
+const HeadercontainerMember = styled(HeadercontainerLogin)``;
 
-const Header_menu_container = styled.div`
-    /* width: 152px;
-        height: 136px;
-        border-radius: 5px;
-        position: absolute;
-        right: 5%;
-        top: 70px; */
-    /* background-color: ${(props) => props.theme.colors.primary_Grey}; */
+const HeaderMenuContainer = styled.div`
     display: flex;
-    /* flex-direction: column; */
+
     align-items: center;
-    /* justify-content: space-evenly; */
+
     gap: 20px;
     z-index: 4;
     a {
         color: ${(props) => props.theme.colors.primary_white};
     }
 `;
-const Header_menu_YourPage = styled(Header_container_Login)``;
-const Header_menu_UpLoad = styled(Header_container_Login)``;
-const Header_menu_LogOut = styled(Header_container_Login)``;
+const HeaderMenuYourPage = styled(HeadercontainerLogin)``;
+const HeaderMenuUpLoad = styled(HeadercontainerLogin)``;
+const HeaderMenuLogOut = styled(HeadercontainerLogin)``;

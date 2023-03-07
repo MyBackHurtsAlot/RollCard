@@ -94,7 +94,7 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
     }, [togglePlay]);
     return (
         <>
-            <Video_Wrapper
+            <VideoWrapper
                 ref={fullScreenRef}
                 onMouseEnter={() => {
                     setShowControls(true);
@@ -114,7 +114,7 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                     onVolumeChange={handleOnVolumeUpdate}
                     onClick={togglePlay}
                 />
-                <Video_Controller_Wrapper isHovered={showControls}>
+                <VideoControllerWrapper isHovered={showControls}>
                     <IsPlaying
                         onClick={togglePlay}
                         onMouseEnter={handlePlayingEnter}
@@ -256,15 +256,15 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                     >
                         {showFullScreen ? <FullScreenIcon /> : "全"}
                     </FullScreen>
-                </Video_Controller_Wrapper>
-            </Video_Wrapper>
+                </VideoControllerWrapper>
+            </VideoWrapper>
         </>
     );
 };
 
 export default VideoPlayer;
 // ========= Styled =========
-const Video_Wrapper = styled.div`
+const VideoWrapper = styled.div`
     position: relative;
     width: 100%;
     margin: 70px auto 20px auto;
@@ -277,7 +277,7 @@ const Video_Wrapper = styled.div`
     }
 `;
 
-const Video_Controller_Wrapper = styled.div`
+const VideoControllerWrapper = styled.div`
     position: absolute;
     display: flex;
     justify-content: space-around;

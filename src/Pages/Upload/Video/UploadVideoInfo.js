@@ -63,14 +63,14 @@ const UploadVideoInfo = ({
     }, []);
     return (
         <>
-            <Upload_File_Section_Wrapper>
-                <Upload_File_Name
+            <UploadFileSectionWrapper>
+                <UploadFileName
                     html={`${videoNameTemp}`}
                     onChange={(e) => {
                         setVideoNameTemp(e.target.value);
                     }}
                 />
-                <Upload_File_description
+                <UploadFiledescription
                     html={`${videoDescriptionTemp}`}
                     onChange={(e) => {
                         setVideoDescriptionTemp(e.target.value);
@@ -80,19 +80,18 @@ const UploadVideoInfo = ({
                     videoTempCategory={videoTempCategory}
                     setTempVideoCategory={setTempVideoCategory}
                 />
-                <Upload_File_Confirm onClick={submitVideoContent}>
+                <UploadFileConfirm onClick={submitVideoContent}>
                     上傳
-                </Upload_File_Confirm>
-                {/* <Card /> */}
+                </UploadFileConfirm>
                 {showCard ? <Card message={"成功上傳"} /> : ""}
-            </Upload_File_Section_Wrapper>
+            </UploadFileSectionWrapper>
         </>
     );
 };
 
 export default UploadVideoInfo;
 
-const Upload_File_Section_Wrapper = styled.div`
+const UploadFileSectionWrapper = styled.div`
     position: relative;
     width: 70%;
     margin: 30px auto auto auto;
@@ -103,7 +102,7 @@ const Upload_File_Section_Wrapper = styled.div`
     gap: 15px;
 `;
 
-const Upload_File_Name = styled(ContentEditable)`
+const UploadFileName = styled(ContentEditable)`
     font-size: 1.5em;
     font-weight: 700;
     outline: none;
@@ -116,7 +115,7 @@ const Upload_File_Name = styled(ContentEditable)`
         border: 1px solid ${(props) => props.theme.colors.highLight};
     }
 `;
-const Upload_File_description = styled(ContentEditable)`
+const UploadFiledescription = styled(ContentEditable)`
     font-size: 16px;
     font-weight: 400;
     min-height: 100px;
@@ -132,7 +131,7 @@ const Upload_File_description = styled(ContentEditable)`
         border: 1px solid ${(props) => props.theme.colors.highLight};
     }
 `;
-const Upload_File_Confirm = styled.div`
+const UploadFileConfirm = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
     cursor: pointer;
     width: 60px;

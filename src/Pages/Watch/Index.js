@@ -74,39 +74,39 @@ const Watch = () => {
 
     return (
         <div>
-            <Watch_Player_wrapper>
+            <WatchPlayerWrapper>
                 <VideoPlayer videoList={videoList[0]} />
-            </Watch_Player_wrapper>
-            <Member_Section_Below_Wrapper>
-                <Member_Section_Below_Left_Wrapper>
-                    <Member_Section_Wrapper>
-                        <Member_Section_VideoInfo_Wrapper>
+            </WatchPlayerWrapper>
+            <MemberSectionBelowWrapper>
+                <MemberSectionBelowLeftWrapper>
+                    <MemberSectionWrapper>
+                        <MemberSectionVideoInfoWrapper>
                             <h1>{`${videoName}`}</h1>
-                        </Member_Section_VideoInfo_Wrapper>
+                        </MemberSectionVideoInfoWrapper>
 
-                        <Member_Section_Editor_Wrapper
+                        <MemberSectionEditorWrapper
                             onClick={() => navigate(`/member/${currentVideo}`)}
                             editor={`${videoEditor}`}
                         >
-                            <Member_Section_Avator_container
+                            <MemberSectionAvatorContainer
                                 videoAvator={videoAvator}
                             />
-                            <Member_Section_Editor_Text_Wrapper>
+                            <MemberSectionEditorTextWrapper>
                                 <h1>{`${videoEditor}`}</h1>
                                 <p>|</p>
                                 <p> {`${videoEditorJob}`}</p>
-                            </Member_Section_Editor_Text_Wrapper>
-                        </Member_Section_Editor_Wrapper>
+                            </MemberSectionEditorTextWrapper>
+                        </MemberSectionEditorWrapper>
                         <HandleDescription
                             videoDescription={videoDescription}
                         ></HandleDescription>
-                    </Member_Section_Wrapper>
+                    </MemberSectionWrapper>
 
                     <ThisCategory
                         videoCategory={videoCategory}
                         currentVideo={currentVideo}
                     />
-                </Member_Section_Below_Left_Wrapper>
+                </MemberSectionBelowLeftWrapper>
 
                 <CurrentMemberOthersWrapper>
                     <CurrentMemberOthers
@@ -114,7 +114,7 @@ const Watch = () => {
                         videoList={videoList[0]}
                     />
                 </CurrentMemberOthersWrapper>
-            </Member_Section_Below_Wrapper>
+            </MemberSectionBelowWrapper>
         </div>
     );
 };
@@ -122,7 +122,7 @@ const Watch = () => {
 export default Watch;
 
 // =========== Styled ==============
-const Watch_Player_wrapper = styled.div`
+const WatchPlayerWrapper = styled.div`
     width: 69%;
     margin: 70px auto 20px auto;
     aspect-ratio: 16/9;
@@ -135,7 +135,7 @@ const Watch_Player_wrapper = styled.div`
     }
 `;
 
-const Member_Section_Below_Wrapper = styled.div`
+const MemberSectionBelowWrapper = styled.div`
     width: 69%;
     margin: 0 auto;
     display: flex;
@@ -153,20 +153,20 @@ const CurrentMemberOthersWrapper = styled.div`
     }
 `;
 
-const Member_Section_Below_Left_Wrapper = styled.div`
+const MemberSectionBelowLeftWrapper = styled.div`
     width: 65%;
     @media (max-width: 1000px) {
         width: 90%;
         margin: 0 auto;
     }
 `;
-const Member_Section_Wrapper = styled.div`
+const MemberSectionWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
 `;
-const Member_Section_VideoInfo_Wrapper = styled.div`
+const MemberSectionVideoInfoWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -176,7 +176,7 @@ const Member_Section_VideoInfo_Wrapper = styled.div`
         font-size: 1.5em;
     }
 `;
-const Member_Section_Editor_Wrapper = styled.div`
+const MemberSectionEditorWrapper = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
@@ -212,13 +212,13 @@ const Member_Section_Editor_Wrapper = styled.div`
         }
     }
 `;
-const Member_Section_Editor_Text_Wrapper = styled.div`
+const MemberSectionEditorTextWrapper = styled.div`
     display: flex;
     gap: 15px;
     font-size: 1.3em;
     margin-left: 10px;
 `;
-const Member_Section_Avator_container = styled.div`
+const MemberSectionAvatorContainer = styled.div`
     width: 30px;
     height: 30px;
     background-image: ${(props) =>

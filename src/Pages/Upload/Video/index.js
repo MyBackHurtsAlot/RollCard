@@ -195,7 +195,7 @@ const VideoUpload = (selectedCategory) => {
 
     return (
         <>
-            <Upload_Area_Wrapper
+            <UploadAreaWrapper
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
             >
@@ -206,7 +206,7 @@ const VideoUpload = (selectedCategory) => {
                         doNotPlay={doNotPlay}
                     />
                 ) : (
-                    <Upload_File_Input style={{ display: displayBlock }}>
+                    <UploadFileInput style={{ display: displayBlock }}>
                         {progress}
                         <h1>上傳影片</h1>
                         <p>或把檔案拖進來</p>
@@ -215,13 +215,13 @@ const VideoUpload = (selectedCategory) => {
                             accept="video/*"
                             onChange={uploadVideo}
                         />
-                    </Upload_File_Input>
+                    </UploadFileInput>
                 )}
                 <Loading
                     style={{ display: notLoading }}
                     progress={`${Math.ceil(progress)}%`}
                 />
-            </Upload_Area_Wrapper>
+            </UploadAreaWrapper>
             <UploadVideoInfo
                 fileName={fileName}
                 videoName={videoName}
@@ -237,7 +237,7 @@ export default VideoUpload;
 
 // =========== Styled ============
 
-const Upload_Area_Wrapper = styled.div`
+const UploadAreaWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -253,7 +253,7 @@ const Upload_Area_Wrapper = styled.div`
         outline: 1px solid ${(props) => props.theme.colors.highLight};
     }
 `;
-const Upload_File_Input = styled.label`
+const UploadFileInput = styled.label`
     cursor: pointer;
     text-align: center;
     h1 {

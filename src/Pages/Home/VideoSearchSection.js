@@ -49,11 +49,11 @@ const VideoSearchSection = ({
 
     return (
         <div>
-            <Home_Video_Section_Wrapper>
+            <HomeVideoSectionWrapper>
                 {videoCategoryList.map((url, index) => {
                     const splitUrl = url.split("&token=")[1];
                     return (
-                        <Home_Video_Container
+                        <HomeVideoContainer
                             key={index}
                             editor={editorName[index]}
                         >
@@ -71,10 +71,10 @@ const VideoSearchSection = ({
                             >
                                 {editorName[index]}
                             </p>
-                        </Home_Video_Container>
+                        </HomeVideoContainer>
                     );
                 })}
-            </Home_Video_Section_Wrapper>
+            </HomeVideoSectionWrapper>
         </div>
     );
 };
@@ -82,14 +82,14 @@ const VideoSearchSection = ({
 export default VideoSearchSection;
 
 // ================ Styled =================
-const Home_Video_Section_Wrapper = styled.section`
+const HomeVideoSectionWrapper = styled.section`
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
 `;
-const Home_Video_Container = styled.div`
+const HomeVideoContainer = styled.div`
     width: 23%;
     position: relative;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);

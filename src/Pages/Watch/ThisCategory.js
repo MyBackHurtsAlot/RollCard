@@ -64,8 +64,8 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
     }, [thisCategory]);
     return (
         <>
-            <ThisCat_Section_Wrapper>
-                <ThisCat_Title>更多{videoCategory}分類的作品</ThisCat_Title>
+            <ThisCatSectionWrapper>
+                <ThisCatTitle>更多{videoCategory}分類的作品</ThisCatTitle>
                 {isTablet ? (
                     <VideoWrapper>
                         {!onlyOneVideo ? (
@@ -73,7 +73,7 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
                                 {thisCategory.map((url, index) => {
                                     const splitUrl = url.split("&token=")[1];
                                     return (
-                                        <Home_Video_Container key={uuidv4()}>
+                                        <HomeVideoContainer key={uuidv4()}>
                                             <VideoContent
                                                 editor={editorName[index]}
                                             >
@@ -97,7 +97,7 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
                                                     {editorName[index]}
                                                 </p>
                                             </VideoContent>
-                                        </Home_Video_Container>
+                                        </HomeVideoContainer>
                                     );
                                 })}
                             </Slider>
@@ -141,7 +141,7 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
                         {thisCategory.map((url, index) => {
                             const splitUrl = url.split("&token=")[1];
                             return (
-                                <Home_Video_Container key={uuidv4()}>
+                                <HomeVideoContainer key={uuidv4()}>
                                     <VideoContent editor={editorName[index]}>
                                         <video
                                             src={url}
@@ -161,18 +161,18 @@ const ThisCategory = ({ videoCategory, currentVideo }) => {
                                             {editorName[index]}
                                         </p>
                                     </VideoContent>
-                                </Home_Video_Container>
+                                </HomeVideoContainer>
                             );
                         })}
                     </VideoWrapper>
                 )}
-            </ThisCat_Section_Wrapper>
+            </ThisCatSectionWrapper>
         </>
     );
 };
 
 export default ThisCategory;
-const ThisCat_Section_Wrapper = styled.section`
+const ThisCatSectionWrapper = styled.section`
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -183,7 +183,7 @@ const ThisCat_Section_Wrapper = styled.section`
     border-radius: 5px;
     padding: 15px;
 `;
-const ThisCat_Title = styled.div`
+const ThisCatTitle = styled.div`
     margin: 0 auto;
     font-size: 1.3em;
     font-weight: 200;
@@ -226,7 +226,7 @@ const OneVideoContainer = styled.div`
         }
     }
 `;
-const Home_Video_Container = styled.div`
+const HomeVideoContainer = styled.div`
     width: 30%;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {

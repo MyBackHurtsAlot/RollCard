@@ -94,44 +94,44 @@ const Category = ({
 
     return (
         <div>
-            <Category_Wrapper>
-                <Cat_And_All_Wrapper>
+            <CategoryWrapper>
+                <CatAndAllWrapper>
                     {/* <Categories>分類</Categories> */}
                     <All onClick={() => HandleClick("")}>全部影片</All>
-                </Cat_And_All_Wrapper>
-                <Category_Enterprise
+                </CatAndAllWrapper>
+                <CategoryEnterprise
                     onClick={() => HandleClick("企業形象")}
                     onMouseEnter={handlEnterpriseMouseEnter}
                     onMouseLeave={handlEnterpriseMouseLeave}
                 >
                     企業形象
                     <video src={showEnterprise} ref={videoRefDocument} muted />
-                </Category_Enterprise>
-                <Category_Animation
+                </CategoryEnterprise>
+                <CategoryAnimation
                     onClick={() => HandleClick("動畫")}
                     onMouseEnter={handleAnimationMouseEnter}
                     onMouseLeave={handleAnimationMouseLeave}
                 >
                     動畫
                     <video src={showAnimation} ref={videoRefAnimation} muted />
-                </Category_Animation>
-                <Category_Event
+                </CategoryAnimation>
+                <CategoryEvent
                     onClick={() => HandleClick("活動紀錄")}
                     onMouseEnter={handleEventMouseEnter}
                     onMouseLeave={handleEventMouseLeave}
                 >
                     活動紀錄
                     <video src={showEvent} ref={videoRefEvent} muted />
-                </Category_Event>
-                <Category_Trailer
+                </CategoryEvent>
+                <CategoryTrailer
                     onClick={() => HandleClick("預告片")}
                     onMouseEnter={handleTrailerMouseEnter}
                     onMouseLeave={handleTrailerMouseLeave}
                 >
                     預告片
                     <video src={showTrailer} ref={videoRefTrailer} muted />
-                </Category_Trailer>
-                <Category_Documentory
+                </CategoryTrailer>
+                <CategoryDocumentory
                     onClick={() => HandleClick("紀錄片")}
                     onMouseEnter={handleDocumentoryMouseEnter}
                     onMouseLeave={handleDocumentoryMouseLeave}
@@ -142,16 +142,16 @@ const Category = ({
                         ref={videoRefDocumentory}
                         muted
                     />
-                </Category_Documentory>
-                <Category_Others
+                </CategoryDocumentory>
+                <CategoryOthers
                     onClick={() => HandleClick("其他")}
                     onMouseEnter={handleOthersnMouseEnter}
                     onMouseLeave={handleOthersnMouseLeave}
                 >
                     其他
                     <video src={showOthers} ref={videoRefOthers} muted />
-                </Category_Others>
-            </Category_Wrapper>
+                </CategoryOthers>
+            </CategoryWrapper>
         </div>
     );
 };
@@ -159,7 +159,7 @@ const Category = ({
 export default Category;
 
 //==================== Styles ====================
-const Category_Wrapper = styled.section`
+const CategoryWrapper = styled.section`
     margin-top: 20px;
     width: 100%;
     height: 500px;
@@ -170,7 +170,7 @@ const Category_Wrapper = styled.section`
     flex-wrap: wrap;
     padding: 10px;
 `;
-const Cat_And_All_Wrapper = styled.div`
+const CatAndAllWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -210,7 +210,7 @@ const All = styled(Categories)`
     }
 `;
 
-const Category_Enterprise = styled.div`
+const CategoryEnterprise = styled.div`
     position: relative;
     width: 30%;
     height: 150px;
@@ -272,8 +272,8 @@ const Category_Enterprise = styled.div`
         }
     }
 `;
-const Category_Animation = styled(Category_Enterprise)``;
-const Category_Event = styled(Category_Enterprise)``;
-const Category_Trailer = styled(Category_Enterprise)``;
-const Category_Documentory = styled(Category_Enterprise)``;
-const Category_Others = styled(Category_Enterprise)``;
+const CategoryAnimation = styled(CategoryEnterprise)``;
+const CategoryEvent = styled(CategoryEnterprise)``;
+const CategoryTrailer = styled(CategoryEnterprise)``;
+const CategoryDocumentory = styled(CategoryEnterprise)``;
+const CategoryOthers = styled(CategoryEnterprise)``;

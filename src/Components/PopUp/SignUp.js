@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import {
-    PopUp_Wrapper,
-    PopUp_Title,
-    PopUp_Input,
-    PopUp_Password,
-    PopUp_Input_Wrapper,
-    PopUp_Button,
-    PopUp_isLoggedin,
-    PopUp_Message,
+    PopUpWrapper,
+    PopUpTitle,
+    PopUpInput,
+    PopUpPassword,
+    PopUpInputWrapper,
+    PopUpButton,
+    PopUpisLoggedin,
+    PopUpMessage,
 } from "./Style/PopUpStyle";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -69,28 +69,28 @@ const SignUp = ({
         if (e.key === "Enter") submitRegister();
     };
     return (
-        <PopUp_Wrapper onKeyPress={submiRegestByKeyboard}>
-            <PopUp_Title>註冊會員</PopUp_Title>
-            <PopUp_Input_Wrapper>
-                <PopUp_Input
+        <PopUpWrapper onKeyPress={submiRegestByKeyboard}>
+            <PopUpTitle>註冊會員</PopUpTitle>
+            <PopUpInputWrapper>
+                <PopUpInput
                     type="input"
                     placeholder="請輸入信箱"
                     onChange={(e) => {
                         setRegisterEmail(e.target.value);
                     }}
                     value={registerEmail}
-                ></PopUp_Input>
-                <PopUp_Password
+                ></PopUpInput>
+                <PopUpPassword
                     type="password"
                     placeholder="請輸入密碼"
                     onChange={(e) => {
                         setRegisterPassword(e.target.value);
                     }}
                     value={registerPassword}
-                ></PopUp_Password>
-            </PopUp_Input_Wrapper>
-            <PopUp_Button onClick={submitRegister}>註冊</PopUp_Button>
-            <PopUp_isLoggedin
+                ></PopUpPassword>
+            </PopUpInputWrapper>
+            <PopUpButton onClick={submitRegister}>註冊</PopUpButton>
+            <PopUpisLoggedin
                 onClick={() => {
                     setCurrentPage("Login");
                     setRegisterEmail("");
@@ -98,9 +98,9 @@ const SignUp = ({
                 }}
             >
                 我是會員
-            </PopUp_isLoggedin>
-            <PopUp_Message color={popColor}>{popMessage}</PopUp_Message>
-        </PopUp_Wrapper>
+            </PopUpisLoggedin>
+            <PopUpMessage color={popColor}>{popMessage}</PopUpMessage>
+        </PopUpWrapper>
     );
 };
 

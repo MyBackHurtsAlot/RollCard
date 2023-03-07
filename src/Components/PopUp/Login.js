@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-    PopUp_Wrapper,
-    PopUp_Title,
-    PopUp_Input,
-    PopUp_Password,
-    PopUp_Input_Wrapper,
-    PopUp_Button,
-    PopUp_isLoggedin,
-    PopUp_Message,
+    PopUpWrapper,
+    PopUpTitle,
+    PopUpInput,
+    PopUpPassword,
+    PopUpInputWrapper,
+    PopUpButton,
+    PopUpisLoggedin,
+    PopUpMessage,
 } from "./Style/PopUpStyle";
 import { UserContext } from "../../Context/userContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -68,18 +68,18 @@ const SignUp = ({
     };
     return (
         <>
-            <PopUp_Wrapper onKeyPress={submitLoginByKeyboard}>
-                <PopUp_Title>會員登入</PopUp_Title>
-                <PopUp_Input_Wrapper>
-                    <PopUp_Input
+            <PopUpWrapper onKeyPress={submitLoginByKeyboard}>
+                <PopUpTitle>會員登入</PopUpTitle>
+                <PopUpInputWrapper>
+                    <PopUpInput
                         placeholder="請輸入信箱"
                         type="input"
                         onChange={(e) => {
                             setCheckEmail(e.target.value);
                         }}
                         value={checkEmail}
-                    ></PopUp_Input>
-                    <PopUp_Password
+                    ></PopUpInput>
+                    <PopUpPassword
                         type="password"
                         placeholder="請輸入密碼"
                         onChange={(e) => {
@@ -87,10 +87,10 @@ const SignUp = ({
                         }}
                         // onClick={setPopMessage("")}
                         value={checkPassword}
-                    ></PopUp_Password>
-                </PopUp_Input_Wrapper>
-                <PopUp_Button onClick={submitLogin}>登入</PopUp_Button>
-                <PopUp_isLoggedin
+                    ></PopUpPassword>
+                </PopUpInputWrapper>
+                <PopUpButton onClick={submitLogin}>登入</PopUpButton>
+                <PopUpisLoggedin
                     onClick={() => {
                         setCurrentPage("SignUp");
                         setCheckEmail("");
@@ -98,9 +98,9 @@ const SignUp = ({
                     }}
                 >
                     我不是會員
-                </PopUp_isLoggedin>
-                <PopUp_Message color={popColor}>{popMessage}</PopUp_Message>
-            </PopUp_Wrapper>
+                </PopUpisLoggedin>
+                <PopUpMessage color={popColor}>{popMessage}</PopUpMessage>
+            </PopUpWrapper>
         </>
     );
 };

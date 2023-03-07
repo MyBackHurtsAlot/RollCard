@@ -33,7 +33,6 @@ const App = () => {
     const [userAbout, setUserAbout] = useState("說點什麼吧");
     const [avator, setAvator] = useState(null);
     const [avatorPreview, setAvatorPreview] = useState(null);
-    // const [video, setVideo] = useState(null);
     const [originalVideoName, setOriginalVideoName] = useState("");
     const [memberVideo, setMemberVideo] = useState([]);
     const [videoUrl, setVideoUrl] = useState("");

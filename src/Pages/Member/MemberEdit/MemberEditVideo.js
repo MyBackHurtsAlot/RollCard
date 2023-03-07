@@ -21,7 +21,7 @@ const MemberEditVideo = ({
 
     return (
         <>
-            <Member_EditPage_Video_Wrapper>
+            <MemberEditPageVideoWrapper>
                 {memberVideoAll.map((url, index) => {
                     const splitUrl = url.split("&token=")[1];
                     return (
@@ -66,13 +66,13 @@ const MemberEditVideo = ({
                         </EditVideoWrapper>
                     );
                 })}
-            </Member_EditPage_Video_Wrapper>
+            </MemberEditPageVideoWrapper>
         </>
     );
 };
 
 export default MemberEditVideo;
-const Member_EditPage_Video_Wrapper = styled.div`
+const MemberEditPageVideoWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;

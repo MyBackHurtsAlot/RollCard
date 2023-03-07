@@ -21,7 +21,6 @@ const VideoCategory = ({
     useEffect(() => {
         const newAnimations = videoCategoryAll.map(() => ({
             randomAnimation: Math.ceil(Math.random() * 6),
-            // return randomAnimation;
         }));
         setRandomAnimations(newAnimations);
     }, [videoCategoryAll]);

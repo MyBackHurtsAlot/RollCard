@@ -15,11 +15,11 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
             {!showLoding ? (
                 <Loading progress={"Loading"} />
             ) : (
-                <Home_Video_Section_Wrapper>
+                <HomeVideoSectionWrapper>
                     {videoList.map((url, index) => {
                         const splitUrl = url.split("&token=")[1];
                         return (
-                            <Home_Video_Container key={index}>
+                            <HomeVideoContainer key={index}>
                                 <video
                                     src={url}
                                     onClick={() => {
@@ -27,7 +27,7 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
                                     }}
                                 />
 
-                                <Home_VideoInfo_Container
+                                <HomeVideoInfoContainer
                                     editor={editorName[index]}
                                 >
                                     <h1>{videoNameList[index]}</h1>
@@ -40,11 +40,11 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
                                     >
                                         {editorName[index]}
                                     </p>
-                                </Home_VideoInfo_Container>
-                            </Home_Video_Container>
+                                </HomeVideoInfoContainer>
+                            </HomeVideoContainer>
                         );
                     })}
-                </Home_Video_Section_Wrapper>
+                </HomeVideoSectionWrapper>
             )}
         </>
     );
@@ -53,14 +53,14 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
 export default React.memo(VideoSection);
 
 // ================ Styled =================
-const Home_Video_Section_Wrapper = styled.section`
+const HomeVideoSectionWrapper = styled.section`
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 20px;
 `;
-const Home_Video_Container = styled.div`
+const HomeVideoContainer = styled.div`
     width: 23%;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
@@ -98,7 +98,7 @@ const Home_Video_Container = styled.div`
     }
 `;
 
-const Home_VideoInfo_Container = styled.div`
+const HomeVideoInfoContainer = styled.div`
     margin: 5px auto auto 0;
     position: relative;
     h1 {

@@ -158,23 +158,23 @@ const Profile = () => {
     return (
         <>
             {!isFolded ? (
-                <Profile_Section>
+                <ProfileSection>
                     {isTablet ? (
                         <Tablet>
-                            <Profile_Section_Left_Wrapper>
-                                <Profile_Section_Left_Avator_Container
+                            <ProfileSectionLeftWrapper>
+                                <ProfileSectionLeftAvatorContainer
                                     avatorPreview={avatorPreview}
                                 >
-                                    <Profile_Section_Left_Avator_Uploader
+                                    <ProfileSectionLeftAvatorUploader
                                         type="file"
                                         accept="image/*"
                                         onChange={AvatorChangePreview}
                                     />
-                                </Profile_Section_Left_Avator_Container>
-                            </Profile_Section_Left_Wrapper>
-                            <Profile_Section_Right_Wrapper>
+                                </ProfileSectionLeftAvatorContainer>
+                            </ProfileSectionLeftWrapper>
+                            <ProfileSectionRightWrapper>
                                 <p>你的名字</p>
-                                <Profile_Section_Right_Name_Editor
+                                <ProfileSectionRightNameEditor
                                     html={`${userNameTemp}`}
                                     onChange={(e) =>
                                         setUserNameTemp(e.target.value)
@@ -187,36 +187,36 @@ const Profile = () => {
                                     userJob={userJob}
                                 />
                                 <p>關於你</p>
-                                <Profile_Section_Right_About_Editor
+                                <ProfileSectionRightAboutEditor
                                     html={`${userAboutTemp}`}
                                     onChange={(e) =>
                                         setUserAboutTemp(e.target.value)
                                     }
                                 />
 
-                                <Profile_Section_Right_Editor_Confirm
+                                <ProfileSectionRightEditorConfirm
                                     onClick={submitUserInfo}
                                 >
                                     儲存
-                                </Profile_Section_Right_Editor_Confirm>
-                            </Profile_Section_Right_Wrapper>
+                                </ProfileSectionRightEditorConfirm>
+                            </ProfileSectionRightWrapper>
                         </Tablet>
                     ) : (
                         <NotTablet>
-                            <Profile_Section_Left_Wrapper>
-                                <Profile_Section_Left_Avator_Container
+                            <ProfileSectionLeftWrapper>
+                                <ProfileSectionLeftAvatorContainer
                                     avatorPreview={avatorPreview}
                                 >
-                                    <Profile_Section_Left_Avator_Uploader
+                                    <ProfileSectionLeftAvatorUploader
                                         type="file"
                                         accept="image/*"
                                         onChange={AvatorChangePreview}
                                     />
-                                </Profile_Section_Left_Avator_Container>
-                            </Profile_Section_Left_Wrapper>
-                            <Profile_Section_Right_Wrapper>
+                                </ProfileSectionLeftAvatorContainer>
+                            </ProfileSectionLeftWrapper>
+                            <ProfileSectionRightWrapper>
                                 <p>你的名字</p>
-                                <Profile_Section_Right_Name_Editor
+                                <ProfileSectionRightNameEditor
                                     html={`${userNameTemp}`}
                                     onChange={(e) =>
                                         setUserNameTemp(e.target.value)
@@ -229,23 +229,23 @@ const Profile = () => {
                                     userJob={userJob}
                                 />
                                 <p>關於你</p>
-                                <Profile_Section_Right_About_Editor
+                                <ProfileSectionRightAboutEditor
                                     html={`${userAboutTemp}`}
                                     onChange={(e) =>
                                         setUserAboutTemp(e.target.value)
                                     }
                                 />
 
-                                <Profile_Section_Right_Editor_Confirm
+                                <ProfileSectionRightEditorConfirm
                                     onClick={submitUserInfo}
                                 >
                                     儲存
-                                </Profile_Section_Right_Editor_Confirm>
-                            </Profile_Section_Right_Wrapper>
+                                </ProfileSectionRightEditorConfirm>
+                            </ProfileSectionRightWrapper>
                         </NotTablet>
                     )}
                     {showCard ? <Card message={"上傳成功"} /> : ""}
-                </Profile_Section>
+                </ProfileSection>
             ) : (
                 <Folded>
                     <FoldedAvator avatorPreview={avatorPreview}>
@@ -336,7 +336,7 @@ const FoldedExtend = styled.div`
     }
 `;
 
-export const Profile_Section = styled.section`
+export const ProfileSection = styled.section`
     position: relative;
     margin: 100px auto auto auto;
     padding: 20px;
@@ -371,7 +371,7 @@ const NotTablet = styled.section`
     align-items: center;
     justify-content: center;
 `;
-export const Profile_Section_Left_Wrapper = styled.div`
+export const ProfileSectionLeftWrapper = styled.div`
     position: relative;
     width: 70%;
     border-radius: 5px;
@@ -389,7 +389,7 @@ export const Profile_Section_Left_Wrapper = styled.div`
         width: 90%;
     }
 `;
-export const Profile_Section_Left_Avator_Container = styled.label`
+export const ProfileSectionLeftAvatorContainer = styled.label`
     width: 100%;
     height: 200px;
     border-radius: 5px;
@@ -416,13 +416,13 @@ export const Profile_Section_Left_Avator_Container = styled.label`
         background-color: #16161664;
     }
 `;
-const Profile_Section_Left_Avator_Uploader = styled.input`
+const ProfileSectionLeftAvatorUploader = styled.input`
     display: none;
     position: absolute;
     top: 0;
     left: 0;
 `;
-export const Profile_Section_Right_Wrapper = styled.div`
+export const ProfileSectionRightWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -440,7 +440,7 @@ export const Profile_Section_Right_Wrapper = styled.div`
         width: 90%;
     }
 `;
-export const Profile_Section_Right_Name_Editor = styled(ContentEditable)`
+export const ProfileSectionRightNameEditor = styled(ContentEditable)`
     font-size: 1.5em;
     font-weight: 700;
     width: 100%;
@@ -463,7 +463,7 @@ export const Profile_Section_Right_Name_Editor = styled(ContentEditable)`
     }
 `;
 
-export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
+export const ProfileSectionRightAboutEditor = styled(ContentEditable)`
     font-size: 16px;
     font-weight: 400;
     min-height: 160px;
@@ -484,7 +484,7 @@ export const Profile_Section_Right_About_Editor = styled(ContentEditable)`
     }
 `;
 
-export const Profile_Section_Right_Editor_Confirm = styled.div`
+export const ProfileSectionRightEditorConfirm = styled.div`
     font-size: 14px;
     width: 100%;
     height: 50px;

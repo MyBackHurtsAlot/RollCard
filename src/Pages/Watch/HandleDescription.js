@@ -23,19 +23,19 @@ export const HandleDescription = (videoDescription) => {
     };
     return (
         <>
-            <Member_Section_Description
+            <MemberSectionDescription
                 ref={measureRef}
                 expanded={expanded}
                 showExpand={showExpand}
                 onClick={handleDescripiton}
             >
                 {parse(videoDescription.videoDescription)}
-            </Member_Section_Description>
+            </MemberSectionDescription>
         </>
     );
 };
 
-const Member_Section_Description = styled.div`
+const MemberSectionDescription = styled.div`
     width: 100%;
     height: ${(props) => (props.expanded ? "auto" : "100px")};
     overflow: hidden;

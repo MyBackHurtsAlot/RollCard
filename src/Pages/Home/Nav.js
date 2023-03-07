@@ -3,31 +3,31 @@ import styled from "styled-components";
 import { device } from "../../Components/Rwd";
 const Nav = () => {
     return (
-        <Nav_Wrapper>
-            <Nav_Left_Wrapper>
-                <Nav_Left_Title>
+        <NavWrapper>
+            <NavLeftWrapper>
+                <NavLeftTitle>
                     你和團隊的
                     <br />
                     線上作品集
-                </Nav_Left_Title>
-                <Nav_Left_Role>乙方</Nav_Left_Role>
-            </Nav_Left_Wrapper>
-            <Nav_Right_Wrapper>
-                <Nav_Right_Role>甲方</Nav_Right_Role>
-                <Nav_Right_Title>
+                </NavLeftTitle>
+                <NavLeftRole>乙方</NavLeftRole>
+            </NavLeftWrapper>
+            <NavRightWrapper>
+                <NavRightRole>甲方</NavRightRole>
+                <NavRightTitle>
                     無須登入
                     <br />
                     直接聯繫
-                </Nav_Right_Title>
-            </Nav_Right_Wrapper>
-        </Nav_Wrapper>
+                </NavRightTitle>
+            </NavRightWrapper>
+        </NavWrapper>
     );
 };
 
 export default Nav;
 
 //Styled Component
-const Nav_Wrapper = styled.nav`
+const NavWrapper = styled.nav`
     width: 100%;
     height: 500px;
     /* padding: 0 10%; */
@@ -47,7 +47,7 @@ const Nav_Wrapper = styled.nav`
         flex-direction: row;
     }
 `;
-const Nav_Left_Wrapper = styled.div`
+const NavLeftWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -67,7 +67,7 @@ const Nav_Left_Wrapper = styled.div`
         width: 50%;
     }
 `;
-const Nav_Left_Role = styled.div`
+const NavLeftRole = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
     display: table-cell;
     vertical-align: text-top;
@@ -102,7 +102,7 @@ const Nav_Left_Role = styled.div`
         font-size: 150px;
     }
 `;
-const Nav_Left_Title = styled.div`
+const NavLeftTitle = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
     font-size: 64px;
     font-weight: 900;
@@ -121,11 +121,11 @@ const Nav_Left_Title = styled.div`
         }
     }
 `;
-const Nav_Left_Content = styled.div`
+const NavLeftContent = styled.div`
     color: ${(props) => props.theme.colors.primary_Dark};
     font-size: 16px;
 `;
-const Nav_Right_Role = styled(Nav_Left_Role)`
+const NavRightRole = styled(NavLeftRole)`
     color: ${(props) => props.theme.colors.primary_white};
     text-align: end;
     animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -142,7 +142,7 @@ const Nav_Right_Role = styled(Nav_Left_Role)`
         }
     }
 `;
-const Nav_Right_Title = styled(Nav_Left_Title)`
+const NavRightTitle = styled(NavLeftTitle)`
     color: ${(props) => props.theme.colors.primary_white};
     text-align: start;
     animation: slideInFromLeft 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
@@ -159,17 +159,13 @@ const Nav_Right_Title = styled(Nav_Left_Title)`
         }
     }
 `;
-const Nav_Right_Wrapper_Background = styled.div`
-    background-color: ${(props) => props.theme.colors.primary_Dark};
-    width: 100%;
-`;
-const Nav_Right_Wrapper = styled.div`
+
+const NavRightWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 50%;
     height: 100%;
-    /* background-color: #6bafeb; */
     background-color: ${(props) => props.theme.colors.primary_Dark};
     @media ${device.smallest} {
         width: 100%;
