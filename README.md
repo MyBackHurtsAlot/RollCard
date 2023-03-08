@@ -9,6 +9,13 @@ RollCard is a video website that provides a platform for video production studio
 ---
 
 
+### Catalog
+  * [Test Account](docs/)
+  * [Framework and Library](docs/)
+  * [Features](docs/)
+  * [contact](docs/)
+
+
 ### Test Account
 
 You don't need to register or log in, or even click your mouse to skip those fancy homepages. All you need is a single click, then enjoy the video. That's how RollCard enhances user experience and protects your elbow. But if you want to try upload videos and edit video information, here is the test account.
@@ -38,34 +45,46 @@ You don't need to register or log in, or even click your mouse to skip those fan
 
 ### Features
 
-#### Infinite Scroll
+#### Infinite Scroll and category choosing
 
 Using Infinite Scroll to create a seamless browsing experience, increased engagement, and reduced server and page load times.
 
-![Scroll](https://user-images.githubusercontent.com/105920543/223765813-7da1762e-e806-46a1-9bcb-b03f43e7bd8b.gif)
+And you can hover your mouse over the Nav bar and click on the category that interests you. Of course, you can also click "All Videos" to cancel the search.
+
+![NavAndScroll](https://user-images.githubusercontent.com/105920543/223805138-c3032adc-493d-4809-b1d4-e2215121847e.gif)
+
 
 #### Costum video player
 
-Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, ``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](http://localhost:8080/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
+Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, 
+``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](http://localhost:8080/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
 
 ![p1](https://user-images.githubusercontent.com/105920543/223779140-1fe2d862-3742-41f8-bb47-e7df30b60e10.png)
 
-#### Naughty UI and elbow-friendly UX
+#### Naughty UI 
 
 Bouncing UI elements are added to increase user interaction and making the website more engaging.
 
----
+![Bounce](https://user-images.githubusercontent.com/105920543/223790742-9c888cdb-44d8-46ba-a648-ec6d7e37b4d0.gif)
 
-
----
 
 #### Upload Video
-
 
 You can upload your videos to RollCard, and while uploading, you can check whether the progress indicator will touch the corner, or just fill in the information about the video below during the upload process to save your time.
 
 ![LxKOF1Lw05](https://user-images.githubusercontent.com/105920543/223689486-01ab68fb-55e1-494e-8c1c-d11dd76d675c.gif)
+
+#### Edit your personal or video information
+
+You can edit your personal or video information on this page, and the latest information will be displayed immediately after editing.
+
+![edit](https://user-images.githubusercontent.com/105920543/223794158-16b4da9f-696d-4131-bf7a-964d0a4fb895.gif)
 ---
 
 
+### contact
 
+If you have any suggestion or question, feel free to contact me at
+[aegis5201@gmail.com](aegis5201@gmail.com)
+
+Thank you !
