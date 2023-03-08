@@ -135,6 +135,6 @@ const Main = styled.main`
 `;
 const Section = styled.section`
     width: 80%;
-
+    min-height: calc(100vh - 500px - 66px);
     margin: 0 auto;
 `;

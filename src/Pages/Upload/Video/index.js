@@ -1,28 +1,23 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ContentEditable from "react-contenteditable";
 import styled from "styled-components";
 import {
     UserInfoContext,
     UserContext,
     VideoContext,
 } from "../../../Context/userContext";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 import {
     ref,
     uploadBytes,
     getDownloadURL,
     uploadBytesResumable,
-    StorageReference,
 } from "firebase/storage";
 import { storage } from "../../../Firebase-config";
-import { db } from "../../../Firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../Firebase-config";
 import UploadVideoInfo from "./UploadVideoInfo";
 import Loading from "../../Loading/Index";
 import { v4 as uuidv4 } from "uuid";
-import { device } from "../../../Components/Rwd";
 import VideoPlayer from "../../../Components/VideoPlayer/Index";
 
 const VideoUpload = (selectedCategory) => {
@@ -32,7 +27,6 @@ const VideoUpload = (selectedCategory) => {
     const [memberUrl, setMemberUrl] = useState();
     const [homePageUrl, setHomePageUrl] = useState();
     const [videoCategory, setVideoCategory] = useState("");
-    // const [videoTempCategory, setTempVideoCategory] = useState("");
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState("");
 
@@ -41,18 +35,8 @@ const VideoUpload = (selectedCategory) => {
     const [visibility, setVisability] = useState("visable");
     const [notLoading, setNotLoading] = useState("none");
     const [noUpload, setNoUpload] = useState(false);
-    const {
-        // videoName,
-        // setVideoName,
-        videoDescription,
-        setVideoDescription,
-        videoUrl,
-        setVideoUrl,
-        // originalVideoName,
-        // setOriginalVideoName,
-    } = useContext(VideoContext);
-    const { userName, userJob, userEmail, setUserEmail } =
-        useContext(UserInfoContext);
+
+    const { setUserEmail } = useContext(UserInfoContext);
     const { user } = useContext(UserContext);
     const metadata = {
         contentType: "video/*",
@@ -247,7 +231,7 @@ const UploadAreaWrapper = styled.div`
     position: relative;
     z-index: 1;
     outline: 1px solid #a6a6a6;
-    border-radius: 15px;
+    border-radius: 5px;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:focus {
         outline: 1px solid ${(props) => props.theme.colors.highLight};
@@ -260,7 +244,7 @@ const UploadFileInput = styled.label`
         text-align: center;
         color: ${(props) => props.theme.colors.primary_Dark};
         background-color: ${(props) => props.theme.colors.highLight};
-        border-radius: 15px;
+        border-radius: 5px;
         padding: 10px;
         font-size: 1.5em;
         letter-spacing: 6px;

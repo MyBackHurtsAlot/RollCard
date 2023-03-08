@@ -108,7 +108,7 @@ const UploadFileName = styled(ContentEditable)`
     outline: none;
     padding: 10px;
     border: 1px solid #f2f2f2;
-    border-radius: 15px;
+    border-radius: 5px;
     color: ${(props) => props.theme.colors.primary_white};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:focus {
@@ -124,7 +124,7 @@ const UploadFiledescription = styled(ContentEditable)`
     outline: none;
     padding: 10px;
     border: 1px solid #f2f2f2;
-    border-radius: 15px;
+    border-radius: 5px;
     color: ${(props) => props.theme.colors.primary_white};
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:focus {
@@ -137,7 +137,7 @@ const UploadFileConfirm = styled.div`
     width: 60px;
     height: 40px;
     margin-left: auto;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 5px;
     display: flex;
     justify-content: center;

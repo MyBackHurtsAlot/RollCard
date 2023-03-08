@@ -48,7 +48,7 @@ const VideoSearchSection = ({
     }, [selectedCategory]);
 
     return (
-        <div>
+        <>
             <HomeVideoSectionWrapper>
                 {videoCategoryList.map((url, index) => {
                     const splitUrl = url.split("&token=")[1];
@@ -75,7 +75,7 @@ const VideoSearchSection = ({
                     );
                 })}
             </HomeVideoSectionWrapper>
-        </div>
+        </>
     );
 };
 
