@@ -46,10 +46,9 @@ Using Infinite Scroll to create a seamless browsing experience, increased engage
 
 #### Costum video player
 
-Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, and ```full-screen``` mode.
+Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, ``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](http://localhost:8080/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
 
-![Player](https://user-images.githubusercontent.com/105920543/223773720-fe6c7881-bc9e-4420-ae5d-fdf4ba120337.gif)
-
+![p1](https://user-images.githubusercontent.com/105920543/223779140-1fe2d862-3742-41f8-bb47-e7df30b60e10.png)
 
 #### Naughty UI and elbow-friendly UX
 
