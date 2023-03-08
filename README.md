@@ -11,8 +11,16 @@ RollCard is a video website that provides a platform for video production studio
 
 ### Catalog
   * [Test Account](README.md#test-account)
+
   * [Framework and Library](README.md#framework-and-library)
-  * [Features](README.md#feature)
+
+  * [Features](README.md#features) 
+      - [Infinite Scroll and category choosing](#infinite-scroll-and-category-choosing)
+      - [Custom video player](#custom-video-player)
+      - [Naughty UI](#naughty-ui)
+      - [Upload Video](#upload-video)
+      - [Edit your personal or video information](#edit-your-personal-or-video-information)
+
   * [contact](README.md#contact)
 
 
@@ -54,7 +62,7 @@ And you can hover your mouse over the Nav bar and click on the category that int
 ![NavAndScroll](https://user-images.githubusercontent.com/105920543/223805138-c3032adc-493d-4809-b1d4-e2215121847e.gif)
 
 
-#### Costum video player
+#### Custom video player
 
 Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, 
 ``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](http://localhost:8080/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
