@@ -4,8 +4,8 @@
 ![截圖 2023-03-08 下午5 22 35](https://user-images.githubusercontent.com/105920543/223678950-63dbae4e-b4f4-4fb4-b147-070a9d8dab0f.png)
 
 
+RollCard is a video website that provides a platform for video production studios and freelance workers to showcase their works. Interested parties can contact the author directly without the need to log in.
 
-#### RollCard is a video website that provides a platform for video production studios and freelance workers to showcase their works. Interested parties can contact the author directly without the need to log in.
 ---
 
 
@@ -42,13 +42,19 @@ You don't need to register or log in, or even click your mouse to skip those fan
 
 Using Infinite Scroll to create a seamless browsing experience, increased engagement, and reduced server and page load times.
 
+![Scroll](https://user-images.githubusercontent.com/105920543/223765813-7da1762e-e806-46a1-9bcb-b03f43e7bd8b.gif)
+
 #### Costum video player
 
 Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, and ```full-screen``` mode.
 
+![Player](https://user-images.githubusercontent.com/105920543/223773720-fe6c7881-bc9e-4420-ae5d-fdf4ba120337.gif)
+
+
 #### Naughty UI and elbow-friendly UX
 
-Bouncing UI elements are added to increase user interaction and enhance brand image, making the website more engaging.
+Bouncing UI elements are added to increase user interaction and making the website more engaging.
+
 ---
 
 
@@ -63,4 +69,4 @@ You can upload your videos to RollCard, and while uploading, you can check wheth
 ---
 
 
-#### 
+
