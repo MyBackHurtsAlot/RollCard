@@ -10,10 +10,10 @@ RollCard is a video website that provides a platform for video production studio
 
 
 ### Catalog
-  * [Test Account](https://github.com/MyBackHurtsAlot/RollCard#test-account)
-  * [Framework and Library](https://github.com/MyBackHurtsAlot/RollCard#framework-and-library)
-  * [Features](https://github.com/MyBackHurtsAlot/RollCard#features)
-  * [contact](https://github.com/MyBackHurtsAlot/RollCard#contact)
+  * [Test Account](README.md#test-account)
+  * [Framework and Library]
+  * [Features]
+  * [contact]
 
 
 ### Test Account
