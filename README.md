@@ -65,7 +65,7 @@ And you can hover your mouse over the Nav bar and click on the category that int
 ### Custom video player
 
 Designed and built a custom video player interface with ```playback controls```, ```timeline```, ```playback speed```, ```volume adjustment```, 
-``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](http://localhost:8080/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
+``` picture-in-picture``` and ```full-screen``` mode. (Click [HERE](https://rollcard.web.app/watch/3554967b-c726-4afa-bdc0-43ed2c82de76) to watch)
 
 ![p1](https://user-images.githubusercontent.com/105920543/223779140-1fe2d862-3742-41f8-bb47-e7df30b60e10.png)
 
