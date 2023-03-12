@@ -97,36 +97,36 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
     }, [togglePlay]);
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (
-                (e.shiftKey && e.key === ">") ||
-                (e.shiftKey && e.key === "。")
-            ) {
-                handleVideoSpeed(Math.min(speed + 0.5, 2));
-            } else if (
-                (e.shiftKey && e.key === "<") ||
-                (e.shiftKey && e.key === "，")
-            ) {
-                if (speed > 1) {
-                    handleVideoSpeed(Math.max(speed - 0.5, 1));
-                } else if (speed === 1) {
-                    handleVideoSpeed(0.75);
-                } else {
-                    handleVideoSpeed(0.5);
+        if (!doNotPlay) {
+            const handleKeyDown = (e) => {
+                if (
+                    (e.shiftKey && e.key === ">") ||
+                    (e.shiftKey && e.key === "。")
+                ) {
+                    handleVideoSpeed(Math.min(speed + 0.5, 2));
+                } else if (
+                    (e.shiftKey && e.key === "<") ||
+                    (e.shiftKey && e.key === "，")
+                ) {
+                    if (speed > 1) {
+                        handleVideoSpeed(Math.max(speed - 0.5, 1));
+                    } else if (speed === 1) {
+                        handleVideoSpeed(0.75);
+                    } else {
+                        handleVideoSpeed(0.5);
+                    }
                 }
-            }
-        };
-        document.addEventListener("keydown", handleKeyDown);
+            };
 
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-        };
+            document.addEventListener("keydown", handleKeyDown);
+
+            return () => {
+                document.removeEventListener("keydown", handleKeyDown);
+            };
+        }
     }, [speed]);
     const handlePlay = () => {
         setShowControls(true);
-        setTimeout(() => {
-            setShowControls(false);
-        }, 5000);
         togglePlay;
     };
     return (
@@ -347,16 +347,44 @@ const TimelineWapper = styled.div`
     width: 70%;
 `;
 const Timeline = styled.input`
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
     width: 100%;
     height: 3px;
+    border-radius: 15px;
     cursor: pointer;
+    position: relative;
+    background: linear-gradient(
+        to right,
+        ${(props) => props.theme.colors.highLight} 0%,
+        ${(props) => props.theme.colors.highLight} ${(props) => props.value}%,
+        #a6a6a6 ${(props) => props.value}%
+    );
+    &:focus {
+        outline: none;
+    }
+    &::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 3px;
+        border-radius: 15px;
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         width: 15px;
         height: 15px;
+        margin-top: -6px;
         border-radius: 50%;
         background-color: ${(props) => props.theme.colors.highLight};
-        color: ${(props) => props.theme.colors.highLight};
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        position: relative;
+        z-index: 2;
     }
 `;
 const Duration = styled.div`
@@ -454,17 +482,42 @@ const VolumeOff = styled(ImVolumeMute2)`
 `;
 const VolumeBar = styled.input`
     transform: rotate(-90deg) translate(-50%, 10px);
-
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
     width: 100px;
     height: 5px;
     position: absolute;
-
+    background: linear-gradient(
+        to right,
+        ${(props) => props.theme.colors.highLight} 0%,
+        ${(props) => props.theme.colors.highLight} ${(props) => props.value}%,
+        #a6a6a6 ${(props) => props.value}%
+    );
+    &:focus {
+        outline: none;
+    }
+    &::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 5px;
+        border-radius: 15px;
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         width: 15px;
         height: 15px;
+        margin-top: -6px;
         border-radius: 50%;
         background-color: ${(props) => props.theme.colors.highLight};
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        position: relative;
+        z-index: 2;
     }
     bottom: ${(props) => (props.showVolumeControl ? "80px" : "70px")};
     opacity: ${(props) => (props.showVolumeControl ? 110 : 0)};

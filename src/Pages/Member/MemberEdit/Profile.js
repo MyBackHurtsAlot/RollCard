@@ -72,6 +72,7 @@ const Profile = () => {
             setShowCard(true);
             setTimeout(() => {
                 setShowCard(false);
+                setIsFolded(true);
             }, 2500);
         } catch (error) {
             console.log(error);
