@@ -121,8 +121,8 @@ const InfoContainer = styled.div`
     text-overflow: ellipsis;
     cursor: pointer;
     h1 {
-        font-size: 1.3em;
-        font-weight: 700;
+        font-size: 1.1em;
+        font-weight: 500;
     }
     p {
         margin-top: 5px;

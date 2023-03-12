@@ -40,8 +40,7 @@ const VideoCategory = ({
         setMemberSelectedCategory(category);
         setShowCategory(true);
     };
-    const filteredCategoryName = new Set(videoCategoryAll);
-    console.log(filteredCategoryName);
+    const filteredCategoryName = Array.from(new Set(videoCategoryAll));
 
     return (
         <>
@@ -57,7 +56,8 @@ const VideoCategory = ({
                 />
             ) : (
                 <RandomWrapper>
-                    {Array.from(filteredCategoryName).map((url, index) => {
+                    {filteredCategoryName.map((category) => {
+                        const index = videoCategoryAll.indexOf(category);
                         return (
                             <Random
                                 key={uuidv4()}

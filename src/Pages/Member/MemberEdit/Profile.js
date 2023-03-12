@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+
 import {
-    getFirestore,
     doc,
     setDoc,
     query,
@@ -25,15 +23,11 @@ import { device } from "../../../Components/Rwd";
 
 const Profile = () => {
     const { user } = useContext(UserContext);
-    const navigate = useNavigate();
+
     const {
         userName,
-        setUserName,
         userJob,
-        setUserJob,
         userAbout,
-        setUserAbout,
-        avator,
         setAvator,
         avatorPreview,
         setAvatorPreview,
