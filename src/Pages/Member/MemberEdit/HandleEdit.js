@@ -189,6 +189,7 @@ const EditVideoContent = styled.div`
 `;
 const NewVideoName = styled(ContentEditable)`
     outline: none;
+    line-height: 23px;
     border: 1px solid ${(props) => props.theme.colors.primary_white};
     cursor: auto;
     border-radius: 5px;
@@ -203,6 +204,7 @@ const NewVideoName = styled(ContentEditable)`
 `;
 const NewVideoDescription = styled(ContentEditable)`
     outline: none;
+    line-height: 23px;
     border: 1px solid ${(props) => props.theme.colors.primary_white};
     cursor: auto;
     border-radius: 5px;

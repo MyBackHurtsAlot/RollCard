@@ -122,7 +122,7 @@ const VideoTextWrapper = styled.div`
     flex-direction: column;
     margin-left: 15px;
     gap: 15px;
-    line-height: 23px;
+    line-height: 26px;
 
     & > p:first-child {
         font-size: 24px;

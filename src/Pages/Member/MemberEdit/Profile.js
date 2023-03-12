@@ -40,7 +40,6 @@ const Profile = () => {
     const [showCard, setShowCard] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
     const [isFolded, setIsFolded] = useState(false);
-    const userAboutRef = useRef();
 
     const submitUserInfo = async () => {
         try {
@@ -187,12 +186,20 @@ const Profile = () => {
                                         setUserAboutTemp(e.target.value)
                                     }
                                 />
-
-                                <ProfileSectionRightEditorConfirm
-                                    onClick={submitUserInfo}
-                                >
-                                    儲存
-                                </ProfileSectionRightEditorConfirm>
+                                <FoldWapper>
+                                    <FoldBack
+                                        onClick={() => {
+                                            setIsFolded(true);
+                                        }}
+                                    >
+                                        算了
+                                    </FoldBack>
+                                    <ProfileSectionRightEditorConfirm
+                                        onClick={submitUserInfo}
+                                    >
+                                        儲存
+                                    </ProfileSectionRightEditorConfirm>
+                                </FoldWapper>
                             </ProfileSectionRightWrapper>
                         </Tablet>
                     ) : (
@@ -249,7 +256,10 @@ const Profile = () => {
                             onChange={AvatorChangePreview}
                         />
                     </FoldedAvator>
-                    <FoldedName>{userNameTemp}</FoldedName>
+                    <FoldedNameAndJobWrapper>
+                        <FoldedName>{userNameTemp}</FoldedName>
+                        <FoldedJob>{userJobTemp}</FoldedJob>
+                    </FoldedNameAndJobWrapper>
                     <FoldedExtend
                         onClick={() => {
                             setIsFolded(false);
@@ -306,8 +316,17 @@ const FolderAvatorInput = styled.input`
     top: 0;
     left: 0;
 `;
+
+const FoldedNameAndJobWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+`;
 const FoldedName = styled.div`
     font-size: 1.3em;
+`;
+const FoldedJob = styled.div`
+    font-size: 1em;
 `;
 const FoldedExtend = styled.div`
     font-size: 0.8em;
@@ -497,4 +516,19 @@ export const ProfileSectionRightEditorConfirm = styled.div`
         transform: translateY(-5px);
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
+    @media ${device.underW1000} {
+        width: 30%;
+    }
+`;
+
+const FoldWapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+`;
+const FoldBack = styled(ProfileSectionRightEditorConfirm)`
+    width: 30%;
+    background-color: ${(props) => props.theme.colors.primary_white};
+    outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
+    color: ${(props) => props.theme.colors.primary_Dark};
 `;
