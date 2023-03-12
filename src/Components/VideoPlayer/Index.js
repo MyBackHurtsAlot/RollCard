@@ -78,20 +78,57 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
 
     useEffect(() => {
         if (!doNotPlay) {
-            const handleKeyDown = (event) => {
-                if (event.code === "Space") {
-                    event.preventDefault();
+            const handleKeyDown = (e) => {
+                if (e.code === "Space") {
+                    e.preventDefault();
                     togglePlay();
-                    setShowControls(!showControls);
+                    setShowControls(true);
+                    setTimeout(() => {
+                        setShowControls(false);
+                    }, 2000);
                 }
             };
 
-            window.addEventListener("keydown", handleKeyDown);
+            document.addEventListener("keydown", handleKeyDown);
             return () => {
-                window.removeEventListener("keydown", handleKeyDown);
+                document.removeEventListener("keydown", handleKeyDown);
             };
         }
     }, [togglePlay]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (
+                (e.shiftKey && e.key === ">") ||
+                (e.shiftKey && e.key === "。")
+            ) {
+                handleVideoSpeed(Math.min(speed + 0.5, 2));
+            } else if (
+                (e.shiftKey && e.key === "<") ||
+                (e.shiftKey && e.key === "，")
+            ) {
+                if (speed > 1) {
+                    handleVideoSpeed(Math.max(speed - 0.5, 1));
+                } else if (speed === 1) {
+                    handleVideoSpeed(0.75);
+                } else {
+                    handleVideoSpeed(0.5);
+                }
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [speed]);
+    const handlePlay = () => {
+        setShowControls(true);
+        setTimeout(() => {
+            setShowControls(false);
+        }, 5000);
+        togglePlay;
+    };
     return (
         <>
             <VideoWrapper
@@ -104,7 +141,7 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                     setShowSpeedControl(false);
                     setShowVolumeControl(false);
                 }}
-                // onKeyPress={handleSpaceBar}
+                onClick={handlePlay}
             >
                 <video
                     src={url}
@@ -169,7 +206,6 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                         >
                             <li
                                 onClick={() => handleVideoSpeed(0.5)}
-                                // showSelected={showSelected}
                                 className={speed === 0.5 ? "selected" : ""}
                             >
                                 0.5
@@ -247,7 +283,6 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                     >
                         {showMiniPlayer ? <MiniPlayerIcon /> : "小"}
                     </MiniPlayer>
-                    {/* <MiniPlayer onClick={toggleMiniPlayer} /> */}
                     <FullScreen
                         onClick={toggleFullScreen}
                         onMouseEnter={() => setShowFullScreen(true)}

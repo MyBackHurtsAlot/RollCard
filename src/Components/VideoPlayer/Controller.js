@@ -48,7 +48,6 @@ const Controller = (videoRef, fullScreenRef) => {
             (videoRef.current.currentTime / videoRef.current.duration) * 100;
         setProgress(progress);
         setCurrentTime(videoRef.current.currentTime);
-        // setDuration(videoRef.current.duration);
     };
     const handleLoadedData = () => {
         setDuration(videoRef.current.duration);
@@ -70,7 +69,6 @@ const Controller = (videoRef, fullScreenRef) => {
     };
     useEffect(() => {
         videoRef.current.muted = muted;
-        // videoRef.current.volume = 0;
         !muted ? (videoRef.current.volume = 1) : (videoRef.current.volume = 0);
         videoRef.current.volume !== 0 ? !muted : muted;
     }, [muted, videoRef]);
