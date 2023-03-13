@@ -64,7 +64,7 @@ export default ThisMemberCategory;
 
 const ThisMemberCategoryWrapper = styled.div`
     width: 60%;
-    height: 600px;
+    min-height: 600px;
     position: relative;
     margin-left: 33%;
     display: flex;
@@ -83,7 +83,7 @@ const ThisMemberCategoryWrapper = styled.div`
     }
 `;
 const CatVideoCantainer = styled.div`
-    margin-top: 15px;
+    margin-top: 10px;
     width: 25%;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
     &:hover {
