@@ -17,6 +17,7 @@ RollCard is a video website that provides a platform for video production studio
   * [Features](README.md#features) 
       - [Infinite Scroll and category choosing](#infinite-scroll-and-category-choosing)
       - [Custom video player](#custom-video-player)
+      - [Keyboard shortcuts](#keyboard-shortcuts)
       - [Naughty UI](#naughty-ui)
       - [Upload Video](#upload-video)
       - [Edit your personal or video information](#edit-your-personal-or-video-information)
@@ -74,6 +75,17 @@ Designed and built a custom video player interface with ```playback controls```,
 Bouncing UI elements are added to increase user interaction and making the website more engaging.
 
 ![Bounce](https://user-images.githubusercontent.com/105920543/223790742-9c888cdb-44d8-46ba-a648-ec6d7e37b4d0.gif)
+
+
+### Keyboard shortcuts
+
+Let those elbow heros protect your elbow from mouse clicking
+
+| shortcut | Action |
+| --- | --- |
+| space | play / pause|
+| shift + > | fast - forward |
+| shift + < | slow play |
 
 
 ### Upload Video
