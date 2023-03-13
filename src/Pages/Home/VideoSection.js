@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../Loading/Index";
 import { device } from "../../Components/Rwd";
+import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
 const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
     const navigate = useNavigate();
@@ -68,16 +69,7 @@ const HomeVideoContainer = styled.div`
     }
     cursor: pointer;
     video {
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
     img {
         width: 50px;
@@ -105,7 +97,7 @@ const HomeVideoInfoContainer = styled.div`
         font-size: 18px;
         font-weight: 500;
         margin-bottom: 5px;
-        line-height: 23px;
+        line-height: 38px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

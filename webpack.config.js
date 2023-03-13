@@ -1,6 +1,5 @@
 const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 module.exports = {
     // 建置模式 (預設為 production)
     mode: "development",
@@ -62,11 +61,4 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "./dist/index.html",
-            filename: "./index.html",
-            favicon: "./src/Assets/R.png",
-        }),
-    ],
 };

@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { device } from "../../Components/Rwd";
+import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
 const ThisMemberCategory = ({
     memberVideoAll,
@@ -89,30 +90,16 @@ const CatVideoCantainer = styled.div`
         color: ${(props) => props.theme.colors.highLight};
     }
     video {
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
+        ${VideoStyle}
         cursor: pointer;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
         @media ${device.underDesktop} {
             outline: 1px solid ${(props) => props.theme.colors.primary_Grey};
         }
     }
     @media ${device.underDesktop} {
-        /* border: 1px solid red; */
         width: 45%;
         padding: 15px;
     }
-    /* @media ${device.underDesktop} {
-        width: 90%;
-        margin: 0 auto;
-    } */
 `;
 const InfoContainer = styled.div`
     margin-top: 5px;

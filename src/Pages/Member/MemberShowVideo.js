@@ -1,18 +1,12 @@
-import React, {
-    useContext,
-    useState,
-    useEffect,
-    useRef,
-    useCallback,
-} from "react";
-import { NavLink, useParams } from "react-router-dom";
-import styled, { css } from "styled-components";
+import React, { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { device, useWindowResize } from "../../Components/Rwd";
+import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 const MemberShowVideo = ({
     memberVideoAll,
     videoNameAll,
-    videoCategoryAll,
     currentMemberAbout,
     currentMemberName,
 }) => {
@@ -171,16 +165,7 @@ const SmallVideoContainer = styled.div`
     gap: 10px;
     video {
         margin-bottom: 5px;
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
     a {
         color: ${(props) => props.theme.colors.primary_white};
@@ -212,21 +197,6 @@ const VideoContainer = styled.div`
         width: 30%;
         aspect-ratio: 16/9;
         outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        animation: slideInFromTop 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        animation: moveToMouse 0.5s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        opacity: 100;
-        @keyframes slideInFromTop {
-            from {
-                transform: translateX(-80%);
-                transform: rotate(5deg);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(1);
-                transform: rotate(0);
-                opacity: 100;
-            }
-        }
         transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
         &:hover {
             transform: translateX(5px);

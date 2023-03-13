@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import settings from "./Carousel";
 import { device, useWindowResize } from "../../Components/Rwd";
+import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
 const ThisCategory = ({ videoCategory, currentVideo }) => {
     const [thisCategory, setThisCategory] = useState([]);
@@ -214,16 +215,7 @@ const OneVideoContainer = styled.div`
     cursor: pointer;
     video {
         margin-top: 5px;
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
 `;
 const HomeVideoContainer = styled.div`
@@ -235,16 +227,7 @@ const HomeVideoContainer = styled.div`
     cursor: pointer;
     video {
         margin-top: 5px;
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
 `;
 const VideoContent = styled.div`
@@ -256,7 +239,7 @@ const VideoContent = styled.div`
         font-size: 1.2em;
         margin-top: 5px;
         font-weight: 500;
-        line-height: 23px;
+        line-height: 38px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

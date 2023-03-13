@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import settings from "./Carousel";
+import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
 const CurrentMemberOthers = ({ videoEditor, videoList }) => {
     const [memberVideo, setMemberVideo] = useState([]);
@@ -212,16 +213,7 @@ const OneVideoContainer = styled.div`
     cursor: pointer;
     video {
         margin-top: 5px;
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
 `;
 
@@ -235,16 +227,7 @@ const VideoContainerSlider = styled.div`
     cursor: pointer;
     video {
         margin-top: 5px;
-        width: 100%;
-        border-radius: 5px;
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
     @media (max-width: 1000px) {
         width: 90%;
@@ -260,17 +243,7 @@ const VideoContainer = styled.div`
     cursor: pointer;
     video {
         margin-top: 5px;
-        width: 100%;
-        border-radius: 5px;
-
-        aspect-ratio: 16/9;
-        outline: 1px solid ${(props) => props.theme.colors.primary_white};
-        transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);
-        &:hover {
-            transform: translateX(5px);
-            transform: translateY(-5px);
-            box-shadow: 5px 5px 0px 0px #a6a6a6;
-        }
+        ${VideoStyle}
     }
 
     p {
