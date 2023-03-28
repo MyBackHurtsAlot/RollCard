@@ -45,8 +45,6 @@ const Header = ({ setSelectedCategory }) => {
         await signOut(auth);
         setLoggedIn(false);
         setUid(null);
-        // setDisplay("none");
-        // setUser({});
         onAuthStateChanged(auth, () => {
             navigate("/");
             window.location.reload(false);
@@ -68,18 +66,15 @@ const Header = ({ setSelectedCategory }) => {
                     <HeaderMenuContainer>
                         <HeaderMenuYourPage
                             onClick={() => {
-                                // navigate(`/member/profile/${uid}`);
                                 setDisplay("none");
                             }}
                         >
                             <NavLink to={`/member/profile/${uid}`}>
                                 你的頁面
                             </NavLink>
-                            {/* 你的頁面 */}
                         </HeaderMenuYourPage>
                         <HeaderMenuUpLoad
                             onClick={() => {
-                                // navigate(`/upload`);
                                 setDisplay("none");
                             }}
                         >

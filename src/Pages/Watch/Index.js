@@ -141,6 +141,7 @@ const MemberSectionBelowWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     @media (max-width: 1000px) {
+        width: 90%;
         flex-direction: column;
     }
 `;

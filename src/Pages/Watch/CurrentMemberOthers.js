@@ -172,7 +172,7 @@ const VideoWapper = styled.div`
     }
 `;
 const VideoTitle = styled.div`
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: 200;
     display: flex;
 
