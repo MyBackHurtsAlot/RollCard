@@ -120,6 +120,9 @@ const SmallVideo = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    @media ${device.underMobile} {
+        justify-content: center;
+    }
 `;
 const SmallAbout = styled.div`
     font-size: 1.2em;
@@ -160,7 +163,7 @@ const JobOrVideo = styled.div`
 const SmallVideoContainer = styled.div`
     margin: 20px 0 10px 0;
     display: flex;
-
+    justify-content: center;
     width: 48%;
     gap: 10px;
     video {
@@ -205,7 +208,7 @@ const VideoContainer = styled.div`
         }
     }
     h1 {
-        width: 90%;
+        width: 100%;
         line-height: 45px;
         font-size: 1.2em;
         font-weight: 300;

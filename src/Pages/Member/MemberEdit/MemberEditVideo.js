@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import HandleEdit from "./HandleEdit";
+import { device } from "../../../Components/Rwd";
 
 const MemberEditVideo = ({
     videoCategoryAll,
@@ -123,17 +124,28 @@ const VideoTextWrapper = styled.div`
     margin-left: 15px;
     gap: 15px;
     line-height: 26px;
-
+    @media ${device.underMobile} {
+        line-height: auto;
+        width: 40%;
+    }
     & > p:first-child {
         font-size: 24px;
         font-weight: 700;
         border-bottom: 1px solid #f2f2f270;
         padding-bottom: 10px;
+        @media ${device.underMobile} {
+            font-size: 16px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
     }
     & > p:nth-child(2) {
         font-size: 18;
         font-weight: 500;
         border-bottom: 1px solid #f2f2f270;
         padding-bottom: 10px;
+        @media ${device.underMobile} {
+            font-weight: 300;
+        }
     }
 `;
