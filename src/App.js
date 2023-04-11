@@ -24,15 +24,15 @@ const App = () => {
     const [user, setUser] = useState("");
     const [displayNone, setDisplayNone] = useState("none");
     const [displayBlock, setDisplayBlock] = useState("block");
-    const [visibility, setVisability] = useState("visable");
+    const [visibility, setVisability] = useState("visible");
 
     // ====== UserInfoContext ======
     const [userName, setUserName] = useState("影視從業人員A");
     const [userEmail, setUserEmail] = useState("");
     const [userJob, setUserJob] = useState("你的職業");
     const [userAbout, setUserAbout] = useState("說點什麼吧");
-    const [avator, setAvator] = useState(null);
-    const [avatorPreview, setAvatorPreview] = useState(null);
+    const [Avatar, setAvatar] = useState(null);
+    const [AvatarPreview, setAvatarPreview] = useState(null);
     const [originalVideoName, setOriginalVideoName] = useState("");
     const [memberVideo, setMemberVideo] = useState([]);
     const [videoUrl, setVideoUrl] = useState("");
@@ -55,13 +55,13 @@ const App = () => {
                         setUserJob(userInfo.userJob || "你的職業");
                         setUserAbout(userInfo.userAbout || "");
                     });
-                    const avatorPath = `avators/${userUid}/${
-                        "avator" + userUid
+                    const AvatarPath = `Avatars/${userUid}/${
+                        "Avatar" + userUid
                     }`;
-                    const avator = await getDownloadURL(
-                        ref(storage, avatorPath)
+                    const Avatar = await getDownloadURL(
+                        ref(storage, AvatarPath)
                     );
-                    setAvatorPreview(() => avator || null);
+                    setAvatarPreview(() => Avatar || null);
                 } catch (error) {
                     console.log(error);
                 }
@@ -81,10 +81,10 @@ const App = () => {
                         setUserJob,
                         userAbout,
                         setUserAbout,
-                        avator,
-                        setAvator,
-                        avatorPreview,
-                        setAvatorPreview,
+                        Avatar,
+                        setAvatar,
+                        AvatarPreview,
+                        setAvatarPreview,
                         userEmail,
                         setUserEmail,
                     }}

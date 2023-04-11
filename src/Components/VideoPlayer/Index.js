@@ -170,7 +170,7 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                             <PauseIcon />
                         )}
                     </IsPlaying>
-                    <TimelineWapper>
+                    <TimelineWrapper>
                         <TimeCode>{formatDuration(currentTime)}</TimeCode>
                         <Timeline
                             type="range"
@@ -180,7 +180,7 @@ const VideoPlayer = ({ videoList, doNotPlay }) => {
                             onChange={(e) => handleVideoProgress(e)}
                         />
                         <Duration>{formatDuration(duration)}</Duration>
-                    </TimelineWapper>
+                    </TimelineWrapper>
                     <SettingsWrapper
                         onMouseEnter={() => {
                             setShowSpeedControl(true);
@@ -340,7 +340,7 @@ const PauseIcon = styled(FaPause)`
     width: 20px;
     height: 20px;
 `;
-const TimelineWapper = styled.div`
+const TimelineWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;

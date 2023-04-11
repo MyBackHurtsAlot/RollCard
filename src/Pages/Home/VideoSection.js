@@ -7,13 +7,13 @@ import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
 const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
     const navigate = useNavigate();
-    const [showLoding, setShowLoading] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
     useEffect(() => {
         !videoList ? setShowLoading(false) : setShowLoading(true);
     }, [videoList]);
     return (
         <>
-            {!showLoding ? (
+            {!showLoading ? (
                 <Loading progress={"Loading"} />
             ) : (
                 <HomeVideoSectionWrapper>

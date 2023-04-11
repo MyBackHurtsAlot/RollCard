@@ -15,7 +15,7 @@ export const HandleDescription = (videoDescription) => {
         }
     }, [videoDescription]);
 
-    const handleDescripiton = () => {
+    const handleDescription = () => {
         setShowExpand(false);
 
         const descriptionHeight = measureRef.current.scrollHeight;
@@ -27,7 +27,7 @@ export const HandleDescription = (videoDescription) => {
                 ref={measureRef}
                 expanded={expanded}
                 showExpand={showExpand}
-                onClick={handleDescripiton}
+                onClick={handleDescription}
             >
                 {parse(videoDescription.videoDescription)}
             </MemberSectionDescription>

@@ -11,7 +11,7 @@ const MemberPageTablet = ({
     currentMemberName,
     videoEditorAll,
     memberId,
-    currentAvator,
+    currentAvatar,
     currentMember,
     currentMemberJob,
     currentMemberEmail,
@@ -23,7 +23,7 @@ const MemberPageTablet = ({
         <>
             <TabletWrapper>
                 <TopWrapper>
-                    <Avator currentAvator={currentAvator}></Avator>
+                    <Avatar currentAvatar={currentAvatar}></Avatar>
                     <NameAndJob>
                         <UserName>{currentMemberName}</UserName>
                         <UserJob>{currentMemberJob}</UserJob>
@@ -45,7 +45,7 @@ const MemberPageTablet = ({
                 currentMemberName={currentMemberName}
                 videoEditorAll={videoEditorAll}
                 memberId={memberId}
-                currentAvator={currentAvator}
+                currentAvatar={currentAvatar}
                 currentMember={currentMember}
                 currentMemberJob={currentMemberJob}
                 currentMemberEmail={currentMemberEmail}
@@ -59,7 +59,7 @@ const MemberPageTablet = ({
                 currentMemberName={currentMemberName}
                 videoEditorAll={videoEditorAll}
                 memberId={memberId}
-                currentAvator={currentAvator}
+                currentAvatar={currentAvatar}
             />
         </>
     );
@@ -113,13 +113,13 @@ const Contact = styled.div`
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
-const Avator = styled.div`
+const Avatar = styled.div`
     min-width: 30%;
     height: 150px;
     border-radius: 5px;
 
     background-image: ${(props) =>
-        props.currentAvator ? `url(${props.currentAvator})` : `url(${img})`};
+        props.currentAvatar ? `url(${props.currentAvatar})` : `url(${img})`};
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;

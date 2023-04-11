@@ -28,9 +28,9 @@ const Profile = () => {
         userName,
         userJob,
         userAbout,
-        setAvator,
-        avatorPreview,
-        setAvatorPreview,
+        setAvatar,
+        AvatarPreview,
+        setAvatarPreview,
     } = useContext(UserInfoContext);
 
     const [userEmail, setUserEmail] = useState("");
@@ -83,19 +83,19 @@ const Profile = () => {
             console.log(error);
         }
     };
-    const AvatorChangePreview = async (e) => {
+    const AvatarChangePreview = async (e) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
             const previewer = new FileReader();
             previewer.readAsDataURL(file);
             previewer.onloadend = () => {
-                setAvator(file);
-                setAvatorPreview(previewer.result);
+                setAvatar(file);
+                setAvatarPreview(previewer.result);
             };
             try {
                 const imageRef = ref(
                     storage,
-                    `avators/${user}/${"avator" + user}`
+                    `Avatars/${user}/${"Avatar" + user}`
                 );
                 if (file) {
                     uploadBytes(imageRef, file).then(() => {});
@@ -161,15 +161,15 @@ const Profile = () => {
                     {isTablet ? (
                         <Tablet>
                             <ProfileSectionLeftWrapper>
-                                <ProfileSectionLeftAvatorContainer
-                                    avatorPreview={avatorPreview}
+                                <ProfileSectionLeftAvatarContainer
+                                    AvatarPreview={AvatarPreview}
                                 >
-                                    <ProfileSectionLeftAvatorUploader
+                                    <ProfileSectionLeftAvatarUploader
                                         type="file"
                                         accept="image/*"
-                                        onChange={AvatorChangePreview}
+                                        onChange={AvatarChangePreview}
                                     />
-                                </ProfileSectionLeftAvatorContainer>
+                                </ProfileSectionLeftAvatarContainer>
                             </ProfileSectionLeftWrapper>
                             <ProfileSectionRightWrapper>
                                 <p>你的名字</p>
@@ -192,7 +192,7 @@ const Profile = () => {
                                         setUserAboutTemp(e.target.value)
                                     }
                                 />
-                                <FoldWapper>
+                                <FoldWrapper>
                                     <FoldBack
                                         onClick={() => {
                                             setIsFolded(true);
@@ -205,21 +205,21 @@ const Profile = () => {
                                     >
                                         儲存
                                     </ProfileSectionRightEditorConfirm>
-                                </FoldWapper>
+                                </FoldWrapper>
                             </ProfileSectionRightWrapper>
                         </Tablet>
                     ) : (
                         <NotTablet>
                             <ProfileSectionLeftWrapper>
-                                <ProfileSectionLeftAvatorContainer
-                                    avatorPreview={avatorPreview}
+                                <ProfileSectionLeftAvatarContainer
+                                    AvatarPreview={AvatarPreview}
                                 >
-                                    <ProfileSectionLeftAvatorUploader
+                                    <ProfileSectionLeftAvatarUploader
                                         type="file"
                                         accept="image/*"
-                                        onChange={AvatorChangePreview}
+                                        onChange={AvatarChangePreview}
                                     />
-                                </ProfileSectionLeftAvatorContainer>
+                                </ProfileSectionLeftAvatarContainer>
                             </ProfileSectionLeftWrapper>
                             <ProfileSectionRightWrapper>
                                 <p>你的名字</p>
@@ -255,13 +255,13 @@ const Profile = () => {
                 </ProfileSection>
             ) : (
                 <Folded>
-                    <FoldedAvator avatorPreview={avatorPreview}>
-                        <FolderAvatorInput
+                    <FoldedAvatar AvatarPreview={AvatarPreview}>
+                        <FolderAvatarInput
                             type="file"
                             accept="image/*"
-                            onChange={AvatorChangePreview}
+                            onChange={AvatarChangePreview}
                         />
-                    </FoldedAvator>
+                    </FoldedAvatar>
                     <FoldedNameAndJobWrapper>
                         <FoldedName>{userNameTemp}</FoldedName>
                         <FoldedJob>{userJobTemp}</FoldedJob>
@@ -290,13 +290,13 @@ const Folded = styled.div`
     display: flex;
     gap: 15px;
 `;
-const FoldedAvator = styled.label`
+const FoldedAvatar = styled.label`
     width: 80px;
     height: 80px;
     border-radius: 15px;
     background-color: ${(props) => props.theme.colors.primary_white};
     background-image: ${(props) =>
-        props.avatorPreview ? `url(${props.avatorPreview})` : `url(${img})`};
+        props.AvatarPreview ? `url(${props.AvatarPreview})` : `url(${img})`};
     color: ${(props) => props.theme.colors.primary_white};
     background-size: cover;
     background-position: center;
@@ -316,7 +316,7 @@ const FoldedAvator = styled.label`
     }
 `;
 
-const FolderAvatorInput = styled.input`
+const FolderAvatarInput = styled.input`
     display: none;
     position: absolute;
     top: 0;
@@ -408,14 +408,14 @@ export const ProfileSectionLeftWrapper = styled.div`
         width: 90%;
     }
 `;
-export const ProfileSectionLeftAvatorContainer = styled.label`
+export const ProfileSectionLeftAvatarContainer = styled.label`
     width: 100%;
     height: 200px;
     border-radius: 5px;
     outline: 1px solid ${(props) => props.theme.colors.primary_Lightgrey};
     background-color: ${(props) => props.theme.colors.primary_white};
     background-image: ${(props) =>
-        props.avatorPreview ? `url(${props.avatorPreview})` : `url(${img})`};
+        props.AvatarPreview ? `url(${props.AvatarPreview})` : `url(${img})`};
     color: ${(props) => props.theme.colors.primary_white};
     background-size: cover;
     background-position: center;
@@ -435,7 +435,7 @@ export const ProfileSectionLeftAvatorContainer = styled.label`
         background-color: #16161664;
     }
 `;
-const ProfileSectionLeftAvatorUploader = styled.input`
+const ProfileSectionLeftAvatarUploader = styled.input`
     display: none;
     position: absolute;
     top: 0;
@@ -527,7 +527,7 @@ export const ProfileSectionRightEditorConfirm = styled.div`
     }
 `;
 
-const FoldWapper = styled.div`
+const FoldWrapper = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;

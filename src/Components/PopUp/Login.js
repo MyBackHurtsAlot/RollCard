@@ -7,7 +7,7 @@ import {
     PopUpPassword,
     PopUpInputWrapper,
     PopUpButton,
-    PopUpisLoggedin,
+    PopUpIsLoggedIn,
     PopUpMessage,
 } from "./Style/PopUpStyle";
 import { UserContext } from "../../Context/userContext";
@@ -90,7 +90,7 @@ const SignUp = ({
                     ></PopUpPassword>
                 </PopUpInputWrapper>
                 <PopUpButton onClick={submitLogin}>登入</PopUpButton>
-                <PopUpisLoggedin
+                <PopUpIsLoggedIn
                     onClick={() => {
                         setCurrentPage("SignUp");
                         setCheckEmail("");
@@ -98,7 +98,7 @@ const SignUp = ({
                     }}
                 >
                     我不是會員
-                </PopUpisLoggedin>
+                </PopUpIsLoggedIn>
                 <PopUpMessage color={popColor}>{popMessage}</PopUpMessage>
             </PopUpWrapper>
         </>

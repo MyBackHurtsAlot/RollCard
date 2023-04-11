@@ -27,7 +27,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
     const [showAnimation, setShowAnimation] = useState();
     const [showEvent, setShowEvent] = useState();
     const [showTrailer, setShowTrailer] = useState();
-    const [showDocumentory, setShowDocumentory] = useState();
+    const [showDocumentary, setShowDocumentary] = useState();
     const [showOthers, setShowOthers] = useState();
     const videoListRef = ref(storage, `videosForHomePage/`);
 
@@ -108,7 +108,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
         getVideo();
     }, []);
 
-    // ================= Documentory ==================
+    // ================= Documentary ==================
     useEffect(() => {
         async function getVideo() {
             const data = query(
@@ -123,7 +123,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
 
                 newVideoList.push(url);
             });
-            setShowDocumentory(newVideoList[0]);
+            setShowDocumentary(newVideoList[0]);
         }
         getVideo();
     }, []);
@@ -161,7 +161,7 @@ const NavOrCategory = ({ setSelectedCategory, setVideoCategoryList }) => {
                         showAnimation={showAnimation}
                         showEvent={showEvent}
                         showTrailer={showTrailer}
-                        showDocumentory={showDocumentory}
+                        showDocumentary={showDocumentary}
                         showOthers={showOthers}
                         setVideoCategoryList={setVideoCategoryList}
                     />

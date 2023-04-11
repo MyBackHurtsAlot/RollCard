@@ -18,7 +18,7 @@ const VideoSearchSection = ({
     const [editorName, setEditorName] = useState([]);
 
     useEffect(() => {
-        setVideoCategoryList([]); // Clears previus search
+        setVideoCategoryList([]);
         async function getVideo(selectedCategory) {
             const data = query(
                 collection(db, "videoForAll"),

@@ -19,11 +19,11 @@ const HandleEdit = ({
     videoTextRef,
     videoNameAll,
     videoCategoryAll,
-    videoDiscriptionAll,
+    videoDescriptionAll,
     videoindex,
     setVideoNameAll,
     setVideoCategoryAll,
-    setVideoDiscriptionAll,
+    setVideoDescriptionAll,
 }) => {
     const { user } = useContext(UserContext);
     const [showEdit, setShowEdit] = useState(true);
@@ -86,7 +86,7 @@ const HandleEdit = ({
                             newState[videoindex] = videoTempCategory;
                             return newState;
                         });
-                        setVideoDiscriptionAll((prev) => {
+                        setVideoDescriptionAll((prev) => {
                             const newState = [...prev];
                             newState[videoindex] = newVideoDescriptionAllTemp;
                             return newState;
@@ -115,11 +115,11 @@ const HandleEdit = ({
         }
     }, []);
     useEffect(() => {
-        if (videoDiscriptionAll === videoDiscriptionAll) {
-            setNewVideoDescriptionAllTemp(videoDiscriptionAll);
+        if (videoDescriptionAll === videoDescriptionAll) {
+            setNewVideoDescriptionAllTemp(videoDescriptionAll);
             setTempVideoCategory(videoCategoryAll);
         }
-    }, [videoDiscriptionAll]);
+    }, [videoDescriptionAll]);
 
     return (
         <>

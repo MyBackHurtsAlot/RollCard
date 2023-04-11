@@ -13,26 +13,26 @@ const MemberPageInfo = ({
     currentMemberName,
     setCurrentMemberName,
     memberId,
-    currentAvator,
-    setCurrentAvator,
+    currentAvatar,
+    setCurrentAvatar,
     currentMemberAbout,
 }) => {
     const [currentMemberJob, setCurrentMemberJob] = useState("");
     const [currentMemberEmail, setCurrentMemberEmail] = useState("");
-    const [isSmallScreen, setIsSmaillScreen] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [sendEmail, setSendEmail] = useState(false);
 
     useEffect(() => {
         if (window.innerWidth < 1199) {
-            setIsSmaillScreen(true);
+            setIsSmallScreen(true);
         } else {
-            setIsSmaillScreen(false);
+            setIsSmallScreen(false);
         }
         const handleResize = () => {
             if (window.innerWidth < 1200) {
-                setIsSmaillScreen(true);
+                setIsSmallScreen(true);
             } else {
-                setIsSmaillScreen(false);
+                setIsSmallScreen(false);
             }
         };
         window.addEventListener("resize", handleResize);
@@ -41,17 +41,17 @@ const MemberPageInfo = ({
     }, []);
 
     useEffect(() => {
-        async function getAvator(memberId) {
+        async function getAvatar(memberId) {
             const response = await listAll(
-                ref(storage, `avators/${memberId}`),
+                ref(storage, `Avatars/${memberId}`),
                 false
             );
-            response.items.forEach(async (avator) => {
-                const url = await getDownloadURL(avator);
-                setCurrentAvator(url);
+            response.items.forEach(async (Avatar) => {
+                const url = await getDownloadURL(Avatar);
+                setCurrentAvatar(url);
             });
         }
-        getAvator(memberId);
+        getAvatar(memberId);
     }, [memberId]);
 
     useEffect(() => {
@@ -94,11 +94,11 @@ const MemberPageInfo = ({
                     setCurrentMemberName={setCurrentMemberName}
                     currentMemberAbout={currentMemberAbout}
                     memberId={memberId}
-                    currentAvator={currentAvator}
+                    currentAvatar={currentAvatar}
                 ></SmallScreen>
             ) : (
                 <CurrentMemberWrapper>
-                    <Avator currentAvator={currentAvator}></Avator>
+                    <Avatar currentAvatar={currentAvatar}></Avatar>
                     <UserContainer>
                         <UserName>{currentMemberName}</UserName>
                         <UserJob>{currentMemberJob}</UserJob>
@@ -155,12 +155,12 @@ const CurrentMemberWrapper = styled.div`
     position: relative;
 `;
 
-const Avator = styled.div`
+const Avatar = styled.div`
     width: 80%;
     height: 200px;
     border-radius: 5px;
     background-image: ${(props) =>
-        props.currentAvator ? `url(${props.currentAvator})` : `url(${img})`};
+        props.currentAvatar ? `url(${props.currentAvatar})` : `url(${img})`};
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;

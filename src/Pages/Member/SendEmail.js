@@ -12,19 +12,19 @@ const SendEmail = ({
     const autoHeight = useRef();
     const [message, setMessage] = useState("");
     const [showMessage, setShowMessage] = useState(false);
-    const [isSmallScreen, setIsSmaillScreen] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
         if (window.innerWidth < 1199) {
-            setIsSmaillScreen(true);
+            setIsSmallScreen(true);
         } else {
-            setIsSmaillScreen(false);
+            setIsSmallScreen(false);
         }
         const handleResize = () => {
             if (window.innerWidth < 1200) {
-                setIsSmaillScreen(true);
+                setIsSmallScreen(true);
             } else {
-                setIsSmaillScreen(false);
+                setIsSmallScreen(false);
             }
         };
         window.addEventListener("resize", handleResize);

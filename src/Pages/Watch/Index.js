@@ -17,7 +17,7 @@ const Watch = () => {
     const { splitUrl } = useParams();
     const [videoList, setVideoList] = useState([]);
     const [videoEditor, setVideoEditor] = useState("");
-    const [videoAvator, setvideoAvator] = useState(null);
+    const [videoAvatar, setVideoAvatar] = useState(null);
     const [videoEditorJob, setVideoEditorJob] = useState("");
     const [videoName, setVideoName] = useState("");
     const [videoDescription, setVideoDescription] = useState("");
@@ -59,17 +59,17 @@ const Watch = () => {
     }, []);
 
     useEffect(() => {
-        const getAvator = async (currentVideo) => {
+        const getAvatar = async (currentVideo) => {
             const storageRef = await listAll(
-                ref(storage, `/avators/${currentVideo}/`),
+                ref(storage, `/Avatars/${currentVideo}/`),
                 false
             );
-            storageRef.items.forEach(async (avator) => {
-                const url = await getDownloadURL(avator);
-                setvideoAvator(url);
+            storageRef.items.forEach(async (Avatar) => {
+                const url = await getDownloadURL(Avatar);
+                setVideoAvatar(url);
             });
         };
-        getAvator(currentVideo);
+        getAvatar(currentVideo);
     }, [currentVideo]);
 
     return (
@@ -88,8 +88,8 @@ const Watch = () => {
                             onClick={() => navigate(`/member/${currentVideo}`)}
                             editor={`${videoEditor}`}
                         >
-                            <MemberSectionAvatorContainer
-                                videoAvator={videoAvator}
+                            <MemberSectionAvatarContainer
+                                videoAvatar={videoAvatar}
                             />
                             <MemberSectionEditorTextWrapper>
                                 <h1>{`${videoEditor}`}</h1>
@@ -219,11 +219,11 @@ const MemberSectionEditorTextWrapper = styled.div`
     font-size: 1.3em;
     margin-left: 10px;
 `;
-const MemberSectionAvatorContainer = styled.div`
+const MemberSectionAvatarContainer = styled.div`
     width: 30px;
     height: 30px;
     background-image: ${(props) =>
-        props.videoAvator ? `url(${props.videoAvator})` : `url(${img})`};
+        props.videoAvatar ? `url(${props.videoAvatar})` : `url(${img})`};
     background-size: cover;
     background-position: center;
 `;

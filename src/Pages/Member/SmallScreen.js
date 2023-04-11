@@ -8,14 +8,14 @@ const SmallScreen = ({
     currentMemberJob,
     currentMemberEmail,
     currentMemberAbout,
-    currentAvator,
+    currentAvatar,
 }) => {
     const [sendEmail, setSendEmail] = useState(false);
     return (
         <>
             <SmallScreenWrapper>
                 <TopWrapper>
-                    <Avator currentAvator={currentAvator}></Avator>
+                    <Avatar currentAvatar={currentAvatar}></Avatar>
                     <NameAndJob>
                         <UserName>{currentMemberName}</UserName>
                         <UserJob>{currentMemberJob}</UserJob>
@@ -98,13 +98,13 @@ const Contact = styled.div`
         bottom: 0;
     }
 `;
-const Avator = styled.div`
+const Avatar = styled.div`
     min-width: 30%;
     height: 150px;
     border-radius: 5px;
 
     background-image: ${(props) =>
-        props.currentAvator ? `url(${props.currentAvator})` : `url(${img})`};
+        props.currentAvatar ? `url(${props.currentAvatar})` : `url(${img})`};
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;

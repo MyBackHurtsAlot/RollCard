@@ -70,7 +70,6 @@ const CardContextBot = styled.div`
         }
         100% {
             transform: translateX(200%);
-            /* opacity: 0; */
         }
     }
 `;

@@ -26,7 +26,7 @@ const MemberEditPage = () => {
     const [videoNameAll, setVideoNameAll] = useState([]);
     const [memberVideoAll, setMemberVideoAll] = useState([]);
     const [videoCategoryAll, setVideoCategoryAll] = useState([]);
-    const [videoDiscriptionAll, setVideoDiscriptionAll] = useState([]);
+    const [videoDescriptionAll, setVideoDescriptionAll] = useState([]);
     const [displayNone, setDisplayNone] = useState("none");
     const [editor, setEditor] = useState("");
 
@@ -57,7 +57,7 @@ const MemberEditPage = () => {
                 setVideoNameAll(newVideoNameList);
                 setMemberVideoAll(newVideoList);
                 setVideoCategoryAll(newCategoryList);
-                setVideoDiscriptionAll(newDescriptionList);
+                setVideoDescriptionAll(newDescriptionList);
             } catch (error) {
                 console.log(error);
             }
@@ -99,18 +99,15 @@ const MemberEditPage = () => {
                         videoNameAll={videoNameAll}
                         memberVideoAll={memberVideoAll}
                         videoCategoryAll={videoCategoryAll}
-                        videoDiscriptionAll={videoDiscriptionAll}
+                        videoDescriptionAll={videoDescriptionAll}
                         setVideoNameAll={setVideoNameAll}
                         setVideoCategoryAll={setVideoCategoryAll}
-                        setVideoDiscriptionAll={setVideoDiscriptionAll}
+                        setVideoDescriptionAll={setVideoDescriptionAll}
                     />
                     <MemberEditPageVideoWrapper
                         style={{ display: displayNone }}
                     >
                         <Loading progress={`${editor} 傳支影片吧`} />
-                        {/* {memberVideo.map((url) => {
-                            return <video src={url} key={uuidv4()} controls />;
-                        })} */}
                     </MemberEditPageVideoWrapper>
                 </MemberEditPageVideoSection>
             </MemberPageWrapper>

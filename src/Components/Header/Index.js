@@ -85,7 +85,7 @@ const Header = ({ setSelectedCategory }) => {
                         </HeaderMenuLogOut>
                     </HeaderMenuContainer>
                 ) : (
-                    <HeadercontainerLogin
+                    <HeaderContainerLogIn
                         onClick={() => {
                             setCurrentPage("Login");
                             setDisplay("flex");
@@ -93,7 +93,7 @@ const Header = ({ setSelectedCategory }) => {
                         }}
                     >
                         登入
-                    </HeadercontainerLogin>
+                    </HeaderContainerLogIn>
                 )}
 
                 {currentPage === "Login" && (
@@ -189,12 +189,12 @@ const HeaderContainerLogo = styled.div`
         letter-spacing: 1.5px;
     }
 `;
-const HeadercontainerLogin = styled(HeaderContainerLogo)`
+const HeaderContainerLogIn = styled(HeaderContainerLogo)`
     color: ${(props) => props.theme.colors.primary_white};
     font-size: 1em;
     font-weight: 200;
 `;
-const HeadercontainerMember = styled(HeadercontainerLogin)``;
+const HeadercontainerMember = styled(HeaderContainerLogIn)``;
 
 const HeaderMenuContainer = styled.div`
     display: flex;
@@ -207,6 +207,6 @@ const HeaderMenuContainer = styled.div`
         color: ${(props) => props.theme.colors.primary_white};
     }
 `;
-const HeaderMenuYourPage = styled(HeadercontainerLogin)``;
-const HeaderMenuUpLoad = styled(HeadercontainerLogin)``;
-const HeaderMenuLogOut = styled(HeadercontainerLogin)``;
+const HeaderMenuYourPage = styled(HeaderContainerLogIn)``;
+const HeaderMenuUpLoad = styled(HeaderContainerLogIn)``;
+const HeaderMenuLogOut = styled(HeaderContainerLogIn)``;

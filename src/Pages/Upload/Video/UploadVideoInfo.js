@@ -70,7 +70,7 @@ const UploadVideoInfo = ({
                         setVideoNameTemp(e.target.value);
                     }}
                 />
-                <UploadFiledescription
+                <UploadFileDescription
                     html={`${videoDescriptionTemp}`}
                     onChange={(e) => {
                         setVideoDescriptionTemp(e.target.value);
@@ -115,7 +115,7 @@ const UploadFileName = styled(ContentEditable)`
         border: 1px solid ${(props) => props.theme.colors.highLight};
     }
 `;
-const UploadFiledescription = styled(ContentEditable)`
+const UploadFileDescription = styled(ContentEditable)`
     font-size: 16px;
     font-weight: 400;
     min-height: 100px;

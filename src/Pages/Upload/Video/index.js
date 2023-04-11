@@ -32,7 +32,7 @@ const VideoUpload = (selectedCategory) => {
 
     const [displayNone, setDisplayNone] = useState("none");
     const [displayBlock, setDisplayBlock] = useState("block");
-    const [visibility, setVisability] = useState("visable");
+    const [visibility, setVisability] = useState("visible");
     const [notLoading, setNotLoading] = useState("none");
     const [noUpload, setNoUpload] = useState(false);
 

@@ -83,7 +83,7 @@ const PopUpButton = styled.div`
         box-shadow: 5px 5px 0px 0px #a6a6a6;
     }
 `;
-const PopUpisLoggedin = styled.div`
+const PopUpIsLoggedIn = styled.div`
     align-items: center;
     width: 80%;
     height: 40px;
@@ -115,6 +115,6 @@ export {
     PopUpPassword,
     PopUpInputWrapper,
     PopUpButton,
-    PopUpisLoggedin,
+    PopUpIsLoggedIn,
     PopUpMessage,
 };

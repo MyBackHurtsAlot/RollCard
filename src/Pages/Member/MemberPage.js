@@ -16,7 +16,7 @@ import VideoCategory from "./VideoCategory";
 const MemberPage = () => {
     const { user, setUser } = useContext(UserContext);
     const [currentMember, setCurrentMember] = useState("");
-    const [currentAvator, setCurrentAvator] = useState("");
+    const [currentAvatar, setCurrentAvatar] = useState("");
     const [currentMemberName, setCurrentMemberName] = useState("");
     const [currentMemberAbout, setCurrentMemberAbout] = useState("");
     const [memberVideoAll, setMemberVideoAll] = useState([]);
@@ -64,17 +64,17 @@ const MemberPage = () => {
     }, [memberId]);
 
     useEffect(() => {
-        const getAvator = async (memberId) => {
+        const getAvatar = async (memberId) => {
             const storageRef = await listAll(
-                ref(storage, `/avators/${memberId}/`),
+                ref(storage, `/Avatars/${memberId}/`),
                 false
             );
-            storageRef.items.forEach(async (avator) => {
-                const url = await getDownloadURL(avator);
-                setCurrentAvator(url);
+            storageRef.items.forEach(async (Avatar) => {
+                const url = await getDownloadURL(Avatar);
+                setCurrentAvatar(url);
             });
         };
-        getAvator(memberId);
+        getAvatar(memberId);
     }, [memberId]);
     return (
         <>
@@ -84,8 +84,8 @@ const MemberPage = () => {
                     currentMember={currentMember}
                     setCurrentMemberName={setCurrentMemberName}
                     memberId={memberId}
-                    currentAvator={currentAvator}
-                    setCurrentAvator={setCurrentAvator}
+                    currentAvatar={currentAvatar}
+                    setCurrentAvatar={setCurrentAvatar}
                     currentMemberAbout={currentMemberAbout}
                 />
                 <VideoCategory
@@ -95,7 +95,7 @@ const MemberPage = () => {
                     currentMemberName={currentMemberName}
                     videoEditorAll={videoEditorAll}
                 />
-                <VideoWapper>
+                <VideoWrapper>
                     <VideoSectionWrapper>
                         <MemberShowVideo
                             memberVideoAll={memberVideoAll}
@@ -105,7 +105,7 @@ const MemberPage = () => {
                             currentMemberName={currentMemberName}
                         />
                     </VideoSectionWrapper>
-                </VideoWapper>
+                </VideoWrapper>
             </MemberPageWrapper>
         </>
     );
@@ -122,7 +122,7 @@ const MemberPageWrapper = styled.section`
     }
 `;
 
-const VideoWapper = styled.div`
+const VideoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;

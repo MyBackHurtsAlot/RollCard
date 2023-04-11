@@ -10,10 +10,10 @@ const MemberEditVideo = ({
     videoCategoryAll,
     memberVideoAll,
     videoNameAll,
-    videoDiscriptionAll,
+    videoDescriptionAll,
     setVideoNameAll,
     setVideoCategoryAll,
-    setVideoDiscriptionAll,
+    setVideoDescriptionAll,
 }) => {
     const navigate = useNavigate();
     const videoWrapperRef = useRef([]);
@@ -49,7 +49,7 @@ const MemberEditVideo = ({
                                 <p> {parse(`${videoCategoryAll[index]}`)}</p>
 
                                 <div>
-                                    {parse(`${videoDiscriptionAll[index]}`)}
+                                    {parse(`${videoDescriptionAll[index]}`)}
                                 </div>
                             </VideoTextWrapper>
                             <HandleEdit
@@ -58,11 +58,11 @@ const MemberEditVideo = ({
                                 videoTextRef={videoTextRef}
                                 videoNameAll={videoNameAll[index]}
                                 videoCategoryAll={videoCategoryAll[index]}
-                                videoDiscriptionAll={videoDiscriptionAll[index]}
+                                videoDescriptionAll={videoDescriptionAll[index]}
                                 videoindex={index}
                                 setVideoNameAll={setVideoNameAll}
                                 setVideoCategoryAll={setVideoCategoryAll}
-                                setVideoDiscriptionAll={setVideoDiscriptionAll}
+                                setVideoDescriptionAll={setVideoDescriptionAll}
                             />
                         </EditVideoWrapper>
                     );

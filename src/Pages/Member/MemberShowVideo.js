@@ -12,7 +12,7 @@ const MemberShowVideo = ({
 }) => {
     const [showVideo, setShowVideo] = useState(-1);
 
-    const [showsmallVideo, setShowSmallVideo] = useState(false);
+    const [showSmallVideo, setShowSmallVideo] = useState(false);
 
     const videoRef = useRef(null);
 
@@ -37,7 +37,7 @@ const MemberShowVideo = ({
             {isTablet ? (
                 <MemberShowVideoWrapper>
                     <VideoTitle> {currentMemberName}的</VideoTitle>
-                    <JobOrVideo showsmallVideo={showsmallVideo}>
+                    <JobOrVideo showSmallVideo={showSmallVideo}>
                         <p
                             onClick={() => {
                                 setShowSmallVideo(false);
@@ -53,7 +53,7 @@ const MemberShowVideo = ({
                             作品
                         </p>
                     </JobOrVideo>
-                    {showsmallVideo ? (
+                    {showSmallVideo ? (
                         <SmallVideo>
                             {memberVideoAll.map((url, index) => {
                                 const splitUrl = url.split("&token=")[1];
@@ -152,12 +152,12 @@ const JobOrVideo = styled.div`
         }
     }
     & > p:first-child {
-        color: ${(props) => (props.showsmallVideo ? "" : "#0d0d0d")};
-        background-color: ${(props) => (props.showsmallVideo ? "" : "#F2B705")};
+        color: ${(props) => (props.showSmallVideo ? "" : "#0d0d0d")};
+        background-color: ${(props) => (props.showSmallVideo ? "" : "#F2B705")};
     }
     & > p:nth-child(2) {
-        background-color: ${(props) => (props.showsmallVideo ? "#F2B705" : "")};
-        color: ${(props) => (props.showsmallVideo ? "#0d0d0d" : "")};
+        background-color: ${(props) => (props.showSmallVideo ? "#F2B705" : "")};
+        color: ${(props) => (props.showSmallVideo ? "#0d0d0d" : "")};
     }
 `;
 const SmallVideoContainer = styled.div`

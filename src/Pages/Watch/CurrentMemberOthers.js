@@ -69,7 +69,7 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
     }, [memberVideo]);
     return (
         <>
-            <VideoWapper>
+            <VideoWrapper>
                 <VideoTitle>
                     {videoEditor} <p>的其他作品</p>
                 </VideoTitle>
@@ -149,14 +149,14 @@ const CurrentMemberOthers = ({ videoEditor, videoList }) => {
                         })}
                     </VideoSectionWrapper>
                 )}
-            </VideoWapper>
+            </VideoWrapper>
         </>
     );
 };
 
 export default CurrentMemberOthers;
 
-const VideoWapper = styled.div`
+const VideoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

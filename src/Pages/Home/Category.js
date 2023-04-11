@@ -9,27 +9,27 @@ const Category = ({
     showAnimation,
     showEvent,
     showTrailer,
-    showDocumentory,
+    showDocumentary,
     showOthers,
 }) => {
     const videoRefDocument = useRef(null);
     const videoRefAnimation = useRef(null);
     const videoRefEvent = useRef(null);
     const videoRefTrailer = useRef(null);
-    const videoRefDocumentory = useRef(null);
+    const videoRefDocumentary = useRef(null);
     const videoRefOthers = useRef(null);
 
     const HandleClick = (category) => {
         setSelectedCategory(category);
     };
     // ========================== handle Mouse ============================
-    const handlEnterpriseMouseEnter = () => {
+    const handleEnterpriseMouseEnter = () => {
         if (videoRefDocument.current.paused) {
             videoRefDocument.current.play();
         }
     };
 
-    const handlEnterpriseMouseLeave = () => {
+    const handleEnterpriseMouseLeave = () => {
         if (!videoRefDocument.current.paused) {
             videoRefDocument.current.pause();
         }
@@ -69,15 +69,15 @@ const Category = ({
             videoRefTrailer.current.pause();
         }
     };
-    const handleDocumentoryMouseEnter = () => {
-        if (videoRefDocumentory.current.paused) {
-            videoRefDocumentory.current.play();
+    const handleDocumentaryMouseEnter = () => {
+        if (videoRefDocumentary.current.paused) {
+            videoRefDocumentary.current.play();
         }
     };
 
-    const handleDocumentoryMouseLeave = () => {
-        if (!videoRefDocumentory.current.paused) {
-            videoRefDocumentory.current.pause();
+    const handleDocumentaryMouseLeave = () => {
+        if (!videoRefDocumentary.current.paused) {
+            videoRefDocumentary.current.pause();
         }
     };
     const handleOthersnMouseEnter = () => {
@@ -101,7 +101,7 @@ const Category = ({
                 </CatAndAllWrapper>
                 <CategoryEnterprise
                     onClick={() => HandleClick("企業形象")}
-                    onMouseEnter={handlEnterpriseMouseEnter}
+                    onMouseEnter={handleEnterpriseMouseEnter}
                     onMouseLeave={handlEnterpriseMouseLeave}
                 >
                     企業形象
@@ -131,18 +131,18 @@ const Category = ({
                     預告片
                     <video src={showTrailer} ref={videoRefTrailer} muted />
                 </CategoryTrailer>
-                <CategoryDocumentory
+                <CategoryDocumentary
                     onClick={() => HandleClick("紀錄片")}
-                    onMouseEnter={handleDocumentoryMouseEnter}
-                    onMouseLeave={handleDocumentoryMouseLeave}
+                    onMouseEnter={handleDocumentaryMouseEnter}
+                    onMouseLeave={handleDocumentaryMouseLeave}
                 >
                     紀錄片
                     <video
-                        src={showDocumentory}
-                        ref={videoRefDocumentory}
+                        src={showDocumentary}
+                        ref={videoRefDocumentary}
                         muted
                     />
-                </CategoryDocumentory>
+                </CategoryDocumentary>
                 <CategoryOthers
                     onClick={() => HandleClick("其他")}
                     onMouseEnter={handleOthersnMouseEnter}
@@ -275,5 +275,5 @@ const CategoryEnterprise = styled.div`
 const CategoryAnimation = styled(CategoryEnterprise)``;
 const CategoryEvent = styled(CategoryEnterprise)``;
 const CategoryTrailer = styled(CategoryEnterprise)``;
-const CategoryDocumentory = styled(CategoryEnterprise)``;
+const CategoryDocumentary = styled(CategoryEnterprise)``;
 const CategoryOthers = styled(CategoryEnterprise)``;

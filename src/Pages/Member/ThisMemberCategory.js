@@ -34,7 +34,7 @@ const ThisMemberCategory = ({
                 {matchingVideos.map((url, index) => {
                     const splitUrl = url.memberVideo.split("&token=")[1];
                     return (
-                        <CatVideoCantainer
+                        <CatVideoContainer
                             key={uuidv4()}
                             onClick={() => {
                                 navigate(`/watch/${splitUrl}`);
@@ -45,7 +45,7 @@ const ThisMemberCategory = ({
                                 <h1>{url.videoName}</h1>
                                 <p>{videoEditorAll}</p>
                             </InfoContainer>
-                        </CatVideoCantainer>
+                        </CatVideoContainer>
                     );
                 })}
                 <Exit
@@ -82,7 +82,7 @@ const ThisMemberCategoryWrapper = styled.div`
         display: none;
     }
 `;
-const CatVideoCantainer = styled.div`
+const CatVideoContainer = styled.div`
     margin-top: 10px;
     width: 25%;
     transition: all 0.3s cubic-bezier(0.34, -0.28, 0.7, 0.93);

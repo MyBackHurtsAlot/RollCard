@@ -8,7 +8,7 @@ import {
     PopUpPassword,
     PopUpInputWrapper,
     PopUpButton,
-    PopUpisLoggedin,
+    PopUpIsLoggedIn,
     PopUpMessage,
 } from "./Style/PopUpStyle";
 
@@ -65,11 +65,11 @@ const SignUp = ({
             console.log(error.message);
         }
     };
-    const submiRegestByKeyboard = (e) => {
+    const submitRegisterByKeyboard = (e) => {
         if (e.key === "Enter") submitRegister();
     };
     return (
-        <PopUpWrapper onKeyPress={submiRegestByKeyboard}>
+        <PopUpWrapper onKeyPress={submitRegisterByKeyboard}>
             <PopUpTitle>註冊會員</PopUpTitle>
             <PopUpInputWrapper>
                 <PopUpInput
@@ -90,7 +90,7 @@ const SignUp = ({
                 ></PopUpPassword>
             </PopUpInputWrapper>
             <PopUpButton onClick={submitRegister}>註冊</PopUpButton>
-            <PopUpisLoggedin
+            <PopUpIsLoggedIn
                 onClick={() => {
                     setCurrentPage("Login");
                     setRegisterEmail("");
@@ -98,7 +98,7 @@ const SignUp = ({
                 }}
             >
                 我是會員
-            </PopUpisLoggedin>
+            </PopUpIsLoggedIn>
             <PopUpMessage color={popColor}>{popMessage}</PopUpMessage>
         </PopUpWrapper>
     );
