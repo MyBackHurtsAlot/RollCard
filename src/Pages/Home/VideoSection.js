@@ -20,7 +20,7 @@ const VideoSection = ({ videoList, videoNameList, userIdList, editorName }) => {
                     {videoList.map((url, index) => {
                         const splitUrl = url.split("&token=")[1];
                         return (
-                            <HomeVideoContainer key={index}>
+                            <HomeVideoContainer key={splitUrl}>
                                 <video
                                     src={url}
                                     onClick={() => {

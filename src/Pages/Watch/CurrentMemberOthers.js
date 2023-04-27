@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
 
 import { db } from "../../Firebase-config";

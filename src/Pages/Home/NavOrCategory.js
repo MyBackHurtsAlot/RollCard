@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 import { db } from "../../Firebase-config";
 import { storage } from "../../Firebase-config";
 

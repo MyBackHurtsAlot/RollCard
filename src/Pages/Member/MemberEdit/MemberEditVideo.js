@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import HandleEdit from "./HandleEdit";
 import { device } from "../../../Components/Rwd";

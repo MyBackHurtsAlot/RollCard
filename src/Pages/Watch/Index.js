@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import { query, collection, getDocs } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../Firebase-config";
 import { db } from "../../Firebase-config";

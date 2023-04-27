@@ -107,18 +107,11 @@ const App = () => {
                             setMemberVideo,
                             originalVideoName,
                             setOriginalVideoName,
-                            // video,
-                            // setVideo,
                         }}
                     >
                         <BrowserRouter>
                             <Header setSelectedCategory={setSelectedCategory} />
                             <Routes>
-                                {/* <Route
-                                    path="/"
-                                    element={<Header key={location.pathname} />}
-                                /> */}
-
                                 <Route
                                     path="/"
                                     element={

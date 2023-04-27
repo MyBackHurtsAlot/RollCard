@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import Select from "react-select";
 
 const JobDropDown = ({ userJobTemp, setUserJobTemp, userJob }) => {

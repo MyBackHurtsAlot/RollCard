@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
-import { query, collection, getDocs, where, limit } from "firebase/firestore";
+import { query, collection, getDocs, where } from "firebase/firestore";
 
 import { db } from "../../../Firebase-config";
 
-import { useNavigate, navLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../../../Firebase-config";
-import { UserContext, VideoContext } from "../../../Context/userContext";
+import { UserContext } from "../../../Context/userContext";
 import Profile from "./Profile";
 import MemberEditVideo from "./MemberEditVideo";
 import Loading from "../../Loading/Index";

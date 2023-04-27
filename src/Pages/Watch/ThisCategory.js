@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { query, collection, getDocs, where, limit } from "firebase/firestore";
@@ -11,7 +11,7 @@ import settings from "./Carousel";
 import { device, useWindowResize } from "../../Components/Rwd";
 import { VideoStyle } from "../../GlobalStyle/SharedStyles";
 
-const ThisCategory = ({ videoCategory, currentVideo }) => {
+const ThisCategory = ({ videoCategory }) => {
     const [thisCategory, setThisCategory] = useState([]);
     const navigate = useNavigate();
     const [videoNameList, setVideoNameList] = useState([]);

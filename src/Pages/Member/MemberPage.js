@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { UserContext } from "../../Context/userContext";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";

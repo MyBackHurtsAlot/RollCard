@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { storage } from "../../Firebase-config";

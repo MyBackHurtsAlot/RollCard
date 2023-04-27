@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Controller from "./Controller";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { ImVolumeHigh, ImVolumeMute2 } from "react-icons/im";

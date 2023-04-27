@@ -1,17 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-    UserInfoContext,
-    UserContext,
-    VideoContext,
-} from "../../../Context/userContext";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-    uploadBytesResumable,
-} from "firebase/storage";
+import { UserInfoContext, UserContext } from "../../../Context/userContext";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../Firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../Firebase-config";

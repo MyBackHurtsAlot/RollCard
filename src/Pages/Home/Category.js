@@ -102,7 +102,7 @@ const Category = ({
                 <CategoryEnterprise
                     onClick={() => HandleClick("企業形象")}
                     onMouseEnter={handleEnterpriseMouseEnter}
-                    onMouseLeave={handlEnterpriseMouseLeave}
+                    onMouseLeave={handleEnterpriseMouseLeave}
                 >
                     企業形象
                     <video src={showEnterprise} ref={videoRefDocument} muted />
